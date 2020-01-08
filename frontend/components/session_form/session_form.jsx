@@ -36,6 +36,11 @@ class SessionForm extends React.Component {
     }
 
     render() {
+        //Want to render name box if creating a user, dont' want to render if just logging in 
+        // let display;
+        // {if (this.props.formType === 'sign up') {
+        //     display = 
+        // }}
         return (
             <div className="login-form-container">
                 <form onSubmit={this.handleSubmit} className="login-form-box">
