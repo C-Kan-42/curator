@@ -8,7 +8,7 @@ const usersReducer = (oldState = null, action) => {
     Object.freeze(oldState);
     switch (action.type) {
         case RECEIVE_CURRENT_USER:
-            return Object.assign({}, oldState, action.currentUser);
+            return action.currentUser;
         case LOGOUT_CURRENT_USER:
             return oldState;
         default:
