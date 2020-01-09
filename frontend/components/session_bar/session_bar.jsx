@@ -12,13 +12,14 @@ const SessionBar = ({ loggedIn, currentUser, logout, history }) => {
     
     return (
         <header className="session-bar">
-            <div className={`session-bar-contents-${buttonAction}`}>
+            <div className={`session-bar-contents`}>
                 <h3 className="session-bar-logo">
                     Curator
                 </h3>
-                <hgroup className="session-bar-right-header"></hgroup>
-                {personalizedGreeting}
-                <button data-toggle="modal" data-target="#modal-login" onClick={buttonAction}>{buttonText}</button>
+                <hgroup className="session-bar-right-header">
+                    {/* {personalizedGreeting} */}
+                    <button className="login-button" data-toggle="modal" data-target="#modal-login" onClick={buttonAction}>{buttonText}</button>
+                </hgroup>
             </div>
         </header>
     );

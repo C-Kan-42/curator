@@ -20,9 +20,10 @@ class SessionForm extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        const { processForm } = this.props;
         const userCredentials = Object.assign({}, this.state);
         this.props.processForm(userCredentials)
-            .then(() => this.props.history.push("/i/latest"), 
+            .then(() => this.props.history.push("/"), //change route to /i/latest
             () => {
                 if (this.props.formType === 'log in') {
                     this.setState({ email: '', password: ''})
@@ -36,7 +37,8 @@ class SessionForm extends React.Component {
                 <input type="text"
                     placeholder="Name"
                     onChange={this.update('name')}
-                    value={this.state.name}/>
+                    value={this.state.name}
+                    className="input-text signup-input-name"/>
             </div>
             : ""
     };
@@ -79,7 +81,7 @@ class SessionForm extends React.Component {
 
                     <div className="session-form-container">
                         <form onSubmit={this.handleSubmit} className="session-form">
-                            <h3>{headerText}</h3>
+                            <h3 className="headerText">{headerText}</h3>
 
                             {this.renderErrors()}
 
@@ -92,21 +94,21 @@ class SessionForm extends React.Component {
                                     placeholder="Email"
                                     value={this.state.email}
                                     onChange={this.update('email')}
-                                    className="login-input"
+                                    className="input-text login-input-email"
                                 />
                                 <br />
                                 <input type="password"
                                     placeholder={"Password" + (formType === 'sign up' ? " (minimum 6 characters)" : "")}
                                     value={this.state.password}
                                     onChange={this.update('password')}
-                                    className="login-input"
+                                    className="input-text login-input-password"
                                 />
                             </div>
 
                             <button className="session-submit-button">{buttonText}</button>
                         </form>
 
-                        <Link to={otherLink} onClick={this.props.clearSessionErrors}>
+                        <Link to={otherLink} onClick={this.props.clearSessionErrors} className="other-link">
                             {subText}
                         </Link>
                     </div>

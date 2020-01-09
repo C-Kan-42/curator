@@ -487,10 +487,12 @@ function (_React$Component) {
       var _this3 = this;
 
       e.preventDefault();
+      var processForm = this.props.processForm;
       var userCredentials = Object.assign({}, this.state);
       this.props.processForm(userCredentials).then(function () {
-        return _this3.props.history.push("/i/latest");
-      }, function () {
+        return _this3.props.history.push("/");
+      }, //change route to /i/latest
+      function () {
         if (_this3.props.formType === 'log in') {
           _this3.setState({
             email: '',
@@ -508,7 +510,8 @@ function (_React$Component) {
         type: "text",
         placeholder: "Name",
         onChange: this.update('name'),
-        value: this.state.name
+        value: this.state.name,
+        className: "input-text signup-input-name"
       })) : "";
     }
   }, {
@@ -563,7 +566,9 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit,
         className: "session-form"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, headerText), this.renderErrors(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+        className: "headerText"
+      }, headerText), this.renderErrors(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "signup-form-name"
       }, this.newUserName()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "login-form-credentials"
@@ -572,18 +577,19 @@ function (_React$Component) {
         placeholder: "Email",
         value: this.state.email,
         onChange: this.update('email'),
-        className: "login-input"
+        className: "input-text login-input-email"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "password",
         placeholder: "Password" + (formType === 'sign up' ? " (minimum 6 characters)" : ""),
         value: this.state.password,
         onChange: this.update('password'),
-        className: "login-input"
+        className: "input-text login-input-password"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "session-submit-button"
       }, buttonText)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: otherLink,
-        onClick: this.props.clearSessionErrors
+        onClick: this.props.clearSessionErrors,
+        className: "other-link"
       }, subText))));
     }
   }]);
@@ -678,16 +684,17 @@ var SessionBar = function SessionBar(_ref) {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
     className: "session-bar"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "session-bar-contents-".concat(buttonAction)
+    className: "session-bar-contents"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
     className: "session-bar-logo"
   }, "Curator"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hgroup", {
     className: "session-bar-right-header"
-  }), personalizedGreeting, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "login-button",
     "data-toggle": "modal",
     "data-target": "#modal-login",
     onClick: buttonAction
-  }, buttonText)));
+  }, buttonText))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (SessionBar);
