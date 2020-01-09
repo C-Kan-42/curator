@@ -9,6 +9,7 @@ const mapStateToProps = (state) => {
     return {
         logged_in: Boolean(state.session.currentUser),
         errors: state.errors.session,
+        session: state.session,
         formType: 'sign up',
         // navLink: <Link to="/login">log in</Link>
     };

@@ -18,7 +18,7 @@ const SessionBar = ({ loggedIn, currentUser, logout, history }) => {
                 </h3>
                 <hgroup className="session-bar-right-header"></hgroup>
                 {personalizedGreeting}
-                <button onClick={buttonAction}>{buttonText}</button>
+                <button data-toggle="modal" data-target="#modal-login" onClick={buttonAction}>{buttonText}</button>
             </div>
         </header>
     );

@@ -34,6 +34,7 @@ export const createDemoUser = () => dispatch => (
 
 export const login = user => dispatch => (
     APIUtil.postSession(user).then(user => (
+        // console.log(user)
         dispatch(receiveCurrentUser(user))
     ), err => (
         dispatch(receiveErrors(err.responseJSON))
@@ -41,7 +42,7 @@ export const login = user => dispatch => (
 );
 
 export const logout = () => dispatch => (
-    APIUtil.deleteSession().then(user => (
+    APIUtil.deleteSession().then(() => (
         dispatch(logoutCurrentUser())
     ))
 );

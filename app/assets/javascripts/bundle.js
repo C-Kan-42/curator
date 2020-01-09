@@ -176,7 +176,9 @@ var createDemoUser = function createDemoUser() {
 var login = function login(user) {
   return function (dispatch) {
     return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["postSession"](user).then(function (user) {
-      return dispatch(receiveCurrentUser(user));
+      return (// console.log(user)
+        dispatch(receiveCurrentUser(user))
+      );
     }, function (err) {
       return dispatch(receiveErrors(err.responseJSON));
     });
@@ -184,7 +186,7 @@ var login = function login(user) {
 };
 var logout = function logout() {
   return function (dispatch) {
-    return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["deleteSession"]().then(function (user) {
+    return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["deleteSession"]().then(function () {
       return dispatch(logoutCurrentUser());
     });
   };
@@ -290,6 +292,7 @@ var mapStateToProps = function mapStateToProps(state) {
   return {
     logged_in: Boolean(state.session.currentUser),
     errors: state.errors.session,
+    session: state.session,
     formType: 'log in' // navLink: <Link to="/signup">sign up</Link>,
 
   };
@@ -515,6 +518,7 @@ var mapStateToProps = function mapStateToProps(state) {
   return {
     logged_in: Boolean(state.session.currentUser),
     errors: state.errors.session,
+    session: state.session,
     formType: 'sign up' // navLink: <Link to="/login">log in</Link>
 
   };
@@ -576,6 +580,8 @@ var SessionBar = function SessionBar(_ref) {
   }, "Curator"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hgroup", {
     className: "session-bar-right-header"
   }), personalizedGreeting, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    "data-toggle": "modal",
+    "data-target": "#modal-login",
     onClick: buttonAction
   }, buttonText)));
 };
@@ -758,37 +764,31 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var usersReducer = function usersReducer() {
-  var oldState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+var sessionReducer = function sessionReducer() {
+  var oldState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+    currentUser: null
+  };
   var action = arguments.length > 1 ? arguments[1] : undefined;
   Object.freeze(oldState);
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_CURRENT_USER"]:
-      return action.currentUser;
+      return {
+        currentUser: action.currentUser
+      };
 
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["LOGOUT_CURRENT_USER"]:
-      return oldState;
+      // debugger;
+      return {
+        currentUser: null
+      };
 
     default:
       return oldState;
   }
-}; // const sessionReducer = (oldState = _nullUser, action) => {
-//     Object.freeze(oldState);
-//     switch (action.type) {
-//         case RECEIVE_CURRENT_USER:
-//             return Object.assign({}, oldState, { id: action.currentUser.id, name: action.currentUser.name, img_url: action.currentUser.img_url});
-//         case LOGOUT_CURRENT_USER:
-//             return _nullUser;
-//         default:
-//             return oldState;
-//     }
-// };
+};
 
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
-  currentUser: usersReducer
-}));
+/* harmony default export */ __webpack_exports__["default"] = (sessionReducer);
 
 /***/ }),
 
