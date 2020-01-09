@@ -8,21 +8,19 @@ import {
     HashRouter
 } from 'react-router-dom';
 
-import GreetingContainer from './greeting/greeting_container';
-import SignupFormContainer from './session_form/signup_form_container';
-import LoginFormContainer from './session_form/login_form_container';
+import SessionBarContainer from './session_bar/session_bar_container';
+import SignupFormContainer from './session/signup_form_container';
+import LoginFormContainer from './session/login_form_container';
+import { AuthRoute } from '../util/route_util';
 
 const App = () => (
-    <div>
+    <div className="app-wrapper">
         <header>
-            <Link to="/" className="header-link">
-                <h1>Curator</h1>
-            </Link>
-            <GreetingContainer />
+            <SessionBarContainer />
         </header>
 
-        <Route path="/login" component={LoginFormContainer} />
-        <Route path="/signup" component={SignupFormContainer} />
+        <AuthRoute path="/login" component={LoginFormContainer} />
+        <AuthRoute path="/signup" component={SignupFormContainer} />
     </div>
 );
 

@@ -6,6 +6,21 @@ export const postUser = user => (
     })
 );
 
+export const createDemoUser = () => (
+    $.ajax({
+        url: "api/users",
+        method: 'POST',
+        data: {
+            user: {
+                email: `demo-user-${Math.floor(Math.random() * 1000000)}-${Math.floor(Math.random() * 1000000)}@demo.com`,
+                first_name: "Demo",
+                last_name: "User",
+                password: `password`
+            }
+        }
+    })
+);
+
 export const postSession = user => (
     $.ajax({
         url: 'api/session',
