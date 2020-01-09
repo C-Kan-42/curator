@@ -8,6 +8,7 @@ import {
     HashRouter
 } from 'react-router-dom';
 
+import Modal from './modal/modal';
 import SessionBarContainer from './session_bar/session_bar_container';
 import SignupFormContainer from './session/signup_form_container';
 import LoginFormContainer from './session/login_form_container';

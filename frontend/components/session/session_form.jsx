@@ -68,9 +68,9 @@ class SessionForm extends React.Component {
 
         return (
             <div id="modal-login" className="modal">
-                <div className="session-modal-screen" onClick={e => this.handleExitClick(e)}></div>
+                <div className="session-modal-background" onClick={e => this.handleExitClick(e)}></div>
 
-                <div className="session-form-window">
+                <div className="session-modal-child">
                     <header className="session-modal-header">
                         <button className="session-form-exit-button" onClick={e => this.handleExitClick(e)}>
                             &#10006;
