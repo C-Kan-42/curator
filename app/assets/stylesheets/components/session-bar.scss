@@ -9,7 +9,7 @@
     box-shadow: 1px 0 0 1px rgba(0, 0, 0, 0.05);
     height: 56px;
     line-height: 24px;
-    padding-top: 0px;
+    padding-top: 12px;
     padding-bottom: 12px;
     padding-left: 0;
     padding-right: 0;
@@ -24,13 +24,14 @@
 
 .session-bar-contents {
     padding-right: 50px;
-    padding-left: 50px;
+    // padding-left: -10px;
     padding-top: 0px;
-    padding-bottom: 20px;
-    margin: 0 auto;
-    max-width: 720px;
-    // padding-left: 24px;
-    // padding-right: 24px;
+    padding-bottom: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 986px;
+    padding-left: 24px;
+    padding-right: 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -86,4 +87,12 @@
     box-shadow: none;
     outline: 0;
     transition: background-color 0.2s linear, color 0.2s linear;
+    transition-property: background-color, color;
+    transition-duration: 0.2s, 0.2s;
+    transition-timing-function: linear, linear;
+    transition-delay: 0s, 0s;
+}
+
+.login-button:hover{
+    border: 1px solid #818181;
 }

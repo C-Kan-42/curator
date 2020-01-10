@@ -105,7 +105,7 @@ class SessionForm extends React.Component {
                                 />
                             </div>
 
-                            <button className="session-submit-button">{buttonText}</button>
+                            <button className="big-green-button">{buttonText}</button>
                         </form>
 
                         <Link to={otherLink} onClick={this.props.clearSessionErrors} className="other-link">
