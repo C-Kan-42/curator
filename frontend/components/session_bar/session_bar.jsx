@@ -5,18 +5,21 @@ const SessionBar = ({ loggedIn, currentUser, logout, history }) => {
     const buttonAction = loggedIn ? logout : e => history.push("/login")
     let personalizedGreeting;
     if (currentUser) {
-        personalizedGreeting = <p className="session-bar-name">Hi, {currentUser.name}.</p>
+        personalizedGreeting = 
+        <h3 className="session-bar-logo-or-greeting">
+            Curator
+                </h3>
     } else {
         personalizedGreeting = ''
     }
     
     return (
         <header className="session-bar">
-            <div className={`session-bar-contents`}>
+            <div className="session-bar-contents">
                 <h3 className="session-bar-logo">
                     Curator
                 </h3>
-                <hgroup className="session-bar-right-header">
+                <hgroup className="session-bar-right-col">
                     {/* {personalizedGreeting} */}
                     <button className="login-button" data-toggle="modal" data-target="#modal-login" onClick={buttonAction}>{buttonText}</button>
                 </hgroup>

@@ -674,9 +674,9 @@ var SessionBar = function SessionBar(_ref) {
   var personalizedGreeting;
 
   if (currentUser) {
-    personalizedGreeting = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-      className: "session-bar-name"
-    }, "Hi, ", currentUser.name, ".");
+    personalizedGreeting = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+      className: "session-bar-logo-or-greeting"
+    }, "Curator");
   } else {
     personalizedGreeting = '';
   }
@@ -688,7 +688,7 @@ var SessionBar = function SessionBar(_ref) {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
     className: "session-bar-logo"
   }, "Curator"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hgroup", {
-    className: "session-bar-right-header"
+    className: "session-bar-right-col"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     className: "login-button",
     "data-toggle": "modal",

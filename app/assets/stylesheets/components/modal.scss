@@ -25,7 +25,7 @@
 }
 
 .session-form-container {
-    padding: 20px;
+    // padding: 20px;
     border-radius: inherit;
     text-align: center;
     margin-left: auto;
@@ -34,16 +34,33 @@
 }
 
 .session-form {
-  width: 300px;
-  margin: 0 auto;
+//   width: 300px;
+//   margin: 0 auto;
+    margin-top: 34px;
 }
 
 .session-modal-header {
-  display: flex;
-  justify-content: flex-end;
-  height: 40px;
-  background: #9f9f9f;
-  width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    height: 40px;
+    background: #F0F0F0;
+    width: 100%;
+}
+
+.session-form-exit-button {
+    border-color: rgba(0,0,0,0.2);
+    border-width: 1px;
+    border-style: hidden;
+    // padding-right: 1rem;
+    cursor: pointer;
+    padding-top: 1px;
+    padding-right: 13px;
+    padding-bottom: 1px;
+    padding-left: 13px;
+}
+
+.session-form-exit-button:hover {
+    background:  lightgrey;
 }
 
 .headerText {
@@ -52,6 +69,31 @@
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
     margin-top: 34px;
+}
+
+.session-errors {
+    font-family: Arial, Helvetica, sans-serif;
+    color: red;
+    list-style: none;
+    font-size: 14px;
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+input {
+    box-sizing: border-box;
+    // display: block;
+    height: 44px;
+    width: 100%;
+    -webkit-appearance: none;
+    color: -internal-light-dark-color(black, white);
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    text-align: start;
+  
 }
 
 .input-text {
@@ -66,6 +108,8 @@
     border-top-right-radius: 3px;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
+    min-width: 50px;
+    width: 100%;
 }
 
 .login-input-email {
@@ -73,6 +117,8 @@
     border-top-right-radius: 3px;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
+    min-width: 50px;
+    width: 100%;
 }
 
 .login-input-password {
@@ -80,7 +126,8 @@
     border-top-right-radius: 0px;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
-    margin-top: -1px;
+    min-width: 50px;
+    width: 100%;
 }
 
 .session-submit-button {
