@@ -399,6 +399,31 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
+/***/ "./frontend/components/main/main_page.jsx":
+/*!************************************************!*\
+  !*** ./frontend/components/main/main_page.jsx ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _session_bar_session_bar_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../session_bar/session_bar_container */ "./frontend/components/session_bar/session_bar_container.js");
+
+
+
+var MainPage = function MainPage(props) {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", {
+    className: "main-page"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_session_bar_session_bar_container__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Latest articles will go here"));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (MainPage);
+
+/***/ }),
+
 /***/ "./frontend/components/root.jsx":
 /*!**************************************!*\
   !*** ./frontend/components/root.jsx ***!
@@ -489,6 +514,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _components_main_main_page__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/main/main_page */ "./frontend/components/main/main_page.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -508,6 +534,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -550,7 +577,7 @@ function (_React$Component) {
       var processForm = this.props.processForm;
       var userCredentials = Object.assign({}, this.state);
       this.props.processForm(userCredentials).then(function () {
-        return _this3.props.history.push("/");
+        return _this3.props.history.push("/i/today");
       }, //change route to /i/latest
       function () {
         if (_this3.props.formType === 'log in') {
@@ -559,6 +586,10 @@ function (_React$Component) {
             password: ''
           });
         }
+      });
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Route, {
+        path: "/i/today",
+        component: _components_main_main_page__WEBPACK_IMPORTED_MODULE_2__["default"]
       });
     }
   }, {
@@ -600,7 +631,7 @@ function (_React$Component) {
       var _this$props = this.props,
           formType = _this$props.formType,
           errors = _this$props.errors;
-      var headerText = formType === 'sign up' ? "Sign Up to Curator" : "Log in to Curator";
+      var headerText = formType === 'sign up' ? "Sign up to Curator" : "Log in to Curator";
       var buttonText = formType === 'sign up' ? "Sign Up" : "Log In";
       var subText = formType === 'sign up' ? "Existing user? Log in" : "New user? Sign up";
       var otherLink = formType === 'sign up' ? '/login' : '/signup';
