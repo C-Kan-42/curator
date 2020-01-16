@@ -376,9 +376,7 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Landing).call(this, props));
     _this.handleDemoUser = _this.handleDemoUser.bind(_assertThisInitialized(_this));
     return _this;
-  } // componentDidMount() {
-  // }
-
+  }
 
   _createClass(Landing, [{
     key: "handleDemoUser",

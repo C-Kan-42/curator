@@ -10,9 +10,6 @@ class Landing extends React.Component {
         this.handleDemoUser = this.handleDemoUser.bind(this);
     }
 
-    // componentDidMount() {
-
-    // }
     handleDemoUser(e) {
         e.preventDefault();
         this.props.createDemoUser()
