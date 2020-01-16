@@ -27,13 +27,13 @@ class ApplicationController < ActionController::Base
         !current_user.nil?
     end
 
-    def require_logged_out
-        # Prevent logged-in users from seeing certain pages
-        redirect_to user_url(current_user) if logged_in?
-    end
+    # def require_logged_out
+    #     # Prevent logged-in users from seeing certain pages
+    #     redirect_to user_url(current_user) if logged_in?
+    # end
 
     def require_logged_in
         # Prevent logged-out users from seeing certain pages
-        redirect_to new_session_url unless logged_in?
+        redirect_to root_url unless logged_in?
     end
 end

@@ -1,6 +1,5 @@
 class User < ApplicationRecord
-    # This makes it so we can validate our password length, without storing it in the DB
-    attr_reader :password
+    # attr_reader :password
 
     validates :name, presence: true
     validates :email, presence: true, uniqueness: true
@@ -10,6 +9,9 @@ class User < ApplicationRecord
     # This allows us to run methods before running validations
     # In this case, we need to have a session_token when a user is first created
     after_initialize :ensure_session_token
+
+    has_many :articles,
+        class_name: :Article
 
     # Class method for finding a user ONLY if we have the correct email and password
     def self.find_by_credentials(email, password)
@@ -42,4 +44,9 @@ class User < ApplicationRecord
         self.save
         self.session_token
     end
+
+    private
+
+    # This makes it so we can validate our password length, without storing it in the DB
+    attr_reader :password
 end

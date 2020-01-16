@@ -1,9 +1,8 @@
-// import { combineReducers } from "redux";
+import { combineReducers } from "redux";
+import articlesReducer from './articles_reducer';
 
-// import usersReducer from "./users_reducer";
+const entitiesReducer = combineReducers({
+    articles: articlesReducer
+});
 
-// const entitiesReducer = combineReducers({
-//     users: usersReducer
-// });
-
-// export default entitiesReducer;
+export default entitiesReducer;

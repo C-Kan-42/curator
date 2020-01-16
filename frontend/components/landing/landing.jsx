@@ -2,19 +2,25 @@ import React from 'react';
 import { withRouter, Route} from 'react-router-dom';
 import LoginFormContainer from '../session/login_form_container';
 import SignupFormContainer from '../session/signup_form_container';
-import SessionForm from '../session/session_form';
+// import SessionForm from '../session/session_form';
 
 class Landing extends React.Component {
     constructor(props) {
         super(props);
+        this.handleDemoUser = this.handleDemoUser.bind(this);
     }
 
     // componentDidMount() {
 
     // }
+    handleDemoUser(e) {
+        e.preventDefault();
+        this.props.createDemoUser()
+            .then(() => this.props.history.push("/i/today"));
+    }
 
     render() {
-        return (
+        return(
         <div className="landing">
             <div>
                 <header className="header-background-gray">
@@ -27,7 +33,7 @@ class Landing extends React.Component {
                             <div className="button-group">
                                 <button className="big-green-button get-started" onClick={e => this.props.history.push('/signup')}>
                                     Get Started For Free</button>
-                                <button className="big-green-button demo-user" onClick={this.props.createDemoUser}>
+                                    <button className="big-green-button demo-user" onClick={this.handleDemoUser}>
                                     Demo User</button>
                             </div>
                         </div>

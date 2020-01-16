@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import MainPage from '../../components/main/main_page';
+import { Link, withRouter } from 'react-router-dom';
 
 class SessionForm extends React.Component {
     constructor(props) {
@@ -24,13 +23,12 @@ class SessionForm extends React.Component {
         const { processForm } = this.props;
         const userCredentials = Object.assign({}, this.state);
         this.props.processForm(userCredentials)
-            .then(() => this.props.history.push("/i/today"), //change route to /i/latest
+            .then(() => this.props.history.push("/i/today"), 
             () => {
                 if (this.props.formType === 'log in') {
                     this.setState({ email: '', password: ''})
                 }
         });
-        <Route path="/i/today" component={MainPage} />
     }
 
     newUserName() {
@@ -121,4 +119,4 @@ class SessionForm extends React.Component {
     }
 }
 
-export default SessionForm;
+export default withRouter(SessionForm);
