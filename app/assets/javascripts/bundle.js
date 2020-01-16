@@ -725,16 +725,15 @@ function (_React$Component) {
         className: "content"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         className: "article-title",
-        href: article.link,
-        title: article.link
+        href: article.link
       }, article.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "metadata"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "authors"
       }, "".concat(article.author, " / ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "m-r-1 ago"
-      }, timeSincePub)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "summary"
+      }, " ".concat(timeSincePub))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "article-summary"
       }, article.description)));
     }
   }]);
@@ -1073,9 +1072,22 @@ var SessionBar = function SessionBar(_ref) {
       logout = _ref.logout,
       history = _ref.history;
   var buttonText = loggedIn ? "Log Out" : "Log In";
-  var buttonAction = loggedIn ? logout : function (e) {
-    return history.push("/login");
-  };
+  var buttonAction;
+
+  if (loggedIn) {
+    buttonAction = function buttonAction(e) {
+      e.preventDefault();
+      logout().then(function () {
+        return history.push("/");
+      });
+    };
+  } else {
+    buttonAction = function buttonAction(e) {
+      history.push("/login");
+    };
+  } // const buttonAction = loggedIn ? logout : e => history.push("/login")
+
+
   var personalizedGreeting;
 
   if (currentUser) {

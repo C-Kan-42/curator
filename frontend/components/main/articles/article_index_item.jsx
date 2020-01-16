@@ -42,14 +42,14 @@ class ArticleIndexItem extends React.Component {
                     {/* <img src={`${article.image_url}`} alt=""/> */}
                 </div>
                 <div className="content">
-                    <a className="article-title" href={article.link} title={article.link}> 
+                    <a className="article-title" href={article.link}> 
                         {article.title}
                     </a>
                     <div className="metadata">
                         <span className="authors">{`${article.author} / `}</span>
-                        <span className="m-r-1 ago">{timeSincePub}</span>
+                        <span className="m-r-1 ago">{` ${timeSincePub}`}</span>
                     </div>
-                    <div className="summary">
+                    <div className="article-summary">
                         {article.description}
                     </div>
                 </div>

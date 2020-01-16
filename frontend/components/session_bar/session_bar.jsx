@@ -2,7 +2,18 @@ import React from 'react';
 
 const SessionBar = ({ loggedIn, currentUser, logout, history }) => {
     const buttonText = loggedIn ? "Log Out" : "Log In"
-    const buttonAction = loggedIn ? logout : e => history.push("/login")
+    let buttonAction;
+    if (loggedIn) {
+        buttonAction = (e) => {
+            e.preventDefault();
+            logout().then(() => history.push("/"));
+        }
+    } else {
+        buttonAction = (e) => {
+            history.push("/login");
+        }
+    }
+    // const buttonAction = loggedIn ? logout : e => history.push("/login")
     let personalizedGreeting;
     if (currentUser) {
         personalizedGreeting = 
