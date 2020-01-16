@@ -16,7 +16,9 @@
 
 // CSS Reset
 @import "base/reset.scss";
-
+div {
+    display:block;
+}
 // // Core
 // @import "base/colors.scss";
 // @import "base/buttons.scss";

@@ -577,14 +577,37 @@ function (_React$Component) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_article_index_item__WEBPACK_IMPORTED_MODULE_2__["default"], {
           key: article.id,
           article: article,
-          history: _this.props.history // {...this.state}
-          // {...this.props}
-
+          history: _this.props.history
         });
       });
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "article-index"
-      }, articleItems);
+      return (
+        /* <ArticleIndexHeader {...{titleLink}}>{title}</ArticleIndexHeader>} */
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          id: "Frame"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          id: "PageHolderFX",
+          className: "fx"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          id: "PageFX",
+          className: "container centered"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "board presentation-4"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
+          className: "header row"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+          className: "col-xs-6 col-md-6"
+        }, "New York Times - Travel")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "row"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-xs-12 col-xl-9"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
+          className: "article-index-subtitle"
+        }, "Recent"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "article-index list-entries"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "entrylist-chunk"
+        }, articleItems)))))))))
+      );
     } // static defaultProps = {
     //     articles: [],
     //     title: ""
@@ -623,6 +646,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -683,30 +708,34 @@ function (_React$Component) {
 
       var article = this.props.article;
       var imageStyle = {
-        backgroundImage: "url(".concat(article.image_url, ")")
+        backgroundImage: 'url(' + "\"".concat(article.image_url, "\"") + ')'
       }; // const originPath = this.props.history.location.pathname;
-      // let timeSincePub = moment(article.pub_date).fromNow();
-      // timeSincePub = timeSincePub.split(" ")[0] === "in" ? "Just now" : pub_date;
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      var timeSincePub = moment__WEBPACK_IMPORTED_MODULE_2__(article.pub_date).fromNow();
+      timeSincePub = timeSincePub.split(" ")[0] === "in" ? "Just now" : timeSincePub.split(" ").slice(0, 2).join(' ');
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", _defineProperty({
         className: "article-index-item",
         onClick: function onClick(e) {
           return _this2.handleRedirect(e, article.id);
         }
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "article-item-image",
+      }, "className", "entry unread u4"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "visual",
         style: imageStyle
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "article-details"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "article-title"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "articles/".concat(article.id)
-      }, article.title))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "article-metadata"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, " by ".concat(article.author, " / ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "article-description"
-      }, article.description))));
+        className: "content"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        className: "article-title",
+        href: article.link,
+        title: article.link
+      }, article.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "metadata"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "authors"
+      }, "".concat(article.author, " / ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "m-r-1 ago"
+      }, timeSincePub)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "summary"
+      }, article.description)));
     }
   }]);
 

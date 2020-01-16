@@ -18,16 +18,37 @@ class ArticleIndex extends React.Component {
             <ArticleIndexItem key={article.id} 
             article={article}
             history={this.props.history}
-            // {...this.state}
-            // {...this.props}
             />
         ));
 
         return(
-            <div className="article-index">
-                {/* <ArticleIndexHeader {...{titleLink}}>{title}</ArticleIndexHeader>} */}
-                {articleItems}
+            /* <ArticleIndexHeader {...{titleLink}}>{title}</ArticleIndexHeader>} */
+            <div id="Frame">
+                <div id="PageHolderFX" className="fx">
+                    <div id="PageFX" className="container centered">
+                        <div className="board presentation-4">
+                            <div>
+                                <header className="header row">
+                                    <h1 className="col-xs-6 col-md-6">
+                                        New York Times - Travel
+                                </h1>
+                                </header>
+                                <div className="row">
+                                    <div className="col-xs-12 col-xl-9">
+                                        <h4 className="article-index-subtitle">Recent</h4>
+                                        <div className="article-index list-entries">
+                                            <div className="entrylist-chunk">
+                                                {articleItems}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            
         );
     }
 
