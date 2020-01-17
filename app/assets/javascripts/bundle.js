@@ -694,7 +694,7 @@ function (_React$Component) {
       var target = e.target.parentElement; // const articleId = this.props.article.id;
 
       var originPath = this.props.history.location.pathname;
-      this.props.history.push("/articles/".concat(articleId));
+      this.props.history.push("articles/".concat(articleId));
     }
   }, {
     key: "handleExitClick",
