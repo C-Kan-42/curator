@@ -13,6 +13,8 @@ import { AuthRoute, ProtectedRoute } from '../util/route_util';
 import SessionBarContainer from './session_bar/session_bar_container';
 import LandingContainer from './landing/landing_container';
 import ArticleContainer from './main/articles/article_container';
+import ArticleShowPopout from "./main/articles/article_show_popout";
+import ArticleShowContainer from './main/articles/article_show_container';
 
 const App = () => (
     <div className="app-wrapper">
@@ -23,6 +25,7 @@ const App = () => (
             <AuthRoute exact path="/" component={LandingContainer} />
             <AuthRoute path="/login" component={LandingContainer} />
             <AuthRoute path="/signup" component={LandingContainer} />
+            {/* <Route path="/articles/:articleId" component={ArticleShowContainer} /> */}
             <ProtectedRoute exact path="/i/today" component={ArticleContainer} />
         </Switch>
     </div>
@@ -30,3 +33,4 @@ const App = () => (
 
 export default App;
 
+//Add route to popout window

@@ -1,7 +1,7 @@
 import React from 'react';
 
 class Popout extends React.Component {
-    handleEscKey = (e) => {
+    handleEscKey(e) {
         if(e.keyCode === 27){
             this.props.handleClose();
         }
@@ -39,10 +39,13 @@ class Popout extends React.Component {
 }
 
 export default class PopoutWithTransition extends React.Component {
-    state = { appeared: false }
-    timeouts = [];
+    constructor(props) {
+        super(props)
+        state = { appeared: false }
+        timeouts = [];
+    }
 
-    handleClose = () => {
+    handleClose() {
         this.setState({appeared: false},
             () => {
                 const timeout = setTimeout(() => {
@@ -52,7 +55,7 @@ export default class PopoutWithTransition extends React.Component {
         });
     }
 
-    handleClick = e => {
+    handleClick(e) {
         if (e.target.className === "pop-out-screen") {
             this.handleClose();
         }

@@ -1,6 +1,9 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import ArticleShowContainer from './article_show_container';
+
+import { ProtectedRoute } from '../../../util/route_util';
+// import ArticleShowContainer from './article_show_container';
+import { fetchArticle } from '../../../actions/article_actions';
 import * as moment from 'moment';
 
 class ArticleShow extends React.Component {
@@ -49,3 +52,5 @@ class ArticleShow extends React.Component {
         )
     }
 }
+
+export default ArticleShow;
