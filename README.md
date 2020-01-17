@@ -1,24 +1,29 @@
-# README
+# Curator
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+-----------
+[Live Website Link](https://curator-1.herokuapp.com/#/)
 
-Things you may want to cover:
+This web app is a clone of Feedly, a popular news aggregator. With so many sources of news today, this site allows you to subscribe to your preferred news sources and RSS feeds, and organize them into feeds. With Curator, you are able to curate and view your own personalized news page, with your favorite topics and sites all in one place. 
 
-* Ruby version
+## Technology
 
-* System dependencies
+This app uses Ruby on Rails for the backend API, and Javascript/React/Redux to render the front-end. 
 
-* Configuration
+## Features
 
-* Database creation
+### Article Floating Modals
 
-* Database initialization
+Users are able to click on individual articles on the show page, and a modal popout will appear on the right side of the screen. This was accomplished with a modal passing relevant articles props to a popout container, and also makes use of this.props.children.
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+render() {
+        return (
+            <div onClick={this.handleClick} className={"pop-out-screen" +
+                (this.state.appeared ? "" : " appearing")
+            }>
+                <Popout {...this.props} handleClose={this.handleClose}>
+                    {this.props.children}
+                </Popout>
+            </div>
+        );
+}
