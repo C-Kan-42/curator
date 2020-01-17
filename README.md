@@ -27,3 +27,7 @@ render() {
             </div>
         );
 }
+
+### Acknowledgements
+
+I would like to acknowledge [Elliot Grieco](https://github.com/etgrieco), as I referenced and got inspiration from his code for his Feedly clone, easyFeeds. I would also like to thank my project advisor, Michelle Kim, and my classmates at App Academy, for all their help and support. 
