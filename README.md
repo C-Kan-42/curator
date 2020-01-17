@@ -27,6 +27,7 @@ render() {
             </div>
         );
 }
+```
 
 ### Acknowledgements
 
