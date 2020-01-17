@@ -25,12 +25,10 @@ const App = () => (
             <AuthRoute exact path="/" component={LandingContainer} />
             <AuthRoute path="/login" component={LandingContainer} />
             <AuthRoute path="/signup" component={LandingContainer} />
-            {/* <Route path="/articles/:articleId" component={ArticleShowContainer} /> */}
+            <Route path="/i/articles/:articleId" component={ArticleShowPopout} />
             <ProtectedRoute exact path="/i/today" component={ArticleContainer} />
         </Switch>
     </div>
 );
 
 export default App;
-
-//Add route to popout window

@@ -30,7 +30,7 @@ class Popout extends React.Component {
                 </div>
                 <div className="floatingEntryContent-tab tab_0" onClick={handleClose}>
                     <div className="floatingEntryContent-tab-close">
-                        <i className="icon icon-fx-cross"></i>
+                        <div className="icon icon-fx-cross">&#10006;</div>
                     </div>
                 </div>
             </div>
@@ -41,15 +41,17 @@ class Popout extends React.Component {
 export default class PopoutWithTransition extends React.Component {
     constructor(props) {
         super(props)
-        state = { appeared: false }
-        timeouts = [];
+        this.state = { appeared: false }
+        this.timeouts = [];
+        this.handleClose = this.handleClose.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     handleClose() {
         this.setState({appeared: false},
             () => {
                 const timeout = setTimeout(() => {
-                    this.props.history.push(this.props.closePath);
+                    this.props.history.push('/i/today');
                 }, 300);
                 this.timeouts.push(timeout);
         });

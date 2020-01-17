@@ -296,6 +296,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _main_articles_article_container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./main/articles/article_container */ "./frontend/components/main/articles/article_container.js");
 /* harmony import */ var _main_articles_article_show_popout__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./main/articles/article_show_popout */ "./frontend/components/main/articles/article_show_popout.jsx");
 /* harmony import */ var _main_articles_article_show_container__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./main/articles/article_show_container */ "./frontend/components/main/articles/article_show_container.js");
+/* harmony import */ var _main_articles_article_show_container__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_main_articles_article_show_container__WEBPACK_IMPORTED_MODULE_8__);
 
 
 
@@ -319,6 +320,9 @@ var App = function App() {
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_3__["AuthRoute"], {
     path: "/signup",
     component: _landing_landing_container__WEBPACK_IMPORTED_MODULE_5__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+    path: "/i/articles/:articleId",
+    component: _main_articles_article_show_popout__WEBPACK_IMPORTED_MODULE_7__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_3__["ProtectedRoute"], {
     exact: true,
     path: "/i/today",
@@ -326,7 +330,7 @@ var App = function App() {
   })));
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (App); //Add route to popout window
+/* harmony default export */ __webpack_exports__["default"] = (App);
 
 /***/ }),
 
@@ -760,11 +764,12 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../util/route_util */ "./frontend/util/route_util.jsx");
-/* harmony import */ var _actions_article_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../actions/article_actions */ "./frontend/actions/article_actions.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../util/route_util */ "./frontend/util/route_util.jsx");
+/* harmony import */ var _actions_article_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../actions/article_actions */ "./frontend/actions/article_actions.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_5__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -782,6 +787,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -804,38 +810,37 @@ function (_React$Component) {
   _createClass(ArticleShow, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchArticle(this.props.match.params.id);
+      console.log(this.props);
+      this.props.fetchArticle(this.props.match.params.articleId);
     }
   }, {
     key: "render",
     value: function render() {
-      var article = this.props.article;
-      var description = article.description,
-          image_url = article.image_url,
-          link_url = article.link_url,
-          title = article.title;
-      var timeSincePub = moment__WEBPACK_IMPORTED_MODULE_4__(article.pub_date).fromNow();
+      console.log(this.props);
+      var timeSincePub = moment__WEBPACK_IMPORTED_MODULE_5__(this.props.article.pub_date).fromNow();
       timeSincePub = timeSincePub.split(" ")[0] === "in" ? "Just now" : timeSincePub.split(" ").slice(0, 2).join(' ');
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "entryholder"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "article-show-entry"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "entryHeader"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "".concat(link_url),
+        href: "".concat(this.props.article.link_url),
         className: "entryTitle title read"
-      }, title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.props.article.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "fx metadata"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "metadata-holder"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "metadata EntryMetadata"
+        className: "metadata entryMetadata"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "source-metadata-holder"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "source"
+        className: "entry-source"
       }, "New York Times - Travel")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "authors"
-      }, "".concat(article.author, " / ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, "".concat(this.props.article.author, " / ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "m-r-1 ago"
       }, " ".concat(timeSincePub))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "shareBarHolder"
@@ -846,52 +851,40 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "entry-imageContainer"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: "".concat(image_url),
+        src: "".concat(this.props.article.image_url),
         alt: "",
         className: "pinable"
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "entry-content"
-      }, description)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.props.article.description)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "tagsHolder decoration-holder"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "wallHolder"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "".concat(link_url),
+        href: "".concat(this.props.article.link_url),
         className: "fx-button secondary full-width visitWebsiteButton"
-      }, "Visit Website"));
+      }, "Visit Website")));
     }
   }]);
 
   return ArticleShow;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (ArticleShow);
-
-/***/ }),
-
-/***/ "./frontend/components/main/articles/article_show_container.js":
-/*!*********************************************************************!*\
-  !*** ./frontend/components/main/articles/article_show_container.js ***!
-  \*********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _actions_article_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../actions/article_actions */ "./frontend/actions/article_actions.js");
-/* harmony import */ var _article_show__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./article_show */ "./frontend/components/main/articles/article_show.jsx");
-
-
-
-
+ArticleShow.defaultProps = {
+  article: {
+    title: "",
+    author: "",
+    link_url: "",
+    image_url: "",
+    description: "",
+    pub_date: ""
+  }
+};
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
-  var articleId = parseInt(ownProps.match.params.id);
-  var article = state.entities.articles[ownProps.match.params.id];
+  // const articleId = parseInt(ownProps.match.params.id);
+  var article = state.entities.articles[ownProps.match.params.articleId];
   return {
-    articleId: articleId,
     article: article
   };
 };
@@ -899,12 +892,42 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     fetchArticle: function fetchArticle(articleId) {
-      return dispatch(Object(_actions_article_actions__WEBPACK_IMPORTED_MODULE_2__["fetchArticle"])(articleId));
+      return dispatch(Object(_actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["fetchArticle"])(articleId));
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_article_show__WEBPACK_IMPORTED_MODULE_3__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(ArticleShow)));
+
+/***/ }),
+
+/***/ "./frontend/components/main/articles/article_show_container.js":
+/*!*********************************************************************!*\
+  !*** ./frontend/components/main/articles/article_show_container.js ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// import { connect } from 'react-redux';
+// import { withRouter } from 'react-router-dom';
+// import { fetchArticle } from '../../../actions/article_actions';
+// import ArticleShow from './article_show';
+// ArticleShow.defaultProps = {
+//     article: {
+//         title: "",
+//         link_url: "",
+//         description: "",
+//     }
+// };
+// const mapStateToProps = (state, ownProps) => {
+//     // const articleId = parseInt(ownProps.match.params.id);
+//     const article = state.entities.articles[ownProps.match.params.id];
+//     return {article}
+// };
+// const mapDispatchToProps = dispatch => ({
+//     fetchArticle: (articleId) => dispatch(fetchArticle(articleId))
+// });
+// export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ArticleShow));
 
 /***/ }),
 
@@ -1025,9 +1048,9 @@ function (_React$Component) {
         onClick: handleClose
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "floatingEntryContent-tab-close"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "icon icon-fx-cross"
-      }))));
+      }, "\u2716"))));
     }
   }]);
 
@@ -1045,10 +1068,12 @@ function (_React$Component2) {
     _classCallCheck(this, PopoutWithTransition);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(PopoutWithTransition).call(this, props));
-    state = {
+    _this.state = {
       appeared: false
     };
-    timeouts = [];
+    _this.timeouts = [];
+    _this.handleClose = _this.handleClose.bind(_assertThisInitialized(_this));
+    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1061,7 +1086,7 @@ function (_React$Component2) {
         appeared: false
       }, function () {
         var timeout = setTimeout(function () {
-          _this2.props.history.push(_this2.props.closePath);
+          _this2.props.history.push('/i/today');
         }, 300);
 
         _this2.timeouts.push(timeout);
