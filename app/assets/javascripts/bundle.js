@@ -810,13 +810,11 @@ function (_React$Component) {
   _createClass(ArticleShow, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      console.log(this.props);
       this.props.fetchArticle(this.props.match.params.articleId);
     }
   }, {
     key: "render",
     value: function render() {
-      console.log(this.props);
       var timeSincePub = moment__WEBPACK_IMPORTED_MODULE_5__(this.props.article.pub_date).fromNow();
       timeSincePub = timeSincePub.split(" ")[0] === "in" ? "Just now" : timeSincePub.split(" ").slice(0, 2).join(' ');
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -862,7 +860,9 @@ function (_React$Component) {
         id: "wallHolder"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "".concat(this.props.article.link_url),
-        className: "fx-button secondary full-width visitWebsiteButton"
+        className: "fx-button secondary full-width visitWebsiteButton",
+        target: "_blank",
+        rel: "noopner"
       }, "Visit Website")));
     }
   }]);

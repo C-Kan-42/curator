@@ -9,12 +9,10 @@ import * as moment from 'moment';
 
 class ArticleShow extends React.Component {
     componentDidMount() {
-        console.log(this.props)
         this.props.fetchArticle(this.props.match.params.articleId);
     }
 
     render() {
-        console.log(this.props)
         let timeSincePub = moment(this.props.article.pub_date).fromNow();
         timeSincePub = timeSincePub.split(" ")[0] === "in" ? "Just now" : timeSincePub.split(" ").slice(0, 2).join(' ');
 
@@ -49,7 +47,7 @@ class ArticleShow extends React.Component {
                     </div>
                     <div className="tagsHolder decoration-holder"></div>
                     <div id="wallHolder"></div>
-                    <a href={`${this.props.article.link_url}`} className="fx-button secondary full-width visitWebsiteButton">Visit Website</a>
+                    <a href={`${this.props.article.link_url}`} className="fx-button secondary full-width visitWebsiteButton" target="_blank" rel="noopner">Visit Website</a>
                 </div>
             </div>
         )
