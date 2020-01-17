@@ -3,7 +3,7 @@
 -----------
 [Live Website Link](https://curator-1.herokuapp.com/#/)
 
-This web app is a clone of Feedly, a popular news aggregator. With so many sources of news today, this site allows you to subscribe to your preferred news sources and RSS feeds, and organize them into feeds. With Curator, you are able to curate and view your own personalized news page, with your favorite topics and sites all in one place. 
+This web app is a clone of Feedly, a popular news aggregator. With so many sources of news today, this site allows users to subscribe to your preferred news sources and organize them into feeds. Curator makes use of RSS Feeds, which hold raw data from news sources and allow users to bypass social media and advertisements while consuming their favorite articles. Curator enables users to curate and view their own personalized news page, with their favorite topics and sites neatly organized in one place. 
 
 ## Technology
 
