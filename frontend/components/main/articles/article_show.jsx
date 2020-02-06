@@ -66,7 +66,6 @@ ArticleShow.defaultProps = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-    // const articleId = parseInt(ownProps.match.params.id);
     const article = state.entities.articles[ownProps.match.params.articleId];
     return { article }
 };
