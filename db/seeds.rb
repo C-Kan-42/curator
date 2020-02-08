@@ -69,3 +69,5 @@ a5 = Article.create!(
     pub_date: nyt_articles[5].pubDate,
     source_id: 1
 )
+
+rss_feed_url_2 = 
