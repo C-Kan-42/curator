@@ -70,4 +70,60 @@ a5 = Article.create!(
     source_id: 1
 )
 
-rss_feed_url_2 = 
+rss_feed_url_2 = 'https://feeds.npr.org/131564138/rss.xml'
+npr_travel_articles = RSS::Parser.parse(open(rss_feed_url_2).read, false).items[0..5]
+
+a6 = Article.create!( 
+    entry_id: "6",
+    title: npr_travel_articles[1].title,
+    author: npr_travel_articles[1].author,
+    description: npr_travel_articles[1].description,
+    link_url: npr_travel_articles[1].link,
+    image_url: 'https://media.npr.org/assets/img/2020/03/05/ap_20064728721715_wide-de8df023bcd2f858c1aee9efb5bd4d05857774d5.jpg?s=600',
+    pub_date: npr_travel_articles[1].pubDate,
+    source_id: 1
+)
+
+a7 = Article.create!( 
+    entry_id: "7",
+    title: npr_travel_articles[2].title,
+    author: npr_travel_articles[2].author,
+    description: npr_travel_articles[2].description,
+    link_url: npr_travel_articles[2].link,
+    image_url: 'https://media.npr.org/assets/img/2020/03/04/gettyimages-1203662366_wide-25a551df81899d892e12cc10e058694606672c77.jpg?s=600',
+    pub_date: npr_travel_articles[2].pubDate,
+    source_id: 1
+)
+
+a8 = Article.create!( 
+    entry_id: "8",
+    title: npr_travel_articles[3].title,
+    author: npr_travel_articles[3].author,
+    description: npr_travel_articles[3].description,
+    link_url: npr_travel_articles[3].link,
+    image_url: 'https://media.npr.org/assets/img/2020/03/03/gettyimages-1200825328_wide-f284677258e1e23f51f165de01f5b015ca81e111.jpg?s=600',
+    pub_date: npr_travel_articles[3].pubDate,
+    source_id: 1
+)
+
+a9 = Article.create!( 
+    entry_id: "9",
+    title: npr_travel_articles[4].title,
+    author: npr_travel_articles[4].author,
+    description: npr_travel_articles[4].description,
+    link_url: npr_travel_articles[4].link,
+    image_url: 'https://media.npr.org/assets/img/2020/02/11/gettyimages-1199784845_wide-503149fff5701f8418e45816f1988a1a67b458cf.jpg?s=600',
+    pub_date: npr_travel_articles[4].pubDate,
+    source_id: 1
+)
+
+a10 = Article.create!( 
+    entry_id: "10",
+    title: npr_travel_articles[5].title,
+    author: npr_travel_articles[5].author,
+    description: npr_travel_articles[5].description,
+    link_url: npr_travel_articles[5].link,
+    image_url: 'https://media.npr.org/assets/img/2019/12/01/gettyimages-1191129404_wide-7d38194ec255c55e785681ba026e0f3635d78612.jpg?s=600',
+    pub_date: npr_travel_articles[5].pubDate,
+    source_id: 1
+)
