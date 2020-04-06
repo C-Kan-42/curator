@@ -127,3 +127,25 @@ a10 = Article.create!(
     pub_date: npr_travel_articles[5].pubDate,
     source_id: 1
 )
+
+#User seed data
+User.destroy_all
+puts "Destroyed all users!"
+users = Array.new(10) do
+    user = User.new(
+        email: Faker::Internet.unique.email,
+        password: 'password',
+        name: Faker::Movies::HitchhikersGuideToTheGalaxy.unique.character
+    )
+
+    user if user.save
+end
+users.compact!
+puts "10 users created!"
+
+#Subscription
+Subscription.destroy_all
+puts "Destroyed all subscriptions"
+users.each do |user|
+    
+end

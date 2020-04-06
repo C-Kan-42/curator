@@ -1,27 +1,43 @@
 require 'rss'
 require 'open-uri'
+require 'metainspector'
 
 class Article < ApplicationRecord
     validates :title, :link_url, :source_id, presence:true
-    # validates :entry_id, uniqueness: {scope: :source_id}
+    validates :entry_id, uniqueness: {scope: :feed_id}
 
-    # belongs_to :source 
-    #     class_name: :Source 
-    #     foreign_key: :source_id
+    belongs_to :feed 
+        class_name: :Feed 
+        foreign_key: :feed_id
 
-    # def self.create_nyt_article(index)
-    #     # article_results = []
-    #     nyt_articles = RSS::Parser.parse(open('https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml').read, false).items[0..5]
-        
-    #     #temporary fix before creating source
-    #     # index = 1
-    #     nyt_articles.each.with_index do |article, idx|
-    #         if idx === index
-    #            result = {entry_id: "#{idx}", title: article.title, author: article.dc_creator, description: article.description, link_url: article.link, image_url: 'image.png', pub_datetime: article.pubDate, source_id: 1}
-    #         end
-    #     end
+    has_many :readers,
+        through: :feed,
+        source: :subscribers
 
-    #     Article.create(result)
-    # end
+    has_many :subscriptions,
+        through: :feed,
+        source: :subscriptions
+
+    def self.create_article(article_item, feed)
+        page = MetaInspector.new(article_item.link)
+
+        entry_id = article_item.link
+        author = article_item.author || feed.title || || page.best_author || "Anonymous"
+        pub_date = article_item.pubDate || page.meta['date'] || Time.now
+        description = article_item.description || page.description
+        image_url  = page.images.best
+
+        Article.create!( 
+            entry_id: "1",
+            title: nyt_articles[1].title,
+            author: nyt_articles[1].author,
+            description: nyt_articles[1].description,
+            link_url: nyt_articles[1].link,
+            image_url: image_url,
+            pub_date: nyt_articles[1].pubDate,
+            feed_id: feed.id
+        )
+
+    end
     
 end
