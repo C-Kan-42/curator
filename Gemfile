@@ -23,6 +23,7 @@ gem 'rails_12factor'
 # For web scraping and article data
 gem 'faker'
 gem 'rss'
+gem 'metainspector'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'

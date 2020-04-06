@@ -3,11 +3,11 @@ require 'open-uri'
 require 'metainspector'
 
 class Article < ApplicationRecord
-    validates :title, :link_url, :source_id, presence:true
+    validates :title, :link_url, :feed_id, presence:true
     validates :entry_id, uniqueness: {scope: :feed_id}
 
-    belongs_to :feed 
-        class_name: :Feed 
+    belongs_to :feed, 
+        class_name: :Feed,
         foreign_key: :feed_id
 
     has_many :readers,
@@ -22,19 +22,20 @@ class Article < ApplicationRecord
         page = MetaInspector.new(article_item.link)
 
         entry_id = article_item.link
-        author = article_item.author || feed.title || || page.best_author || "Anonymous"
+        title = article_item.title || page.title
+        author = article_item.author || page.best_author || feed.title || "Anonymous"
         pub_date = article_item.pubDate || page.meta['date'] || Time.now
         description = article_item.description || page.description
         image_url  = page.images.best
 
         Article.create!( 
-            entry_id: "1",
-            title: nyt_articles[1].title,
-            author: nyt_articles[1].author,
-            description: nyt_articles[1].description,
-            link_url: nyt_articles[1].link,
+            entry_id: entry_id,
+            title: title,
+            author: author,
+            description: description,
+            link_url: article_item.link,
             image_url: image_url,
-            pub_date: nyt_articles[1].pubDate,
+            pub_date: pubDate,
             feed_id: feed.id
         )
 

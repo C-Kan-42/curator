@@ -35,7 +35,7 @@ class Feed < ApplicationRecord
             @rss_feed = RSS::Parser.parse(open(rss_url).read, false)
         rescue 
             errors.add :base,
-                "There was an issue fetching teh feed"
+                "There was an issue fetching the feed"
             throw :abort
         end
     end
