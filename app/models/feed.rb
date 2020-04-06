@@ -1,5 +1,6 @@
 require 'rss'
 require 'open-uri'
+require 'metainspector'
 
 class Feed < ApplicationRecord
     attr_accessor :populate
@@ -25,7 +26,7 @@ class Feed < ApplicationRecord
     after_initialize :ensure_populate_default, on: :create
 
     after_validation :populate_feed_metadata, on: :create, if: @populate
-    after_create :populate_entries, if: @populate
+    after_create :populate_articles, if: @populate
 
 
     #before_validation (create)
@@ -33,7 +34,7 @@ class Feed < ApplicationRecord
         if rss_url.empty?
             errors.add :base,
                 'The url field cannot be empty'
-            throw: abort
+            throw :abort
         end
 
         begin
@@ -55,7 +56,11 @@ class Feed < ApplicationRecord
 
     def populate_feed_metadata
         @rss_feed ||= RSS::Parser.parse(open(rss_url).read, false)
-        page_link = @rss_feed.channel.image.link
+        if rss_url == 'https://www.wired.com/feed/rss'
+            page_link = 'https://www.wired.com'
+        else
+            page_link = @rss_feed.channel.image.link
+        end
         @feed_page = MetaInspector.new(page_link)
 
         self.title = @feed_page.title || @rss_feed.channel.image.title || "New Feed"
@@ -74,12 +79,12 @@ class Feed < ApplicationRecord
         @rss_feed ||= RSS::Parser.parse(open(rss_url).read, false)
 
         @rss_feed.items.each do |article|
-            unless articles.find_by(entry_id: article.entry_id)
+            unless articles.find_by(entry_id: article.link)
                 Article.create_article(article, self)
             end
         end
 
-        self.last_built = @rss_feed.items.map{ |art| art.pubDate || Time.now }.max
+        self.last_built = @rss_feed.items.map{ |art| Time.now } #fix this to reflect actual pubdate
         save
     end
 end

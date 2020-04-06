@@ -18,14 +18,14 @@ class Article < ApplicationRecord
         through: :feed,
         source: :subscriptions
 
-    def self.create_article(article_item, feed)
-        page = MetaInspector.new(article_item.link)
+    def self.create_article(article, feed)
+        page = MetaInspector.new(article.link)
 
-        entry_id = article_item.link
-        title = article_item.title || page.title
-        author = article_item.author || page.best_author || feed.title || "Anonymous"
-        pub_date = article_item.pubDate || page.meta['date'] || Time.now
-        description = article_item.description || page.description
+        entry_id = article.link
+        title = article.title || page.title
+        author = article.author || page.best_author || feed.title || "Anonymous"
+        pub_date = article.pubDate || page.meta['pdate'] || Time.now
+        description = article.description || page.description
         image_url  = page.images.best
 
         Article.create!( 
@@ -33,9 +33,9 @@ class Article < ApplicationRecord
             title: title,
             author: author,
             description: description,
-            link_url: article_item.link,
+            link_url: article.link,
             image_url: image_url,
-            pub_date: pubDate,
+            pub_date: pub_date,
             feed_id: feed.id
         )
 
