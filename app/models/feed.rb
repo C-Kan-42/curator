@@ -28,8 +28,13 @@ class Feed < ApplicationRecord
     after_validation :populate_feed_metadata, on: :create, if: @populate
     after_create :populate_articles, if: @populate
 
+    def self.popular 
+        Feed  
+            .order('subscriptions_count DESC')
+            .limit(20)
+    end
 
-    #before_validation (create)
+    #before_validation 
     def validate_feed
         if rss_url.empty?
             errors.add :base,
