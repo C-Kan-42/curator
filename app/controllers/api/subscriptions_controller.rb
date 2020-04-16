@@ -1,5 +1,5 @@
 class Api::SubscriptionsController < ApplicationController
-    before_action :require_login
+    before_action :require_logged_in
 
     def index
         # lazy loaded in case refresh already ran

@@ -23,7 +23,7 @@ class SessionForm extends React.Component {
         const { processForm } = this.props;
         const userCredentials = Object.assign({}, this.state);
         this.props.processForm(userCredentials)
-            .then(() => this.props.history.push("/i/today"), 
+            .then(() => this.props.history.push("/i/latest"), 
             () => {
                 if (this.props.formType === 'log in') {
                     this.setState({ email: '', password: ''})

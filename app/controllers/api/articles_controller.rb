@@ -14,7 +14,7 @@ class Api::ArticlesController < ApplicationController
     end
 
     def show
-        @article = Article.
+        @article = Article
                     .select("articles.*")
                     .includes(:feed, :subscriptions)
                     .find_by(id: params[:id])

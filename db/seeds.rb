@@ -168,7 +168,7 @@ puts "20 users created!"
 Subscription.destroy_all
 puts "Destroyed all subscriptions"
 users.each do |user|
-    feed_ids = Array.new(10) {Feed.all.sample.id}.compact
+    feed_ids = Array.new(3) {Feed.all.sample.id}.compact
 
     feed_ids.uniq.each do |feed_id|
         sub = Subscription.new(
@@ -179,4 +179,23 @@ users.each do |user|
         sub.save
     end   
 end
+
+demoUser = User.new(
+    email: 'demo-user@email.com',
+    password: 'password',
+    name: 'Demo User'
+)
+demoUser.save
+
+feed_ids = Array.new(3) {Feed.all.sample.id}.compact
+
+feed_ids.uniq.each do |feed_id|
+    sub = Subscription.new(
+        subscriber_id: demoUser.id,
+        feed_id: feed_id
+    )
+    sub.title = Faker::Ancient.god if Random.rand(3) > 1
+    sub.save
+end   
+
 puts "Assigned 10 subscriptions for each user!"

@@ -11,7 +11,7 @@ class User < ApplicationRecord
     after_initialize :ensure_session_token
 
     before_create :ensure_seed_default
-    after_crate_commit :seed_user, if: @give_seeds
+    after_create_commit :seed_user, if: @give_seeds
 
     has_many :subscriptions,
         foreign_key: :subscriber_id,
