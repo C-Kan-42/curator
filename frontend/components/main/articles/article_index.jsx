@@ -4,28 +4,32 @@ import ArticleIndexItem from './article_index_item';
 
 class ArticleIndex extends React.Component {
     constructor(props) {
-        this.props = {
+        super(props);
+        this.state = {
             articles: [],
             title: "",
             titleLink: null
         }
     }
+
     componentDidMount() {
         // if (this.props.articles.length === 0) {
         //     this.props.fetchArticle(this.props.match.params.id)
         // }
-        if (this.props.articles.length === 0 || this.props.readView) {
-            this.props.fetchAction(this.props.match.params.id);
-        }
+        console.log(this.props)
+        this.props.fetchAction()
+        // if (this.props.articles.length === 0 || this.props.readView) {
+        //     this.props.fetchAction(this.props.match.params.id);
+        // }
         // this.props.fetchLatest();
         this.articleIndex = document.querySelector(".article-index")
     }
 
-    componentWillReceiveProps(newProps) {
+    componentDidUpdate(newProps) {
         const oldURL = this.props.match.url;
         const newURL = newProps.match.url;
         if (newProps.articles.length === 0 && oldURL !== newURL) {
-            newProps.fetchAction(newProps.match.params.id);
+            newProps.fetchAction();
         } else if (oldURL !== newURL) {
             window.document.querySelector(".main-content").scrollTo(0, 0);
         }
@@ -33,8 +37,9 @@ class ArticleIndex extends React.Component {
 
     render() {
         const { articles, feeds, title, titleLink, previewView, readView } = this.props;
-
-        // console.log(this.props);
+        
+        console.log(this.props);
+        console.log(this.state)
         const articleItems = articles.map(article => {
             const feed = feeds[article.feed_id];
 

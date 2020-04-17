@@ -5,12 +5,15 @@ import { CLEAR_ENTITIES, RECEIVE_CURRENT_USER } from '../actions/session_actions
 import { RECEIVE_LATEST } from '../actions/article_actions';
 // import _ from "lodash";
 import merge from 'lodash/merge';
-var union = require('lodash.union')
+// var union = require('lodash.union')
+import union from 'lodash/union';
 import { combineReducers } from 'redux';
 
 const feedsById = (state = {}, action) => {
     Object.freeze(state);
     let newState;
+    // console.log(state)
+    // console.log(action)
 
     switch (action.type) {
         // case RECEIVE_FEEDS_RESULTS:
@@ -24,7 +27,8 @@ const feedsById = (state = {}, action) => {
         //     newState = merge({}, state, action.feeds.byId, action.subscriptions.byId);
         //     return newState;
         case RECEIVE_SINGLE_FEED:
-            const feedId = action.feeds.allIds[0];
+            const feedId = action.feeds.byId[0];
+            console.log(state)
             const prevArticles = state[feedId] ? state[feedId].articles : [];
             const allArticles = union(prevArticles, action.feeds.byId[feedId].articles);
             newState = merge({}, state, action.feeds.byId, action.subscriptions.byId);

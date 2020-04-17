@@ -59,7 +59,7 @@ class Api::SubscriptionsController < ApplicationController
     end
 
     def refresh_all
-        @subs = current_user.subscriptions.includes(:feed, :stories)
+        @subs = current_user.subscriptions.includes(:feed, :articles)
         @subs.each(&:populate_entries)
     end
 

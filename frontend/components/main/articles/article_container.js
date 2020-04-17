@@ -6,6 +6,7 @@ import {fetchUnsubscribedFeed, fetchLatest, fetchArticle} from '../../../actions
 // import { asArray } from '../../../reducers/selectors';
 
 const mapStateToProps = (state, ownProps) => {
+    console.log(state);
     const feeds = state.entities.feeds.byId;
     const id = ownProps.match.params.id;
     const path = ownProps.match.path.split('/')[2];
@@ -22,7 +23,7 @@ const mapStateToProps = (state, ownProps) => {
 
     const articleIds = {
         latest: state.session.latest,
-        subscriptions: feed.stories
+        subscriptions: feed.articles
     };
     
     console.log(articleIds)
@@ -38,11 +39,12 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     const path = ownProps.match.path.split('/')[2];
+    console.log(path)
     // const fetchBenches = {
     //     latest: () => dispatch(fetchLatest())
     // }
     const fetchActions = {
-        latest: (_id) => dispatch(fetchLatest()),
+        latest: () => dispatch(fetchLatest()),
         subscriptions: (id, offset) => dispatch(fetchSingleFeed(id, offset))
     }
 
@@ -53,9 +55,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     };
 }
 
-export default withRouter(
-    connect(
+export default  connect(
         mapStateToProps,
         mapDispatchToProps
-    )(ArticleIndex)
-);
+    )(ArticleIndex);

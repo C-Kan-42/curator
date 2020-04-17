@@ -198,4 +198,4 @@ feed_ids.uniq.each do |feed_id|
     sub.save
 end   
 
-puts "Assigned 10 subscriptions for each user!"
+puts "Assigned 3 subscriptions for each user!"
