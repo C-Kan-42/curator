@@ -2,21 +2,19 @@ class Api::FeedsController < ApplicationController
     before_action :require_logged_in
 
     def index
-        sql_join = "LEFT OUTER JOIN subscriptions
-        ON subscriptions.feed_id = feeds.id
-        AND subscriptions.subscriber_id = #{current_user.id}"
+        sql_join = "LEFT OUTER JOIN subscriptions ON subscriptions.feed_id = feeds.id AND subscriptions.subscriber_id = #{current_user.id}"
 
         if params[:q].try(:empty?)
-        @feeds = Feed.popular
-            .select("feeds.*, subscriptions.subscriber_id as followed")
-            .where("subscriptions.subscriber_id IS NULL")
-            .joins(sql_join)
+            @feeds = Feed.popular
+                .select("feeds.*, subscriptions.subscriber_id as followed")
+                .where("subscriptions.subscriber_id IS NULL")
+                .joins(sql_join)
         else
-        @q = Feed.ransack(title_or_rss_url_or_description_cont: params[:q])
-        @feeds = @q.result
-            .select("feeds.*, subscriptions.subscriber_id as followed")
-            .joins(sql_join)
-            .limit(20)
+            @q = Feed.ransack(title_or_rss_url_or_description_cont: params[:q])
+            @feeds = @q.result
+                .select("feeds.*, subscriptions.subscriber_id as followed")
+                .joins(sql_join)
+                .limit(20)
         end
     end
 

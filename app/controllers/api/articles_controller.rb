@@ -6,7 +6,7 @@ class Api::ArticlesController < ApplicationController
         # (0..4).each do |idx|
         #     article_arr.push(Article.create_nyt_article(idx))
         # end
-        p current_user.articles
+        
         @articles = current_user.articles
             .select("articles.*")
             .order('pub_date DESC')

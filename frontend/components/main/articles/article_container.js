@@ -3,7 +3,8 @@ import { withRouter } from 'react-router-dom';
 import ArticleIndex from './article_index';
 import { fetchSingleFeed } from '../../../actions/subscription_actions';
 import {fetchUnsubscribedFeed, fetchLatest, fetchArticle} from '../../../actions/article_actions';
-// import { asArray } from '../../../reducers/selectors';
+import { asArray } from '../../../reducers/selectors';
+// debugger;
 
 const mapStateToProps = (state, ownProps) => {
     console.log(state);
@@ -22,14 +23,15 @@ const mapStateToProps = (state, ownProps) => {
     };
 
     const articleIds = {
-        latest: state.session.latest,
+        latest: Object.keys(state.entities.articles.byId),
         subscriptions: feed.articles
     };
     
     console.log(articleIds)
-    console.log(path)
-    const articles = articleIds[path].map(articleId => articlesById[articleId]);
-
+    // console.log(path)
+    const articles = articleIds[path] ? articleIds[path].map(articleId => articlesById[articleId]) : null
+    console.log(articles)
+    
     return {
         feeds,
         ...pathProps[path],

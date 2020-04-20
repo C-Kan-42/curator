@@ -16,11 +16,15 @@ class ArticleIndex extends React.Component {
         // if (this.props.articles.length === 0) {
         //     this.props.fetchArticle(this.props.match.params.id)
         // }
-        console.log(this.props)
-        this.props.fetchAction()
-        // if (this.props.articles.length === 0 || this.props.readView) {
-        //     this.props.fetchAction(this.props.match.params.id);
-        // }
+        // console.log(this.props)
+        // this.props.fetchAction()
+        if (this.props.articles.length === 0 || this.props.readView) {
+            console.log('reached here')
+            this.props.fetchAction(this.props.match.params.id)
+                .then(res => {
+                    this.setState({articles: res.articles})
+                })
+        }
         // this.props.fetchLatest();
         this.articleIndex = document.querySelector(".article-index")
     }
@@ -39,22 +43,29 @@ class ArticleIndex extends React.Component {
         const { articles, feeds, title, titleLink, previewView, readView } = this.props;
         
         console.log(this.props);
-        console.log(this.state)
-        const articleItems = articles.map(article => {
-            const feed = feeds[article.feed_id];
-
-            return (
-                <ArticleIndexItem key={article.id} 
-                article={article}
-                feed={feed}
-                titleLink={titleLink}
-                history={this.props.history}
-                {...this.state}
-                {...this.props}
-                />
-            );
-        });
-
+        // console.log(this.state)
+        if (typeof this.state.articles !== 'array' && typeof this.state.articles.byId === 'object') {
+            console.log('reached!!')
+            const articleItems = 
+            
+                this.props.articles.map(article => {
+                    // const article = this.state.articles.byId[articleId]
+                    const feed = feeds[article.feed_id];
+                    return (
+                        <ArticleIndexItem key={article.id} 
+                        article={article}
+                        feed={feed}
+                        titleLink={titleLink}
+                        history={this.props.history}
+                        {...this.state}
+                        {...this.props}
+                        />
+                    );
+                });
+            console.log(articleItems)
+        }
+        
+        
         return(
             /* <ArticleIndexHeader {...{titleLink}}>{title}</ArticleIndexHeader>} */
             <div id="Frame">
@@ -68,7 +79,7 @@ class ArticleIndex extends React.Component {
                                         <h4 className="article-index-subtitle">Recent</h4>
                                         <div className="article-index list-entries">
                                             <div className="entrylist-chunk">
-                                                {articleItems}
+                                                {/* {articleItems ? articleItems : null} */}
                                             </div>
                                         </div>
                                     </div>

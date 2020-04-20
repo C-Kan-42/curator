@@ -627,6 +627,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _article_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./article_index */ "./frontend/components/main/articles/article_index.jsx");
 /* harmony import */ var _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../actions/subscription_actions */ "./frontend/actions/subscription_actions.js");
 /* harmony import */ var _actions_article_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../actions/article_actions */ "./frontend/actions/article_actions.js");
+/* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../reducers/selectors */ "./frontend/reducers/selectors.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -637,7 +638,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
- // import { asArray } from '../../../reducers/selectors';
+
+ // debugger;
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   console.log(state);
@@ -657,14 +659,15 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
     subscriptions: _objectSpread({}, feed)
   };
   var articleIds = {
-    latest: state.session.latest,
+    latest: Object.keys(state.entities.articles.byId),
     subscriptions: feed.articles
   };
-  console.log(articleIds);
-  console.log(path);
-  var articles = articleIds[path].map(function (articleId) {
+  console.log(articleIds); // console.log(path)
+
+  var articles = articleIds[path] ? articleIds[path].map(function (articleId) {
     return articlesById[articleId];
-  });
+  }) : null;
+  console.log(articles);
   return _objectSpread({
     feeds: feeds
   }, pathProps[path], {
@@ -710,9 +713,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _article_index_item__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./article_index_item */ "./frontend/components/main/articles/article_index_item.jsx");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -756,14 +759,22 @@ function (_React$Component) {
   _createClass(ArticleIndex, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this2 = this;
+
       // if (this.props.articles.length === 0) {
       //     this.props.fetchArticle(this.props.match.params.id)
       // }
-      console.log(this.props);
-      this.props.fetchAction(); // if (this.props.articles.length === 0 || this.props.readView) {
-      //     this.props.fetchAction(this.props.match.params.id);
-      // }
-      // this.props.fetchLatest();
+      // console.log(this.props)
+      // this.props.fetchAction()
+      if (this.props.articles.length === 0 || this.props.readView) {
+        console.log('reached here');
+        this.props.fetchAction(this.props.match.params.id).then(function (res) {
+          _this2.setState({
+            articles: res.articles
+          });
+        });
+      } // this.props.fetchLatest();
+
 
       this.articleIndex = document.querySelector(".article-index");
     }
@@ -782,7 +793,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var _this$props = this.props,
           articles = _this$props.articles,
@@ -791,18 +802,24 @@ function (_React$Component) {
           titleLink = _this$props.titleLink,
           previewView = _this$props.previewView,
           readView = _this$props.readView;
-      console.log(this.props);
-      console.log(this.state);
-      var articleItems = articles.map(function (article) {
-        var feed = feeds[article.feed_id];
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_article_index_item__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
-          key: article.id,
-          article: article,
-          feed: feed,
-          titleLink: titleLink,
-          history: _this2.props.history
-        }, _this2.state, _this2.props));
-      });
+      console.log(this.props); // console.log(this.state)
+
+      if (typeof this.state.articles !== 'array' && _typeof(this.state.articles.byId) === 'object') {
+        console.log('reached!!');
+        var articleItems = this.props.articles.map(function (article) {
+          // const article = this.state.articles.byId[articleId]
+          var feed = feeds[article.feed_id];
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_article_index_item__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
+            key: article.id,
+            article: article,
+            feed: feed,
+            titleLink: titleLink,
+            history: _this3.props.history
+          }, _this3.state, _this3.props));
+        });
+        console.log(articleItems);
+      }
+
       return (
         /* <ArticleIndexHeader {...{titleLink}}>{title}</ArticleIndexHeader>} */
         react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -829,7 +846,7 @@ function (_React$Component) {
           className: "article-index list-entries"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "entrylist-chunk"
-        }, articleItems)))))))))
+        })))))))))
       );
     }
   }]);
@@ -2422,7 +2439,7 @@ function (_React$Component) {
       e.preventDefault();
       var processForm = this.props.processForm;
       var userCredentials = Object.assign({}, this.state);
-      this.props.processForm(userCredentials).then(function () {
+      processForm(userCredentials).then(function () {
         return _this3.props.history.push("/i/latest");
       }, function () {
         if (_this3.props.formType === 'log in') {
@@ -2658,6 +2675,7 @@ var articlesById = function articlesById() {
   Object.freeze(state);
   var newState;
   var newArticles;
+  console.log(action.articles); // console.log("have been fetched");
 
   switch (action.type) {
     case _actions_article_actions__WEBPACK_IMPORTED_MODULE_3__["RECEIVE_LATEST"]:
@@ -2666,6 +2684,7 @@ var articlesById = function articlesById() {
     case _actions_article_actions__WEBPACK_IMPORTED_MODULE_3__["RECEIVE_ARTICLE"]:
     case _actions_article_actions__WEBPACK_IMPORTED_MODULE_3__["RECEIVE_ARTICLE"]:
       newState = lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, state, action.articles.byId);
+      console.log(newState);
       return newState;
     // const newArticle = { [action.article.id]: action.article };
     // return Object.assign({}, state, newArticle);
@@ -2759,7 +2778,8 @@ var feedsById = function feedsById() {
   var action = arguments.length > 1 ? arguments[1] : undefined;
   Object.freeze(state);
   var newState; // console.log(state)
-  // console.log(action)
+
+  console.log(action.feeds);
 
   switch (action.type) {
     // case RECEIVE_FEEDS_RESULTS:
@@ -2768,16 +2788,17 @@ var feedsById = function feedsById() {
     case _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_NEW_FEED"]:
     case _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_ALL_SUBSCRIPTIONS"]:
     case _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_0__["REMOVE_FEED"]:
-    case _actions_article_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_LATEST"]: // case RECEIVE_READS:
-    //     newState = merge({}, state, action.feeds.byId, action.subscriptions.byId);
-    //     return newState;
+    case _actions_article_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_LATEST"]:
+      // case RECEIVE_READS:
+      newState = lodash_merge__WEBPACK_IMPORTED_MODULE_3___default()({}, state, action.feeds.byId, action.subscriptions.byId);
+      return newState;
 
     case _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_SINGLE_FEED"]:
-      var feedId = action.feeds.byId[0];
-      console.log(state);
+      var feedId = action.feeds.allIds[0]; // console.log(state)
+
       var prevArticles = state[feedId] ? state[feedId].articles : [];
       var allArticles = lodash_union__WEBPACK_IMPORTED_MODULE_4___default()(prevArticles, action.feeds.byId[feedId].articles);
-      newState = lodash_merge__WEBPACK_IMPORTED_MODULE_3___default()({}, state, action.feeds.byId, action.subscriptions.byId);
+      newState = lodash_merge__WEBPACK_IMPORTED_MODULE_3___default()({}, state, action.feeds, action.subscriptions);
       newState[feedId].articles = allArticles;
       return newState;
 
@@ -2878,6 +2899,25 @@ var rootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])(
 
 /***/ }),
 
+/***/ "./frontend/reducers/selectors.js":
+/*!****************************************!*\
+  !*** ./frontend/reducers/selectors.js ***!
+  \****************************************/
+/*! exports provided: asArray */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "asArray", function() { return asArray; });
+var asArray = function asArray(_ref) {
+  var articles = _ref.articles;
+  return Object.keys(articles).map(function (key) {
+    return articles[key];
+  });
+};
+
+/***/ }),
+
 /***/ "./frontend/reducers/session_errors_reducer.js":
 /*!*****************************************************!*\
   !*** ./frontend/reducers/session_errors_reducer.js ***!
@@ -2894,7 +2934,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (function () {
   var oldState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
-  Object.freeze(oldState);
+  Object.freeze(oldState); // console.log(action)
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_SESSION_ERRORS"]:
@@ -2921,35 +2961,101 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
-/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var lodash_union__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash/union */ "./node_modules/lodash/union.js");
+/* harmony import */ var lodash_union__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_union__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../actions/subscription_actions */ "./frontend/actions/subscription_actions.js");
+/* harmony import */ var _actions_article_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../actions/article_actions */ "./frontend/actions/article_actions.js");
 
 
 
-var sessionReducer = function sessionReducer() {
-  var oldState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-    currentUser: null
-  };
+
+
+
+
+var userReducer = function userReducer() {
+  var oldState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
   var action = arguments.length > 1 ? arguments[1] : undefined;
   Object.freeze(oldState);
 
   switch (action.type) {
-    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_CURRENT_USER"]:
-      return {
-        currentUser: action.currentUser
-      };
+    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_CURRENT_USER"]:
+      return action.currentUser;
 
-    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["LOGOUT_CURRENT_USER"]:
+    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["LOGOUT_CURRENT_USER"]:
       // debugger;
-      return {
-        currentUser: null
-      };
+      return null;
 
     default:
       return oldState;
   }
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (sessionReducer);
+var subscriptionsReducer = function subscriptionsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+  var newState;
+
+  switch (action.type) {
+    case _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_3__["RECEIVE_ALL_SUBSCRIPTIONS"]:
+      return action.feeds.allIds;
+
+    case _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_3__["RECEIVE_NEW_FEED"]:
+      return lodash_union__WEBPACK_IMPORTED_MODULE_1___default()(state, action.feeds.allIds);
+
+    case _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_3__["REMOVE_FEED"]:
+      var id = action.feeds.allIds[0];
+      return state.filter(function (el) {
+        return el !== id;
+      });
+
+    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["CLEAR_ENTITIES"]:
+      return [];
+
+    default:
+      return state;
+  }
+};
+
+var latestArticlesReducer = function latestArticlesReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+  var newState;
+
+  switch (action.type) {
+    case _actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["RECEIVE_LATEST"]:
+      return lodash_union__WEBPACK_IMPORTED_MODULE_1___default()(state, action.articles.allIds);
+
+    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["CLEAR_ENTITIES"]:
+      return [];
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
+  currentUser: userReducer,
+  subscriptions: subscriptionsReducer,
+  latest: latestArticlesReducer
+})); //Old reducer
+// const sessionReducer = (oldState = {currentUser: null}, action) => {
+//     Object.freeze(oldState);
+//     // console.log(action.currentUser)
+//     switch (action.type) {
+//         case RECEIVE_CURRENT_USER:
+//             return {currentUser: action.currentUser};
+//         case LOGOUT_CURRENT_USER:
+//             // debugger;
+//             return { currentUser: null };
+//         default:
+//             return oldState;
+//     }
+// };
+// export default sessionReducer;
+//refactor so that userReducer and subscriptionsReducer
 
 /***/ }),
 
@@ -2975,6 +3081,7 @@ var feedTitleReducer = function feedTitleReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
+  // console.log(action)
   switch (action.type) {
     case _actions_ui_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_FEED_TITLE"]:
       return action.feedTitle;

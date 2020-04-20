@@ -13,7 +13,7 @@ const feedsById = (state = {}, action) => {
     Object.freeze(state);
     let newState;
     // console.log(state)
-    // console.log(action)
+    console.log(action.feeds)
 
     switch (action.type) {
         // case RECEIVE_FEEDS_RESULTS:
@@ -24,14 +24,14 @@ const feedsById = (state = {}, action) => {
         case REMOVE_FEED:
         case RECEIVE_LATEST:
         // case RECEIVE_READS:
-        //     newState = merge({}, state, action.feeds.byId, action.subscriptions.byId);
-        //     return newState;
+            newState = merge({}, state, action.feeds.byId, action.subscriptions.byId);
+            return newState;
         case RECEIVE_SINGLE_FEED:
-            const feedId = action.feeds.byId[0];
-            console.log(state)
+            const feedId = action.feeds.allIds[0];
+            // console.log(state)
             const prevArticles = state[feedId] ? state[feedId].articles : [];
             const allArticles = union(prevArticles, action.feeds.byId[feedId].articles);
-            newState = merge({}, state, action.feeds.byId, action.subscriptions.byId);
+            newState = merge({}, state, action.feeds, action.subscriptions);
             newState[feedId].articles = allArticles;
             return newState;
         case CLEAR_ENTITIES:

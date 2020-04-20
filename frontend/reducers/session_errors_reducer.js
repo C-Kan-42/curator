@@ -6,6 +6,7 @@ import { CLEAR_SESSION_ERRORS } from '../actions/errors_actions';
 
 export default (oldState = [], action) => {
     Object.freeze(oldState);
+    // console.log(action)
     switch (action.type) {
         case RECEIVE_SESSION_ERRORS:
             return action.errors;

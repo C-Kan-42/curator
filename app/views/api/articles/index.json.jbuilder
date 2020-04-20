@@ -4,7 +4,7 @@ json.articles do
   json.byId do
     @articles.each do |article|
       json.set! article.id do
-        json.partial! 'api/articles/article', article: article #change to api/articles/article
+        json.partial! 'article', article: article #change to api/articles/article
       end
     end
   end
