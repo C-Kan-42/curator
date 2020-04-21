@@ -68,10 +68,10 @@ class MainContent extends React.Component {
                 <ProtectedRoute path="/i/feeds" component={FeedsIndexContainer} />
                 <ProtectedRoute path="/i/latest" component={ArticleContainer} />
                 {/* <ProtectedRoute path="/i/reads" component={ArticleContainer} /> */}
-                <Switch>
-                    <ProtectedRoute path="/i/:prevSource/:prevId/articles/:id" component={ArticleShowPopout} />
+                {/* <Switch> */}
+                    {/* <ProtectedRoute path="/i/:prevSource/:prevId/articles/:id" component={ArticleShowPopout} /> */}
                     {/* <ProtectedRoute path="/i/discover/:id" component={SubscriptionStoriesIndexPopout} /> */}
-                </Switch>
+                {/* </Switch> */}
                 {/* <ProtectedRoute path="/i/discover" component={DiscoverContainer} /> */}
                 <ProtectedRoute path="/i/subscriptions/:id" component={ArticleContainer} />
                 {/* <ProtectedRoute path="/i/collections/:id" component={ArticleContainer} /> */}

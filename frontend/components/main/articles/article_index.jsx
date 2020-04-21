@@ -18,13 +18,17 @@ class ArticleIndex extends React.Component {
         // }
         // console.log(this.props)
         // this.props.fetchAction()
-        if (this.props.articles.length === 0 || this.props.readView) {
-            console.log('reached here')
-            this.props.fetchAction(this.props.match.params.id)
-                .then(res => {
-                    this.setState({articles: res.articles})
-                })
-        }
+        this.props.fetchAction()
+            .then(res => {
+                this.setState({ articles: res.articles })
+            });
+        // if (this.props.articles.length === 0 || this.props.readView) {
+        //     console.log('reached here')
+        //     this.props.fetchAction(this.props.match.params.id)
+        //         .then(res => {
+        //             this.setState({articles: res.articles})
+        //         })
+        // }
         // this.props.fetchLatest();
         this.articleIndex = document.querySelector(".article-index")
     }
@@ -41,14 +45,14 @@ class ArticleIndex extends React.Component {
 
     render() {
         const { articles, feeds, title, titleLink, previewView, readView } = this.props;
-        
+        let articleItems;
         console.log(this.props);
+        console.log(this.state)
         // console.log(this.state)
-        if (typeof this.state.articles !== 'array' && typeof this.state.articles.byId === 'object') {
+        if (this.props.articles.length > 0) {
             console.log('reached!!')
-            const articleItems = 
-            
-                this.props.articles.map(article => {
+            articleItems = 
+                (this.props.articles.map(article => {
                     // const article = this.state.articles.byId[articleId]
                     const feed = feeds[article.feed_id];
                     return (
@@ -61,7 +65,7 @@ class ArticleIndex extends React.Component {
                         {...this.props}
                         />
                     );
-                });
+                }))
             console.log(articleItems)
         }
         
@@ -79,7 +83,7 @@ class ArticleIndex extends React.Component {
                                         <h4 className="article-index-subtitle">Recent</h4>
                                         <div className="article-index list-entries">
                                             <div className="entrylist-chunk">
-                                                {/* {articleItems ? articleItems : null} */}
+                                                {articleItems}
                                             </div>
                                         </div>
                                     </div>

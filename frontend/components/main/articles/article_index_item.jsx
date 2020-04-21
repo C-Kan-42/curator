@@ -19,6 +19,7 @@ class ArticleIndexItem extends React.Component {
         // const articleId = this.props.article.id;
         const originPath = this.props.history.location.pathname;
         this.props.history.push(`${originPath}/articles/${articleId}`);
+        // this.handle
     }
 
     handleExitClick(e) {

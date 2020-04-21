@@ -2,7 +2,7 @@ json.feeds do
     json.byId do
         json.set! @article.feed.id do
             json.partial! 'api/feeds/feed', feed: @article.feed
-            json.articles[@article.id]
+            json.articles @article.id
         end
     end
 end
@@ -17,7 +17,7 @@ json.articles do
             end
         end
     end
-    json.allIds[@article.id]
+    json.allIds @article.id
 end
 
 json.subscriptions do

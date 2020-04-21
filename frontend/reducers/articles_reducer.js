@@ -10,17 +10,14 @@ const articlesById = (state = {}, action) => {
     Object.freeze(state)
     let newState;
     let newArticles;
-    console.log(action.articles)
-    // console.log("have been fetched");
 
     switch(action.type) {
         case RECEIVE_LATEST:
         case RECEIVE_SINGLE_FEED:
         case RECEIVE_NEW_FEED:
         case RECEIVE_ARTICLE:
-        case RECEIVE_ARTICLE:
             newState = merge({}, state, action.articles.byId);
-            console.log(newState)
+            // console.log(newState)
             return newState;
             // const newArticle = { [action.article.id]: action.article };
             // return Object.assign({}, state, newArticle);

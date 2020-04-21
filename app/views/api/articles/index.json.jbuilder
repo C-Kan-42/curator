@@ -4,15 +4,15 @@ json.articles do
   json.byId do
     @articles.each do |article|
       json.set! article.id do
-        json.partial! 'article', article: article #change to api/articles/article
+        json.partial! 'api/articles/article', article: article #change to api/articles/article
       end
     end
   end
 
-  json.allIds @articles.map(&:id)
+  json.allIds @articles.map { |a| a.id }
 end
 
-all_feeds =[]
+all_feeds = []
 json.feeds({})
 json.feeds do 
   json.byId do

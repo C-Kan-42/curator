@@ -642,7 +642,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
  // debugger;
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
-  console.log(state);
   var feeds = state.entities.feeds.byId;
   var id = ownProps.match.params.id;
   var path = ownProps.match.path.split('/')[2];
@@ -659,7 +658,7 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
     subscriptions: _objectSpread({}, feed)
   };
   var articleIds = {
-    latest: Object.keys(state.entities.articles.byId),
+    latest: state.session.latest,
     subscriptions: feed.articles
   };
   console.log(articleIds); // console.log(path)
@@ -676,14 +675,14 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
-  var path = ownProps.match.path.split('/')[2];
-  console.log(path); // const fetchBenches = {
+  var path = ownProps.match.path.split('/')[2]; // console.log(path)
+  // const fetchBenches = {
   //     latest: () => dispatch(fetchLatest())
   // }
 
   var fetchActions = {
-    latest: function latest() {
-      return dispatch(Object(_actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["fetchLatest"])());
+    latest: function latest(id) {
+      return dispatch(Object(_actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["fetchLatest"])(id));
     },
     subscriptions: function subscriptions(id, offset) {
       return dispatch(Object(_actions_subscription_actions__WEBPACK_IMPORTED_MODULE_3__["fetchSingleFeed"])(id, offset));
@@ -696,7 +695,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_article_index__WEBPACK_IMPORTED_MODULE_2__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_article_index__WEBPACK_IMPORTED_MODULE_2__["default"])));
 
 /***/ }),
 
@@ -713,9 +712,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _article_index_item__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./article_index_item */ "./frontend/components/main/articles/article_index_item.jsx");
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -766,15 +765,18 @@ function (_React$Component) {
       // }
       // console.log(this.props)
       // this.props.fetchAction()
-      if (this.props.articles.length === 0 || this.props.readView) {
-        console.log('reached here');
-        this.props.fetchAction(this.props.match.params.id).then(function (res) {
-          _this2.setState({
-            articles: res.articles
-          });
+      this.props.fetchAction().then(function (res) {
+        _this2.setState({
+          articles: res.articles
         });
-      } // this.props.fetchLatest();
-
+      }); // if (this.props.articles.length === 0 || this.props.readView) {
+      //     console.log('reached here')
+      //     this.props.fetchAction(this.props.match.params.id)
+      //         .then(res => {
+      //             this.setState({articles: res.articles})
+      //         })
+      // }
+      // this.props.fetchLatest();
 
       this.articleIndex = document.querySelector(".article-index");
     }
@@ -802,11 +804,13 @@ function (_React$Component) {
           titleLink = _this$props.titleLink,
           previewView = _this$props.previewView,
           readView = _this$props.readView;
-      console.log(this.props); // console.log(this.state)
+      var articleItems;
+      console.log(this.props);
+      console.log(this.state); // console.log(this.state)
 
-      if (typeof this.state.articles !== 'array' && _typeof(this.state.articles.byId) === 'object') {
+      if (this.props.articles.length > 0) {
         console.log('reached!!');
-        var articleItems = this.props.articles.map(function (article) {
+        articleItems = this.props.articles.map(function (article) {
           // const article = this.state.articles.byId[articleId]
           var feed = feeds[article.feed_id];
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_article_index_item__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
@@ -846,7 +850,7 @@ function (_React$Component) {
           className: "article-index list-entries"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "entrylist-chunk"
-        })))))))))
+        }, articleItems)))))))))
       );
     }
   }]);
@@ -935,7 +939,7 @@ function (_React$Component) {
       var target = e.target.parentElement; // const articleId = this.props.article.id;
 
       var originPath = this.props.history.location.pathname;
-      this.props.history.push("".concat(originPath, "/articles/").concat(articleId));
+      this.props.history.push("".concat(originPath, "/articles/").concat(articleId)); // this.handle
     }
   }, {
     key: "handleExitClick",
@@ -1040,21 +1044,39 @@ var ArticleShow =
 function (_React$Component) {
   _inherits(ArticleShow, _React$Component);
 
-  function ArticleShow() {
+  function ArticleShow(props) {
+    var _this;
+
     _classCallCheck(this, ArticleShow);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(ArticleShow).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ArticleShow).call(this, props));
+    _this.state = {
+      article: {}
+    };
+    return _this;
   }
 
   _createClass(ArticleShow, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchArticle(this.props.match.params.articleId);
+      var _this2 = this;
+
+      this.props.fetchArticle(this.props.match.params.id).then(function (res) {
+        _this2.setState({
+          article: res.articles.byId[_this2.props.match.params.id]
+        });
+      });
     }
   }, {
     key: "render",
     value: function render() {
-      var timeSincePub = moment__WEBPACK_IMPORTED_MODULE_5__(this.props.article.pub_date).fromNow();
+      console.log(this.props.article); // console.log(this.state.article.feedInfo)
+
+      if (this.state.article) {
+        var feedInfo = this.state.article.feedInfo;
+      }
+
+      var timeSincePub = moment__WEBPACK_IMPORTED_MODULE_5__(this.state.article.pub_date).fromNow();
       timeSincePub = timeSincePub.split(" ")[0] === "in" ? "Just now" : timeSincePub.split(" ").slice(0, 2).join(' ');
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "entryholder"
@@ -1063,9 +1085,9 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "entryHeader"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "".concat(this.props.article.link_url),
+        href: "".concat(this.state.article.link_url),
         className: "entryTitle title read"
-      }, this.props.article.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.state.article.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "fx metadata"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "metadata-holder"
@@ -1075,9 +1097,9 @@ function (_React$Component) {
         className: "source-metadata-holder"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "entry-source"
-      }, "New York Times - Travel")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, this.state.feedInfo.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "authors"
-      }, "".concat(this.props.article.author, " / ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, "".concat(this.state.article.author, " / ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "m-r-1 ago"
       }, " ".concat(timeSincePub))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "shareBarHolder"
@@ -1088,17 +1110,17 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "entry-imageContainer"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: "".concat(this.props.article.image_url),
+        src: "".concat(this.state.article.image_url),
         alt: "",
         className: "pinable"
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "entry-content"
-      }, this.props.article.description)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.state.article.description)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "tagsHolder decoration-holder"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "wallHolder"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "".concat(this.props.article.link_url),
+        href: "".concat(this.state.article.link_url),
         className: "fx-button secondary full-width visitWebsiteButton",
         target: "_blank",
         rel: "noopner"
@@ -1674,10 +1696,7 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_3__["ProtectedRoute"], {
         path: "/i/latest",
         component: _articles_article_container__WEBPACK_IMPORTED_MODULE_5__["default"]
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_3__["ProtectedRoute"], {
-        path: "/i/:prevSource/:prevId/articles/:id",
-        component: _articles_article_show_popout__WEBPACK_IMPORTED_MODULE_7__["default"]
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_3__["ProtectedRoute"], {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_3__["ProtectedRoute"], {
         path: "/i/subscriptions/:id",
         component: _articles_article_container__WEBPACK_IMPORTED_MODULE_5__["default"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_3__["ProtectedRoute"], {
@@ -2675,16 +2694,14 @@ var articlesById = function articlesById() {
   Object.freeze(state);
   var newState;
   var newArticles;
-  console.log(action.articles); // console.log("have been fetched");
 
   switch (action.type) {
     case _actions_article_actions__WEBPACK_IMPORTED_MODULE_3__["RECEIVE_LATEST"]:
     case _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_SINGLE_FEED"]:
     case _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_NEW_FEED"]:
     case _actions_article_actions__WEBPACK_IMPORTED_MODULE_3__["RECEIVE_ARTICLE"]:
-    case _actions_article_actions__WEBPACK_IMPORTED_MODULE_3__["RECEIVE_ARTICLE"]:
-      newState = lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, state, action.articles.byId);
-      console.log(newState);
+      newState = lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, state, action.articles.byId); // console.log(newState)
+
       return newState;
     // const newArticle = { [action.article.id]: action.article };
     // return Object.assign({}, state, newArticle);

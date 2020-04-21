@@ -8,26 +8,42 @@ import { fetchArticle } from '../../../actions/article_actions';
 import * as moment from 'moment';
 
 class ArticleShow extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            article: {}
+        }
+    }
+
     componentDidMount() {
-        this.props.fetchArticle(this.props.match.params.articleId);
+        this.props.fetchArticle(this.props.match.params.id)
+            .then(res => {
+                this.setState({article: res.articles.byId[this.props.match.params.id]})
+            })
     }
 
     render() {
-        let timeSincePub = moment(this.props.article.pub_date).fromNow();
+        console.log(this.props.article)
+        // console.log(this.state.article.feedInfo)
+        if (this.state.article) {
+            const feedInfo = this.state.article.feedInfo;
+        }
+        let timeSincePub = moment(this.state.article.pub_date).fromNow();
         timeSincePub = timeSincePub.split(" ")[0] === "in" ? "Just now" : timeSincePub.split(" ").slice(0, 2).join(' ');
-
+        
         return (
             <div className="entryholder">
                 <div className="article-show-entry">
                     <div className="entryHeader">
-                        <a href={`${this.props.article.link_url}`} className="entryTitle title read">{this.props.article.title}</a>
+                        <a href={`${this.state.article.link_url}`} className="entryTitle title read">{this.state.article.title}</a>
                         <div className="fx metadata">
                             <span className="metadata-holder">
                                 <div className="metadata entryMetadata">
                                     <span className="source-metadata-holder">
-                                        <p className="entry-source">New York Times - Travel</p>
+                                        <p className="entry-source">{this.state.feedInfo.title}</p>
                                     </span>
-                                    <span className="authors">{`${this.props.article.author} / `}</span>
+                                    <span className="authors">{`${this.state.article.author} / `}</span>
                                     <span className="m-r-1 ago">{` ${timeSincePub}`}</span>
                                 </div>
                             </span>
@@ -38,16 +54,16 @@ class ArticleShow extends React.Component {
                     <div className="entryBody">
                         <div>
                             <span className="entry-imageContainer">
-                                <img src={`${this.props.article.image_url}`} alt="" className="pinable" />
+                                <img src={`${this.state.article.image_url}`} alt="" className="pinable" />
                             </span>
                         </div>
                         <div className="entry-content">
-                            {this.props.article.description}
+                            {this.state.article.description}
                         </div>
                     </div>
                     <div className="tagsHolder decoration-holder"></div>
                     <div id="wallHolder"></div>
-                    <a href={`${this.props.article.link_url}`} className="fx-button secondary full-width visitWebsiteButton" target="_blank" rel="noopner">Visit Website</a>
+                    <a href={`${this.state.article.link_url}`} className="fx-button secondary full-width visitWebsiteButton" target="_blank" rel="noopner">Visit Website</a>
                 </div>
             </div>
         )
