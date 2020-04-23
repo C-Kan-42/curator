@@ -979,7 +979,7 @@ function (_React$Component) {
         className: "feed-source"
       }, " ", !this.props.titleLink ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/i/subscriptions/".concat(article.feed_id)
-      }, feed.subscription_title) : null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, feed.subscription_title) : null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "authors"
       }, "".concat(article.author, " / ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "m-r-1 ago"
@@ -1070,11 +1070,12 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      console.log(this.props.article);
-      console.log(this.state.article);
+      // console.log(this.props.article)
+      var feedInfo;
 
       if (this.state.article) {
-        var feedInfo = this.state.article.feedInfo;
+        console.log(this.state.article.feedInfo);
+        feedInfo = this.state.article.feedInfo;
       }
 
       var timeSincePub = moment__WEBPACK_IMPORTED_MODULE_5__(this.state.article.pub_date).fromNow();
@@ -1098,7 +1099,7 @@ function (_React$Component) {
         className: "source-metadata-holder"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "entry-source"
-      }, this.state.article.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, feedInfo ? feedInfo.title : "")), "                                    ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "authors"
       }, "".concat(this.state.article.author, " / ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "m-r-1 ago"

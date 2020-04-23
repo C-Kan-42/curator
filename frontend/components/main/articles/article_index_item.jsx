@@ -52,6 +52,7 @@ class ArticleIndexItem extends React.Component {
                                 {feed.subscription_title}
                             </Link> : null
                         }</span>
+                        <br></br>
                         <span className="authors">{`${article.author} / `}</span>
                         <span className="m-r-1 ago">{` ${timeSincePub}`}</span>
                     </div>

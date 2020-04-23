@@ -24,11 +24,14 @@ class ArticleShow extends React.Component {
     }
 
     render() {
-        console.log(this.props.article)
-        console.log(this.state.article)
+        // console.log(this.props.article)
+        let feedInfo;
+
         if (this.state.article) {
-            const feedInfo = this.state.article.feedInfo;
+            console.log(this.state.article.feedInfo);
+            feedInfo = this.state.article.feedInfo;
         }
+
         let timeSincePub = moment(this.state.article.pub_date).fromNow();
         timeSincePub = timeSincePub.split(" ")[0] === "in" ? "Just now" : timeSincePub.split(" ").slice(0, 2).join(' ');
         
@@ -41,9 +44,8 @@ class ArticleShow extends React.Component {
                             <span className="metadata-holder">
                                 <div className="metadata entryMetadata">
                                     <span className="source-metadata-holder">
-                                        <p className="entry-source">{this.state.article.title}</p>
-                                    </span>
-                                    <span className="authors">{`${this.state.article.author} / `}</span>
+                                        <p className="entry-source">{feedInfo ? feedInfo.title : ""}</p>
+                                    </span>                                    <span className="authors">{`${this.state.article.author} / `}</span>
                                     <span className="m-r-1 ago">{` ${timeSincePub}`}</span>
                                 </div>
                             </span>
