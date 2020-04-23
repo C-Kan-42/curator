@@ -37,7 +37,10 @@ class ArticleIndex extends React.Component {
         const oldURL = this.props.match.url;
         const newURL = newProps.match.url;
         if (newProps.articles.length === 0 && oldURL !== newURL) {
-            newProps.fetchAction(newProps.match.params.id);
+            newProps.fetchAction(newProps.match.params.id)
+                .then(res => {
+                    this.setState({ articles: res.articles })
+                })
         } else if (oldURL !== newURL) {
             window.document.querySelector(".main-content").scrollTo(0, 0);
         }

@@ -783,11 +783,17 @@ function (_React$Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(newProps) {
+      var _this3 = this;
+
       var oldURL = this.props.match.url;
       var newURL = newProps.match.url;
 
       if (newProps.articles.length === 0 && oldURL !== newURL) {
-        newProps.fetchAction(newProps.match.params.id);
+        newProps.fetchAction(newProps.match.params.id).then(function (res) {
+          _this3.setState({
+            articles: res.articles
+          });
+        });
       } else if (oldURL !== newURL) {
         window.document.querySelector(".main-content").scrollTo(0, 0);
       }
@@ -795,7 +801,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       var _this$props = this.props,
           articles = _this$props.articles,
@@ -818,8 +824,8 @@ function (_React$Component) {
             article: article,
             feed: feed,
             titleLink: titleLink,
-            history: _this3.props.history
-          }, _this3.state, _this3.props));
+            history: _this4.props.history
+          }, _this4.state, _this4.props));
         });
         console.log(articleItems);
       }
