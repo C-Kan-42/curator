@@ -139,7 +139,8 @@ const NavBarLinks = ({ feedIds, feeds, selected, closeNavBar }) => {
     return (
         <nav className="navbar-links">
             <div className="feeds">
-                <Link to="/i/latest" onClick={closeNavBar}
+                <Link to="/i/latest" 
+                    // onClick={closeNavBar}
                     className={`latest${selected === "latest" ? " selected" : ""}`}>
                     <li><span><i className="fa fa-bars" aria-hidden="true"></i></span>
                         Latest

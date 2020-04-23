@@ -2266,8 +2266,8 @@ var NavBarLinks = function NavBarLinks(_ref3) {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "feeds"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-    to: "/i/latest",
-    onClick: closeNavBar,
+    to: "/i/latest" // onClick={closeNavBar}
+    ,
     className: "latest".concat(selected === "latest" ? " selected" : "")
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fa fa-bars",
