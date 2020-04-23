@@ -1070,7 +1070,8 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      console.log(this.props.article); // console.log(this.state.article.feedInfo)
+      console.log(this.props.article);
+      console.log(this.state.article);
 
       if (this.state.article) {
         var feedInfo = this.state.article.feedInfo;
@@ -1097,7 +1098,7 @@ function (_React$Component) {
         className: "source-metadata-holder"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "entry-source"
-      }, this.state.feedInfo.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, this.state.article.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "authors"
       }, "".concat(this.state.article.author, " / ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "m-r-1 ago"

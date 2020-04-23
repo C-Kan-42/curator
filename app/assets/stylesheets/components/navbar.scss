@@ -1,8 +1,9 @@
 .navbar {
   position: relative;
-  background: grey;
+  background: white;
   width: 250px;
   flex-shrink: 0;
+  // display: flex;
 }
 
 .navbar.collapsed {

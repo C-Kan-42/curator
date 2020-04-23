@@ -25,7 +25,7 @@ class ArticleShow extends React.Component {
 
     render() {
         console.log(this.props.article)
-        // console.log(this.state.article.feedInfo)
+        console.log(this.state.article)
         if (this.state.article) {
             const feedInfo = this.state.article.feedInfo;
         }
@@ -41,7 +41,7 @@ class ArticleShow extends React.Component {
                             <span className="metadata-holder">
                                 <div className="metadata entryMetadata">
                                     <span className="source-metadata-holder">
-                                        <p className="entry-source">{this.state.feedInfo.title}</p>
+                                        <p className="entry-source">{this.state.article.title}</p>
                                     </span>
                                     <span className="authors">{`${this.state.article.author} / `}</span>
                                     <span className="m-r-1 ago">{` ${timeSincePub}`}</span>

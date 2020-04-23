@@ -23,7 +23,7 @@ class Article < ApplicationRecord
 
         entry_id = article.link
         title = article.title || page.title
-        author = article.author || page.best_author || feed.title || "Anonymous"
+        author = article.author || page.best_author || article.dc_creator || feed.title || "Anonymous"
         pub_date = article.pubDate || page.meta['pdate'] || Time.now
         description = article.description || page.description
         image_url  = page.images.best
