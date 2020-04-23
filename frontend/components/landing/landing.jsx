@@ -12,11 +12,17 @@ class Landing extends React.Component {
 
     handleDemoUser(e) {
         e.preventDefault();
-        this.props.createDemoUser()
-            .then(() => this.props.history.push("/i/today"));
+        const demoUser = { 
+            email: 'demo-user@email.com',
+            name: 'Demo User',
+            password: 'password'
+        }
+        this.props.login(demoUser)
+            .then(() => this.props.history.push("/i/latest"));
     }
 
     render() {
+        
         return(
         <div className="landing">
             <div>
@@ -29,9 +35,11 @@ class Landing extends React.Component {
                             </h1>
                             <div className="button-group">
                                 <button className="big-green-button get-started" onClick={e => this.props.history.push('/signup')}>
-                                    Get Started For Free</button>
-                                    <button className="big-green-button demo-user" onClick={this.handleDemoUser}>
-                                    Demo User</button>
+                                    Get Started For Free
+                                </button>
+                                <button className="big-green-button demo-user" onClick={this.handleDemoUser}>
+                                    Demo User
+                                </button>
                             </div>
                         </div>
 

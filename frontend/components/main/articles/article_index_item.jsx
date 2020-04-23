@@ -18,7 +18,8 @@ class ArticleIndexItem extends React.Component {
         const target = e.target.parentElement;
         // const articleId = this.props.article.id;
         const originPath = this.props.history.location.pathname;
-        this.props.history.push(`articles/${articleId}`);
+        this.props.history.push(`${originPath}/articles/${articleId}`);
+        // this.handle
     }
 
     handleExitClick(e) {
@@ -27,7 +28,7 @@ class ArticleIndexItem extends React.Component {
     }
 
     render() {
-        const {article} = this.props;
+        const {article, feed} = this.props;
         const imageStyle = {
             backgroundImage: 'url(' + `"${article.image_url}"` + ')'
         };
@@ -46,6 +47,12 @@ class ArticleIndexItem extends React.Component {
                         {article.title}
                     </a>
                     <div className="metadata">
+                        <span className="feed-source"> {!this.props.titleLink ?
+                            <Link to={`/i/subscriptions/${article.feed_id}`}>
+                                {feed.subscription_title}
+                            </Link> : null
+                        }</span>
+                        <br></br>
                         <span className="authors">{`${article.author} / `}</span>
                         <span className="m-r-1 ago">{` ${timeSincePub}`}</span>
                     </div>

@@ -31,11 +31,14 @@ export const signup = user => dispatch => (
     ))
 );
 
-export const createDemoUser = () => dispatch => (
-    APIUtil.createDemoUser()
-        .then(signedUpUser => dispatch(receiveCurrentUser(signedUpUser)),
-        err => dispatch(receiveErrors(err.responseJSON)))
-);
+// export const createDemoUser = () => dispatch => (
+//     {   email: 'demo-user@email.com',
+//         name: 'Demo User',
+//         password: `password`
+//     }
+//         .then(signedUpUser => dispatch(receiveCurrentUser(signedUpUser)),
+//         err => dispatch(receiveErrors(err.responseJSON)))
+// );
 
 export const login = user => dispatch => (
     APIUtil.postSession(user).then(user => (
