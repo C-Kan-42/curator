@@ -13,7 +13,7 @@ const feedsById = (state = {}, action) => {
     Object.freeze(state);
     let newState;
     // console.log(state)
-    console.log(action.feeds)
+    // console.log(action.feeds)
 
     switch (action.type) {
         // case RECEIVE_FEEDS_RESULTS:

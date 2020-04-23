@@ -1,27 +1,24 @@
 # get 20 most-recent stories
 all_articles = []
 subscription = @subscription
-
+# p subscription
 json.articles({})
 json.articles do
   json.byId({})
   json.byId do
-    articles = subscription.articles
-        .select("articles.*")
-        # .joins(reads_join)
-        .order('pub_date DESC')
-        # .where("reads.id IS NULL
-        #         OR reads.updated_at > :within_last_three_minutes",
-        #         within_last_three_minutes: Time.now - 180)
-        .limit(20)
-        # .offset(params[:offset])
-
-    articles.to_a.each do |article|
-      all_articles << article
-      json.set! article.id do
-        json.partial! 'api/articles/article', article: article
+      articles = subscription
+          .articles
+          .select("articles.*")
+          .order('pub_date DESC')
+          .limit(20)
+          .offset(params[:offset])
+      
+      articles.to_a.each do |article|
+        all_articles << article
+        json.set! article.id do
+          json.partial! 'api/articles/article', article: article
+        end
       end
-    end
   end
 end
 

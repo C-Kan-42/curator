@@ -12,6 +12,7 @@ class NavBar extends React.Component {
         };
         this.handleClick = this.handleClick.bind(this);
         this.handleSelectedUpdate = this.handleSelectedUpdate.bind(this);
+        this.closeNavBar = this.closeNavBar.bind(this);
     }
         
     getSelectedLink () {
@@ -118,9 +119,11 @@ const NavBarCollapseExpand = ({ isOpen, handleClick }) => (
 );
 
 const NavBarLinks = ({ feedIds, feeds, selected, closeNavBar }) => {
+    console.log(feedIds)
+    console.log(feeds)
     const feedsList = feedIds ? (feedIds.map(feedId => {
         const feed = feeds[feedId];
-
+        console.log(feed)
         return (
             <Link className={selected == feedId ? "selected" : ""}
                 onClick={closeNavBar}
@@ -139,8 +142,8 @@ const NavBarLinks = ({ feedIds, feeds, selected, closeNavBar }) => {
                 <Link to="/i/latest" onClick={closeNavBar}
                     className={`latest${selected === "latest" ? " selected" : ""}`}>
                     <li><span><i className="fa fa-bars" aria-hidden="true"></i></span>
-            Latest
-          </li>
+                        Latest
+                    </li>
                 </Link>
 
                 {/* <Link to="/i/reads" onClick={closeNavBar}

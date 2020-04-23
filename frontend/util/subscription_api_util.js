@@ -1,7 +1,7 @@
-export const fetchSingleFeed = (feedId, offset = 0) => (
+export const fetchSingleFeed = (id, offset = 0) => (
     $.ajax({
         method: "GET",
-        url: `api/subscriptions/${feedId}`,
+        url: `api/subscriptions/${id}`,
         data: {
             offset
         }

@@ -765,7 +765,7 @@ function (_React$Component) {
       // }
       // console.log(this.props)
       // this.props.fetchAction()
-      this.props.fetchAction().then(function (res) {
+      this.props.fetchAction(this.props.match.params.id).then(function (res) {
         _this2.setState({
           articles: res.articles
         });
@@ -787,7 +787,7 @@ function (_React$Component) {
       var newURL = newProps.match.url;
 
       if (newProps.articles.length === 0 && oldURL !== newURL) {
-        newProps.fetchAction();
+        newProps.fetchAction(newProps.match.params.id);
       } else if (oldURL !== newURL) {
         window.document.querySelector(".main-content").scrollTo(0, 0);
       }
@@ -2098,6 +2098,7 @@ function (_React$Component) {
     };
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
     _this.handleSelectedUpdate = _this.handleSelectedUpdate.bind(_assertThisInitialized(_this));
+    _this.closeNavBar = _this.closeNavBar.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2237,8 +2238,11 @@ var NavBarLinks = function NavBarLinks(_ref3) {
       feeds = _ref3.feeds,
       selected = _ref3.selected,
       closeNavBar = _ref3.closeNavBar;
+  console.log(feedIds);
+  console.log(feeds);
   var feedsList = feedIds ? feedIds.map(function (feedId) {
     var feed = feeds[feedId];
+    console.log(feed);
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
       className: selected == feedId ? "selected" : "",
       onClick: closeNavBar,
@@ -2797,8 +2801,7 @@ var feedsById = function feedsById() {
   var action = arguments.length > 1 ? arguments[1] : undefined;
   Object.freeze(state);
   var newState; // console.log(state)
-
-  console.log(action.feeds);
+  // console.log(action.feeds)
 
   switch (action.type) {
     // case RECEIVE_FEEDS_RESULTS:
@@ -3345,11 +3348,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteSubscription", function() { return deleteSubscription; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateSubscription", function() { return updateSubscription; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createFeed", function() { return createFeed; });
-var fetchSingleFeed = function fetchSingleFeed(feedId) {
+var fetchSingleFeed = function fetchSingleFeed(id) {
   var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
   return $.ajax({
     method: "GET",
-    url: "api/subscriptions/".concat(feedId),
+    url: "api/subscriptions/".concat(id),
     data: {
       offset: offset
     }
