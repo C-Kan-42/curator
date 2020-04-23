@@ -126,7 +126,7 @@ const NavBarLinks = ({ feedIds, feeds, selected, closeNavBar }) => {
         console.log(feed)
         return (
             <Link className={selected == feedId ? "selected" : ""}
-                onClick={closeNavBar}
+                // onClick={closeNavBar}
                 key={feedId}
                 to={`/i/subscriptions/${feed.id}`}>
                 <li>

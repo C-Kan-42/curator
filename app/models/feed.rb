@@ -63,17 +63,18 @@ class Feed < ApplicationRecord
         @rss_feed ||= RSS::Parser.parse(open(rss_url).read, false)
         if rss_url == 'https://www.wired.com/feed/rss'
             page_link = 'https://www.wired.com'
+            favicon_url = MetaInspector.new(@rss_feed.items[0].link).images.favicon
         else
             page_link = @rss_feed.channel.image.link
         end
         @feed_page = MetaInspector.new(page_link)
-
+        
         self.title = @feed_page.title || @rss_feed.channel.image.title || "New Feed"
         self.description = @feed_page.description || @rss_feed.channel.description
         self.website_url = @feed_page.url
         self.last_built = Time.now
 
-        self.favicon_url = @feed_page.images.favicon
+        self.favicon_url = @feed_page.images.favicon || favicon_url
     end
 
     def subscription_title(user)
