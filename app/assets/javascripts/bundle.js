@@ -765,11 +765,13 @@ function (_React$Component) {
       // }
       // console.log(this.props)
       // this.props.fetchAction()
-      this.props.fetchAction(this.props.match.params.id).then(function (res) {
-        _this2.setState({
-          articles: res.articles
+      if (this.props.articles.length === 0) {
+        this.props.fetchAction(this.props.match.params.id).then(function (res) {
+          _this2.setState({
+            articles: res.articles
+          });
         });
-      }); // if (this.props.articles.length === 0 || this.props.readView) {
+      } // if (this.props.articles.length === 0 || this.props.readView) {
       //     console.log('reached here')
       //     this.props.fetchAction(this.props.match.params.id)
       //         .then(res => {
@@ -777,6 +779,7 @@ function (_React$Component) {
       //         })
       // }
       // this.props.fetchLatest();
+
 
       this.articleIndex = document.querySelector(".article-index");
     }

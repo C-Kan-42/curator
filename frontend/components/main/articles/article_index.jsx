@@ -18,10 +18,12 @@ class ArticleIndex extends React.Component {
         // }
         // console.log(this.props)
         // this.props.fetchAction()
-        this.props.fetchAction(this.props.match.params.id)
-            .then(res => {
-                this.setState({ articles: res.articles })
-            });
+        if (this.props.articles.length === 0) {
+            this.props.fetchAction(this.props.match.params.id)
+                .then(res => {
+                    this.setState({ articles: res.articles })
+                })
+        }
         // if (this.props.articles.length === 0 || this.props.readView) {
         //     console.log('reached here')
         //     this.props.fetchAction(this.props.match.params.id)
@@ -36,7 +38,7 @@ class ArticleIndex extends React.Component {
     componentDidUpdate(newProps) {
         const oldURL = this.props.match.url;
         const newURL = newProps.match.url;
-        if (newProps.articles.length === 0 && oldURL !== newURL) {
+        if ((newProps.articles.length === 0) && (oldURL !== newURL)) {
             newProps.fetchAction(newProps.match.params.id)
                 .then(res => {
                     this.setState({ articles: res.articles })
