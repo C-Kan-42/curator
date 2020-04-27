@@ -3,7 +3,12 @@
   background: white;
   width: 250px;
   flex-shrink: 0;
-  // display: flex;
+  // position: fixed;
+  // top: 0;
+  // left: 0;
+  // bottom: 0;
+  // width: 318px;
+  // display: block;
 }
 
 .navbar.collapsed {
@@ -40,6 +45,7 @@
   margin-top: 30px;
   overflow: auto;
   height: 100%;
+
 }
 
 .feeds i {

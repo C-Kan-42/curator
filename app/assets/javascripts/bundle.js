@@ -1080,7 +1080,7 @@ function (_React$Component) {
       var feedInfo;
 
       if (this.state.article) {
-        console.log(this.state.article.feedInfo);
+        console.log(this.state.article);
         feedInfo = this.state.article.feedInfo;
       }
 
