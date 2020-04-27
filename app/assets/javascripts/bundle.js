@@ -1892,7 +1892,7 @@ function (_React$Component2) {
         appeared: false
       }, function () {
         var timeout = setTimeout(function () {
-          _this2.props.history.push('/i/latest');
+          _this2.props.history.push(_this2.props.closePath);
         }, 300);
 
         _this2.timeouts.push(timeout);
@@ -2220,7 +2220,7 @@ var NavBarMenu = function NavBarMenu(props) {
     onClick: props.closeNavBar
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "edit-button"
-  }, "Organize Feeds", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fa fa-cog",
     "aria-hidden": "true"
   })))) : null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NavBarCollapseExpand, props));

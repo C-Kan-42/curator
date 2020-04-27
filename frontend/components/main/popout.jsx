@@ -51,7 +51,7 @@ export default class PopoutWithTransition extends React.Component {
         this.setState({appeared: false},
             () => {
                 const timeout = setTimeout(() => {
-                    this.props.history.push('/i/latest');
+                    this.props.history.push(this.props.closePath);
                 }, 300);
                 this.timeouts.push(timeout);
         });
