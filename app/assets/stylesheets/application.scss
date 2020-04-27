@@ -32,6 +32,16 @@ div {
 display: none;
 }
 
+.app-wrapper {
+    display:flex;
+    flex-direction: row;
+}
+
+.main-content {
+    max-width: 720px;
+}
+
+
 // source: https://stackoverflow.com/questions/826782/how-to-disable-text-selection-highlighting-using-css
 // .noselect {
 // -webkit-touch-callout: none; /* iOS Safari */
