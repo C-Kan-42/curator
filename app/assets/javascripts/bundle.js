@@ -1957,6 +1957,8 @@ function (_React$Component2) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
 
 
 var SessionBar = function SessionBar(_ref) {
@@ -1995,9 +1997,14 @@ var SessionBar = function SessionBar(_ref) {
     className: "session-bar"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "session-bar-contents"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    to: "/i/latest",
+    style: {
+      textDecoration: 'none'
+    }
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
     className: "session-bar-logo"
-  }, "Curator"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hgroup", {
+  }, "Curator")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hgroup", {
     className: "session-bar-right-col"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     className: "login-button",
