@@ -37,8 +37,9 @@ display: none;
     flex-direction: row;
 }
 
-.main-content {
-    max-width: 720px;
+.main-page, .main-content {
+    max-width: none;
+    width: 100%;
 }
 
 

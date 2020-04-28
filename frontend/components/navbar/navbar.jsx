@@ -96,8 +96,8 @@ const NavBarMenu = (props) => (
         {props.isOpen ?
             <div>
                 <Link to="/i/feeds/" onClick={props.closeNavBar}>
-                    <div className="edit-button">Organize Feeds
-            <i className="fa fa-cog" aria-hidden="true"></i>
+                    <div className="edit-button">
+                        <i className="fa fa-cog" aria-hidden="true"></i>
                     </div>
                 </Link>
             </div>

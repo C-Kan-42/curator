@@ -765,11 +765,13 @@ function (_React$Component) {
       // }
       // console.log(this.props)
       // this.props.fetchAction()
-      this.props.fetchAction(this.props.match.params.id).then(function (res) {
-        _this2.setState({
-          articles: res.articles
+      if (this.props.articles.length === 0) {
+        this.props.fetchAction(this.props.match.params.id).then(function (res) {
+          _this2.setState({
+            articles: res.articles
+          });
         });
-      }); // if (this.props.articles.length === 0 || this.props.readView) {
+      } // if (this.props.articles.length === 0 || this.props.readView) {
       //     console.log('reached here')
       //     this.props.fetchAction(this.props.match.params.id)
       //         .then(res => {
@@ -777,6 +779,7 @@ function (_React$Component) {
       //         })
       // }
       // this.props.fetchLatest();
+
 
       this.articleIndex = document.querySelector(".article-index");
     }
@@ -1892,7 +1895,7 @@ function (_React$Component2) {
         appeared: false
       }, function () {
         var timeout = setTimeout(function () {
-          _this2.props.history.push('/i/latest');
+          _this2.props.history.push(_this2.props.closePath);
         }, 300);
 
         _this2.timeouts.push(timeout);
@@ -2220,7 +2223,7 @@ var NavBarMenu = function NavBarMenu(props) {
     onClick: props.closeNavBar
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "edit-button"
-  }, "Organize Feeds", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fa fa-cog",
     "aria-hidden": "true"
   })))) : null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NavBarCollapseExpand, props));
