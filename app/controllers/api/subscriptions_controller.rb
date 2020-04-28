@@ -18,7 +18,6 @@ class Api::SubscriptionsController < ApplicationController
         end
     end
 
-    #add update, create, destroy methods
     def update
         # note: takes a subscription id vs. a feed id
         @subscription = current_user.subscriptions.find_by(id: params[:id])
