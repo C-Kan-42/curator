@@ -37,9 +37,10 @@ display: none;
     flex-direction: row;
 }
 
-// .main-content {
-//     // max-width: 720px;
-// }
+.main-page, .main-content {
+    max-width: none;
+    width: 100%;
+}
 
 
 // source: https://stackoverflow.com/questions/826782/how-to-disable-text-selection-highlighting-using-css
