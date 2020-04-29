@@ -5,7 +5,7 @@ import { AuthRoute, ProtectedRoute } from '../../util/route_util';
 import LandingContainer from '../landing/landing_container';
 import ArticleContainer from './articles/article_container';
 import FeedsIndexContainer from './feeds/feeds_index_container';
-// import DiscoverContainer from './feeds/discover_container';
+import DiscoverContainer from './feeds/discover_container';
 // import SubscriptionArticlesIndexPopout from './stories/subscription_stories_index_popout';
 import ArticleShowPopout from './articles/article_show_popout';
 import { receiveFeedTitle } from '../../actions/ui_actions';
@@ -72,7 +72,7 @@ class MainContent extends React.Component {
                     <ProtectedRoute path="/i/:prevSource/:prevId/articles/:id" component={ArticleShowPopout} />
                     {/* <ProtectedRoute path="/i/discover/:id" component={SubscriptionStoriesIndexPopout} /> */}
                 </Switch>
-                {/* <ProtectedRoute path="/i/discover" component={DiscoverContainer} /> */}
+                <ProtectedRoute path="/i/discover" component={DiscoverContainer} />
                 <ProtectedRoute path="/i/subscriptions/:id" component={ArticleContainer} />
                 {/* <ProtectedRoute path="/i/collections/:id" component={ArticleContainer} /> */}
                 <ProtectedRoute path="/i/:prevSource/articles/:id" component={ArticleShowPopout} />

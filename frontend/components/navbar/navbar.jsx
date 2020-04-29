@@ -82,7 +82,7 @@ class NavBar extends React.Component {
                             feedIds={feedIds} selected={selected} feeds={feeds} 
                             closeNavBar={this.closeNavBar}
                         />
-                        {/* <NavBarAddContent closeNavBar={this.closeNavBar} /> */}
+                        <NavBarAddContent closeNavBar={this.closeNavBar} />
                     </div>
                     : null
                 }
@@ -160,18 +160,20 @@ const NavBarLinks = ({ feedIds, feeds, selected, closeNavBar }) => {
                 <div className="feeds-list">
                     {feedsList}
                 </div>
+
+                {/* <Link to="/i/discover" className= */}
             </div>
         </nav>
     );
 }
 
-// const NavBarAddContent = ({ closeNavBar }) => (
-//     <div className="add-content" onClick={closeNavBar}>
-//         <Link to="/i/discover">
-//             <span><i className="fa fa-plus" aria-hidden="true"></i></span>
-//       Add Content
-//     </Link>
-//     </div>
-// );
+const NavBarAddContent = ({ closeNavBar }) => (
+    <div className="add-content">
+        <Link to="/i/discover">
+            <span><i className="fa fa-plus" aria-hidden="true"></i></span>
+            Follow New Sources
+        </Link>
+    </div>
+);
 
 export default NavBar;

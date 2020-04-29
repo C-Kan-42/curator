@@ -156,6 +156,38 @@ var fetchUnsubscribedFeed = function fetchUnsubscribedFeed(feedId) {
 
 /***/ }),
 
+/***/ "./frontend/actions/discovery_actions.js":
+/*!***********************************************!*\
+  !*** ./frontend/actions/discovery_actions.js ***!
+  \***********************************************/
+/*! exports provided: RECEIVE_FEEDS_RESULTS, receiveFeedResults, fetchFeedResults */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_FEEDS_RESULTS", function() { return RECEIVE_FEEDS_RESULTS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveFeedResults", function() { return receiveFeedResults; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchFeedResults", function() { return fetchFeedResults; });
+/* harmony import */ var _util_feed_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/feed_api_util */ "./frontend/util/feed_api_util.js");
+
+var RECEIVE_FEEDS_RESULTS = 'RECEIVE_FEEDS_RESULTS';
+var receiveFeedResults = function receiveFeedResults(feedsPayload) {
+  return {
+    type: RECEIVE_FEEDS_RESULTS,
+    feeds: feedsPayload.feeds,
+    results: feedsPayload.results
+  };
+};
+var fetchFeedResults = function fetchFeedResults(query) {
+  return function (dispatch) {
+    return _util_feed_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchFeedResults"](query).then(function (feedsPayload) {
+      return dispatch(receiveFeedResults(feedsPayload));
+    });
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/actions/errors_actions.js":
 /*!********************************************!*\
   !*** ./frontend/actions/errors_actions.js ***!
@@ -179,6 +211,27 @@ var clearSessionErrors = function clearSessionErrors() {
 var clearErrors = function clearErrors() {
   return {
     type: CLEAR_ERRORS
+  };
+};
+
+/***/ }),
+
+/***/ "./frontend/actions/loading_actions.js":
+/*!*********************************************!*\
+  !*** ./frontend/actions/loading_actions.js ***!
+  \*********************************************/
+/*! exports provided: START_FEED_ACTION, startFeedAction */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "START_FEED_ACTION", function() { return START_FEED_ACTION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "startFeedAction", function() { return startFeedAction; });
+var START_FEED_ACTION = 'START_FEED_ACTION';
+var startFeedAction = function startFeedAction(messages) {
+  return {
+    type: START_FEED_ACTION,
+    messages: messages
   };
 };
 
@@ -301,7 +354,7 @@ var logout = function logout() {
 /*!**************************************************!*\
   !*** ./frontend/actions/subscription_actions.js ***!
   \**************************************************/
-/*! exports provided: REMOVE_FEED, RECEIVE_SINGLE_FEED, RECEIVE_NEW_FEED, RECEIVE_SUBSCRIPTION_ERRORS, RECEIVE_ALL_SUBSCRIPTIONS, receiveSingleFeed, receiveNewFeed, receiveAllSubscriptions, removeFeed, receiveSubscriptionErrors, fetchAllSubscriptions, fetchSingleFeed, deleteFeed, updateSubscription */
+/*! exports provided: REMOVE_FEED, RECEIVE_SINGLE_FEED, RECEIVE_NEW_FEED, RECEIVE_SUBSCRIPTION_ERRORS, RECEIVE_ALL_SUBSCRIPTIONS, receiveSingleFeed, receiveNewFeed, receiveAllSubscriptions, removeFeed, receiveSubscriptionErrors, fetchAllSubscriptions, fetchSingleFeed, deleteFeed, updateSubscription, createFeed */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -320,7 +373,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSingleFeed", function() { return fetchSingleFeed; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteFeed", function() { return deleteFeed; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateSubscription", function() { return updateSubscription; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createFeed", function() { return createFeed; });
 /* harmony import */ var _util_subscription_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/subscription_api_util */ "./frontend/util/subscription_api_util.js");
+/* harmony import */ var _loading_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./loading_actions */ "./frontend/actions/loading_actions.js");
+
 
 var REMOVE_FEED = 'REMOVE_FEED';
 var RECEIVE_SINGLE_FEED = 'RECEIVE_SINGLE_FEED';
@@ -392,15 +448,17 @@ var updateSubscription = function updateSubscription(subscription) {
       return dispatch(receiveSubscriptionErrors(errors.responseJSON));
     });
   };
-}; // export const createFeed = feed => dispatch => {
-//     dispatch(startFeedAction(["Subscribing to Feed..."]));
-//     return (
-//         SubscriptionApiUtil.createFeed(feed)
-//             .then(
-//                 newFeed => dispatch(receiveNewFeed(newFeed)),
-//                 errors => dispatch(receiveSubscriptionErrors(errors.responseJSON)))
-//     );
-// };
+};
+var createFeed = function createFeed(feed) {
+  return function (dispatch) {
+    dispatch(Object(_loading_actions__WEBPACK_IMPORTED_MODULE_1__["startFeedAction"])(["Subscribing to Feed..."]));
+    return _util_subscription_api_util__WEBPACK_IMPORTED_MODULE_0__["createFeed"](feed).then(function (newFeed) {
+      return dispatch(receiveNewFeed(newFeed));
+    }, function (errors) {
+      return dispatch(receiveSubscriptionErrors(errors.responseJSON));
+    });
+  };
+};
 
 /***/ }),
 
@@ -1207,6 +1265,280 @@ var ArticleShowPopout = function ArticleShowPopout(props) {
 
 /***/ }),
 
+/***/ "./frontend/components/main/feeds/discover.jsx":
+/*!*****************************************************!*\
+  !*** ./frontend/components/main/feeds/discover.jsx ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _discover_index_item__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./discover_index_item */ "./frontend/components/main/feeds/discover_index_item.jsx");
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var Discover =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Discover, _React$Component);
+
+  function Discover(props) {
+    var _this;
+
+    _classCallCheck(this, Discover);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Discover).call(this, props));
+    _this.state = {
+      query: "",
+      dataBaseSearch: true
+    };
+    return _this;
+  }
+
+  _createClass(Discover, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.fetchFeedResults(this.state.query);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var text = this.state.query.length === 0 ? "Popular Feeds" : "Results";
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "discover-search-index"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "discover-items"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, text), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DiscoverIndexItems, this.props)));
+    }
+  }]);
+
+  return Discover;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+function DiscoverIndexItems(_ref) {
+  var feeds = _ref.feeds,
+      feedActions = _objectWithoutProperties(_ref, ["feeds"]);
+
+  var results = feeds.results.length == 0 ? ["No Feeds Found"] : feeds.results.map(function (resultId) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_discover_index_item__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
+      key: resultId,
+      feed: feeds.byId[resultId]
+    }, feedActions));
+  });
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "results"
+  }, results);
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Discover);
+
+/***/ }),
+
+/***/ "./frontend/components/main/feeds/discover_container.jsx":
+/*!***************************************************************!*\
+  !*** ./frontend/components/main/feeds/discover_container.jsx ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _actions_discovery_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../actions/discovery_actions */ "./frontend/actions/discovery_actions.js");
+/* harmony import */ var _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../actions/subscription_actions */ "./frontend/actions/subscription_actions.js");
+/* harmony import */ var _actions_errors_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../actions/errors_actions */ "./frontend/actions/errors_actions.js");
+/* harmony import */ var _actions_article_actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../actions/article_actions */ "./frontend/actions/article_actions.js");
+/* harmony import */ var _discover__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./discover */ "./frontend/components/main/feeds/discover.jsx");
+
+
+
+
+
+
+
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    feeds: state.entities.feeds,
+    errors: state.errors.feeds,
+    loadingMessages: state.loading.messages
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    fetchFeedResults: function fetchFeedResults(query) {
+      return dispatch(Object(_actions_discovery_actions__WEBPACK_IMPORTED_MODULE_3__["fetchFeedResults"])(query));
+    },
+    createFeed: function createFeed(feed) {
+      return dispatch(Object(_actions_subscription_actions__WEBPACK_IMPORTED_MODULE_4__["createFeed"])(feed));
+    },
+    fetchUnsubscribedFeed: function fetchUnsubscribedFeed(feedId) {
+      return dispatch(Object(_actions_article_actions__WEBPACK_IMPORTED_MODULE_6__["fetchUnsubscribedFeed"])(feedId));
+    },
+    clearErrors: function clearErrors() {
+      return dispatch(Object(_actions_errors_actions__WEBPACK_IMPORTED_MODULE_5__["clearErrors"])());
+    },
+    deleteFeed: function deleteFeed(feed) {
+      return dispatch(Object(_actions_subscription_actions__WEBPACK_IMPORTED_MODULE_4__["deleteFeed"])(feed));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(_discover__WEBPACK_IMPORTED_MODULE_7__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/main/feeds/discover_index_item.jsx":
+/*!****************************************************************!*\
+  !*** ./frontend/components/main/feeds/discover_index_item.jsx ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+function DiscoverIndexItem(_ref) {
+  var feed = _ref.feed,
+      deleteFeed = _ref.deleteFeed,
+      createFeed = _ref.createFeed;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    key: feed.id,
+    className: "feed-search-item"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "feed-search-name"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    src: feed.favicon_url,
+    className: "feed=index-icon"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "feed-search-description"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    to: "/i/discover/".concat(feed.id)
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, feed.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, feed.description))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, feed.subscribed ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(UnsubscribeButton, {
+    feed: feed,
+    deleteFeed: deleteFeed
+  }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(SubscribeButton, {
+    feed: feed,
+    createFeed: createFeed
+  })));
+}
+
+var UnsubscribeButton =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(UnsubscribeButton, _React$Component);
+
+  function UnsubscribeButton(props) {
+    var _this;
+
+    _classCallCheck(this, UnsubscribeButton);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(UnsubscribeButton).call(this, props));
+    _this.state = {
+      hovering: false
+    };
+    return _this;
+  }
+
+  _createClass(UnsubscribeButton, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "following-button discover-button",
+        onMouseOver: function onMouseOver(e) {
+          return _this2.setState({
+            hovering: true
+          });
+        },
+        onMouseLeave: function onMouseLeave(e) {
+          return _this2.setState({
+            hovering: false
+          });
+        },
+        onClick: function onClick(e) {
+          return _this2.props.deleteFeed(_this2.props.feed);
+        }
+      }, this.state.hovering ? "Unfollow?" : "Following");
+    }
+  }]);
+
+  return UnsubscribeButton;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+function SubscribeButton(_ref2) {
+  var feed = _ref2.feed,
+      createFeed = _ref2.createFeed;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "follow-button discover-button",
+    onClick: function onClick(e) {
+      return createFeed(feed);
+    }
+  }, "Follow");
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (DiscoverIndexItem);
+
+/***/ }),
+
 /***/ "./frontend/components/main/feeds/feeds_index.jsx":
 /*!********************************************************!*\
   !*** ./frontend/components/main/feeds/feeds_index.jsx ***!
@@ -1596,8 +1928,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _landing_landing_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../landing/landing_container */ "./frontend/components/landing/landing_container.jsx");
 /* harmony import */ var _articles_article_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./articles/article_container */ "./frontend/components/main/articles/article_container.js");
 /* harmony import */ var _feeds_feeds_index_container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./feeds/feeds_index_container */ "./frontend/components/main/feeds/feeds_index_container.js");
-/* harmony import */ var _articles_article_show_popout__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./articles/article_show_popout */ "./frontend/components/main/articles/article_show_popout.jsx");
-/* harmony import */ var _actions_ui_actions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../actions/ui_actions */ "./frontend/actions/ui_actions.js");
+/* harmony import */ var _feeds_discover_container__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./feeds/discover_container */ "./frontend/components/main/feeds/discover_container.jsx");
+/* harmony import */ var _articles_article_show_popout__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./articles/article_show_popout */ "./frontend/components/main/articles/article_show_popout.jsx");
+/* harmony import */ var _actions_ui_actions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../actions/ui_actions */ "./frontend/actions/ui_actions.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
@@ -1624,8 +1957,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
- // import DiscoverContainer from './feeds/discover_container';
-// import SubscriptionArticlesIndexPopout from './stories/subscription_stories_index_popout';
+
+ // import SubscriptionArticlesIndexPopout from './stories/subscription_stories_index_popout';
 
 
  // import throttle from 'lodash/throttle';
@@ -1709,13 +2042,16 @@ function (_React$Component) {
         component: _articles_article_container__WEBPACK_IMPORTED_MODULE_5__["default"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_3__["ProtectedRoute"], {
         path: "/i/:prevSource/:prevId/articles/:id",
-        component: _articles_article_show_popout__WEBPACK_IMPORTED_MODULE_7__["default"]
+        component: _articles_article_show_popout__WEBPACK_IMPORTED_MODULE_8__["default"]
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_3__["ProtectedRoute"], {
+        path: "/i/discover",
+        component: _feeds_discover_container__WEBPACK_IMPORTED_MODULE_7__["default"]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_3__["ProtectedRoute"], {
         path: "/i/subscriptions/:id",
         component: _articles_article_container__WEBPACK_IMPORTED_MODULE_5__["default"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_3__["ProtectedRoute"], {
         path: "/i/:prevSource/articles/:id",
-        component: _articles_article_show_popout__WEBPACK_IMPORTED_MODULE_7__["default"]
+        component: _articles_article_show_popout__WEBPACK_IMPORTED_MODULE_8__["default"]
       }));
     }
   }]);
@@ -1739,7 +2075,7 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     receiveFeedTitle: function receiveFeedTitle(title) {
-      return dispatch(Object(_actions_ui_actions__WEBPACK_IMPORTED_MODULE_8__["receiveFeedTitle"])(title));
+      return dispatch(Object(_actions_ui_actions__WEBPACK_IMPORTED_MODULE_9__["receiveFeedTitle"])(title));
     }
   };
 };
@@ -2215,6 +2551,8 @@ function (_React$Component) {
         selected: selected,
         feeds: feeds,
         closeNavBar: this.closeNavBar
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NavBarAddContent, {
+        closeNavBar: this.closeNavBar
       })) : null);
     }
   }]);
@@ -2285,15 +2623,19 @@ var NavBarLinks = function NavBarLinks(_ref3) {
   })), "Latest")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "feeds-list"
   }, feedsList)));
-}; // const NavBarAddContent = ({ closeNavBar }) => (
-//     <div className="add-content" onClick={closeNavBar}>
-//         <Link to="/i/discover">
-//             <span><i className="fa fa-plus" aria-hidden="true"></i></span>
-//       Add Content
-//     </Link>
-//     </div>
-// );
+};
 
+var NavBarAddContent = function NavBarAddContent(_ref4) {
+  var closeNavBar = _ref4.closeNavBar;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "add-content"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    to: "/i/discover"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fa fa-plus",
+    "aria-hidden": "true"
+  })), "Follow New Sources"));
+};
 
 /* harmony default export */ __webpack_exports__["default"] = (NavBar);
 
@@ -2797,15 +3139,16 @@ var errorsReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"]
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/subscription_actions */ "./frontend/actions/subscription_actions.js");
-/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var _actions_article_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/article_actions */ "./frontend/actions/article_actions.js");
-/* harmony import */ var lodash_merge__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash/merge */ "./node_modules/lodash/merge.js");
-/* harmony import */ var lodash_merge__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash_merge__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var lodash_union__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lodash/union */ "./node_modules/lodash/union.js");
-/* harmony import */ var lodash_union__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(lodash_union__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
-// import { RECEIVE_FEEDS_RESULTS } from '../actions/discovery_actions';
+/* harmony import */ var _actions_discovery_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/discovery_actions */ "./frontend/actions/discovery_actions.js");
+/* harmony import */ var _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/subscription_actions */ "./frontend/actions/subscription_actions.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _actions_article_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../actions/article_actions */ "./frontend/actions/article_actions.js");
+/* harmony import */ var lodash_merge__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lodash/merge */ "./node_modules/lodash/merge.js");
+/* harmony import */ var lodash_merge__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(lodash_merge__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var lodash_union__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! lodash/union */ "./node_modules/lodash/union.js");
+/* harmony import */ var lodash_union__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(lodash_union__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+
 
 
  // import _ from "lodash";
@@ -2819,31 +3162,30 @@ var feedsById = function feedsById() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
   Object.freeze(state);
-  var newState; // console.log(state)
-  // console.log(action.feeds)
+  var newState;
 
   switch (action.type) {
-    // case RECEIVE_FEEDS_RESULTS:
-    //     newState = merge({}, state, action.feeds.byId);
-    //     return newState;
-    case _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_NEW_FEED"]:
-    case _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_ALL_SUBSCRIPTIONS"]:
-    case _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_0__["REMOVE_FEED"]:
-    case _actions_article_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_LATEST"]:
-      // case RECEIVE_READS:
-      newState = lodash_merge__WEBPACK_IMPORTED_MODULE_3___default()({}, state, action.feeds.byId, action.subscriptions.byId);
+    case _actions_discovery_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_FEEDS_RESULTS"]:
+      newState = lodash_merge__WEBPACK_IMPORTED_MODULE_4___default()({}, state, action.feeds.byId);
       return newState;
 
-    case _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_SINGLE_FEED"]:
-      var feedId = action.feeds.allIds[0]; // console.log(state)
+    case _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_NEW_FEED"]:
+    case _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_ALL_SUBSCRIPTIONS"]:
+    case _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_1__["REMOVE_FEED"]:
+    case _actions_article_actions__WEBPACK_IMPORTED_MODULE_3__["RECEIVE_LATEST"]:
+      // case RECEIVE_READS:
+      newState = lodash_merge__WEBPACK_IMPORTED_MODULE_4___default()({}, state, action.feeds.byId, action.subscriptions.byId);
+      return newState;
 
+    case _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_SINGLE_FEED"]:
+      var feedId = action.feeds.allIds[0];
       var prevArticles = state[feedId] ? state[feedId].articles : [];
-      var allArticles = lodash_union__WEBPACK_IMPORTED_MODULE_4___default()(prevArticles, action.feeds.byId[feedId].articles);
-      newState = lodash_merge__WEBPACK_IMPORTED_MODULE_3___default()({}, state, action.feeds, action.subscriptions);
+      var allArticles = lodash_union__WEBPACK_IMPORTED_MODULE_5___default()(prevArticles, action.feeds.byId[feedId].articles);
+      newState = lodash_merge__WEBPACK_IMPORTED_MODULE_4___default()({}, state, action.feeds, action.subscriptions);
       newState[feedId].articles = allArticles;
       return newState;
 
-    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["CLEAR_ENTITIES"]:
+    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["CLEAR_ENTITIES"]:
       return {};
 
     default:
@@ -2858,12 +3200,13 @@ var allFeedsResults = function allFeedsResults() {
   var newState;
 
   switch (action.type) {
-    case _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_NEW_FEED"]:
-      return lodash_union__WEBPACK_IMPORTED_MODULE_4___default()(action.feeds.allIds, state);
-    // case RECEIVE_FEEDS_RESULTS:
-    //     return action.results;
+    case _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_NEW_FEED"]:
+      return lodash_union__WEBPACK_IMPORTED_MODULE_5___default()(action.feeds.allIds, state);
 
-    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["CLEAR_ENTITIES"]:
+    case _actions_discovery_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_FEEDS_RESULTS"]:
+      return action.results;
+
+    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["CLEAR_ENTITIES"]:
       return [];
 
     default:
@@ -2871,11 +3214,45 @@ var allFeedsResults = function allFeedsResults() {
   }
 };
 
-var feedsReducer = Object(redux__WEBPACK_IMPORTED_MODULE_5__["combineReducers"])({
+var feedsReducer = Object(redux__WEBPACK_IMPORTED_MODULE_6__["combineReducers"])({
   byId: feedsById,
   results: allFeedsResults
 });
 /* harmony default export */ __webpack_exports__["default"] = (feedsReducer);
+
+/***/ }),
+
+/***/ "./frontend/reducers/loading_reducer.js":
+/*!**********************************************!*\
+  !*** ./frontend/reducers/loading_reducer.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+
+var initialState = [];
+
+var loadingMessagesReducer = function loadingMessagesReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+
+  if (action.type.slice(0, 6) === "START_") {
+    return action.messages;
+  } else if (action.type.slice(0, 8) === "RECEIVE_") {
+    return [];
+  } else {
+    return state;
+  }
+};
+
+var loadingReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
+  messages: loadingMessagesReducer
+});
+/* harmony default export */ __webpack_exports__["default"] = (loadingReducer);
 
 /***/ }),
 
@@ -2925,6 +3302,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _errors_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./errors_reducer */ "./frontend/reducers/errors_reducer.js");
 /* harmony import */ var _ui_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ui_reducer */ "./frontend/reducers/ui_reducer.js");
 /* harmony import */ var _entities_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./entities_reducer */ "./frontend/reducers/entities_reducer.js");
+/* harmony import */ var _loading_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./loading_reducer */ "./frontend/reducers/loading_reducer.js");
+
 
 
 
@@ -2934,6 +3313,7 @@ var rootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])(
   entities: _entities_reducer__WEBPACK_IMPORTED_MODULE_4__["default"],
   session: _session_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
   errors: _errors_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
+  loading: _loading_reducer__WEBPACK_IMPORTED_MODULE_5__["default"],
   ui: _ui_reducer__WEBPACK_IMPORTED_MODULE_3__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (rootReducer);

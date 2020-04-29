@@ -1,4 +1,5 @@
 import * as SubscriptionApiUtil from '../util/subscription_api_util';
+import { startFeedAction } from './loading_actions';
 
 export const REMOVE_FEED = 'REMOVE_FEED';
 export const RECEIVE_SINGLE_FEED = 'RECEIVE_SINGLE_FEED';
@@ -71,12 +72,12 @@ export const updateSubscription = subscription => dispatch => {
             });
 };
 
-// export const createFeed = feed => dispatch => {
-//     dispatch(startFeedAction(["Subscribing to Feed..."]));
-//     return (
-//         SubscriptionApiUtil.createFeed(feed)
-//             .then(
-//                 newFeed => dispatch(receiveNewFeed(newFeed)),
-//                 errors => dispatch(receiveSubscriptionErrors(errors.responseJSON)))
-//     );
-// };
+export const createFeed = feed => dispatch => {
+    dispatch(startFeedAction(["Subscribing to Feed..."]));
+    return (
+        SubscriptionApiUtil.createFeed(feed)
+            .then(
+                newFeed => dispatch(receiveNewFeed(newFeed)),
+                errors => dispatch(receiveSubscriptionErrors(errors.responseJSON)))
+    );
+};
