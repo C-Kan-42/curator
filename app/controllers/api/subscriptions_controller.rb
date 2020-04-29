@@ -30,8 +30,8 @@ class Api::SubscriptionsController < ApplicationController
 
     def create
         @subscription = Subscription.build_by_rss_url(
-        rss_url: subscription_params[:rss_url],
-        subscriber: current_user
+            rss_url: subscription_params[:rss_url],
+            subscriber: current_user
         )
 
         if @subscription.save

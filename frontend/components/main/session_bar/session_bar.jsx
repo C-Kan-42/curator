@@ -1,4 +1,5 @@
 import React from 'react';
+import { Route, Link } from 'react-router-dom';
 
 const SessionBar = ({ loggedIn, currentUser, logout, history }) => {
     const buttonText = loggedIn ? "Log Out" : "Log In"
@@ -19,17 +20,20 @@ const SessionBar = ({ loggedIn, currentUser, logout, history }) => {
         personalizedGreeting = 
         <h3 className="session-bar-logo-or-greeting">
             Curator
-                </h3>
+        </h3>
     } else {
         personalizedGreeting = ''
     }
+
     
     return (
         <header className="session-bar">
             <div className="session-bar-contents">
-                <h3 className="session-bar-logo">
-                    Curator
-                </h3>
+                <Link to={`/i/latest`} style={{ textDecoration: 'none' }}>
+                    <h3 className="session-bar-logo">
+                        Curator
+                    </h3>
+                </Link>
                 <hgroup className="session-bar-right-col">
                     {/* {personalizedGreeting} */}
                     <button className="login-button" data-toggle="modal" data-target="#modal-login" onClick={buttonAction}>{buttonText}</button>

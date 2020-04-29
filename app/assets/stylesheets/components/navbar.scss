@@ -9,6 +9,7 @@
   font-family: sans-serif;
   border-right: 1px solid #efefef;
   border-left: 1px solid #efefef;
+  height: 100vh;
 }
 
 .navbar.collapsed {
@@ -39,11 +40,12 @@
   // font-size: 13px;
   // font-weight: 700;
   // color: #757575;
+  width: 250px;
   position: relative;
   top: 0;
   left: 0;
   bottom: 0;
-  width: 318px;
+  // width: 318px;
   padding-left: 1px;
 }
 
@@ -51,7 +53,7 @@
   margin-top: 30px;
   overflow: auto;
   height: 100%;
-
+  width: 250px;
 }
 
 .feeds i {
@@ -108,16 +110,26 @@
   width: 100%;
   bottom: 0;
   text-transform: uppercase;
-  border-top: 1px solid grey;
+  // border-top: 1px solid grey;
   box-sizing: border-box;
   text-align: center;
   vertical-align: baseline;
   padding: 15px 0;
-  background: grey;
+  background: #f6f7f8;
+  color: #333333;
+
 }
 
 .add-content a {
   display: inline-block;
+}
+
+.add-content:hover {
+  background: #efefef;
+  color: black;
+  font-weight: 700;
+  border-left: 2px solid #2bb24c;
+  // color: #2bb24c;
 }
 
 .add-content span {

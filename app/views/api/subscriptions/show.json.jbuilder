@@ -22,7 +22,7 @@ json.articles do
   end
 end
 
-# get the user's subscribed feed
+# get the user's subscribed feeds
 json.feeds do
   feed = subscription.feed
   json.byId do
