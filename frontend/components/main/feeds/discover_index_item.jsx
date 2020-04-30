@@ -5,7 +5,7 @@ function DiscoverIndexItem({ feed, deleteFeed, createFeed }) {
     return (
         <div key={feed.id} className="feed-search-item">
             <div className="feed-search-name">
-                <img src={feed.favicon_url} className="feed=index-icon" />
+                <img src={feed.favicon_url} className="feed-index-icon" />
                 <div className="feed-search-description">
                     <Link to={`/i/discover/${feed.id}`}>
                         <h3>{feed.title}</h3>

@@ -73,6 +73,9 @@ class Feed < ApplicationRecord
         self.description = @feed_page.description || @rss_feed.channel.description
         self.website_url = @feed_page.url
         self.last_built = Time.now
+        if rss_url === 'http://feeds.bbci.co.uk/news/world/rss.xml'
+            self.favicon_url = @rss_feed.image.url
+        end
 
         self.favicon_url = @feed_page.images.favicon || favicon_url
     end

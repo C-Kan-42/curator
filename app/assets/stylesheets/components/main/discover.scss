@@ -2,6 +2,25 @@ button {
   cursor: pointer;
 }
 
+.feed-index-icon {
+  height: 18px;
+  width: 18px;
+  padding: 2px;
+  margin-right: 10px;
+}
+
+.feed-search-description {
+margin-right: 100px;
+    margin-top: 1rem;
+    max-height: 40px;
+    // overflow: hidden;
+        color: #757575;
+        font-size: 0.875rem;
+    font-weight: normal;
+    line-height: 1.25rem;
+        font-family: sans-serif;
+}
+
 .discover-search-index {
   margin: 0 auto;
   max-width: 840px;
