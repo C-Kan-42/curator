@@ -818,39 +818,25 @@ function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      // if (this.props.articles.length === 0) {
-      //     this.props.fetchArticle(this.props.match.params.id)
-      // }
-      // console.log(this.props)
-      // this.props.fetchAction()
-      if (this.props.articles.length === 0) {
-        this.props.fetchAction(this.props.match.params.id).then(function (res) {
-          _this2.setState({
-            articles: res.articles
-          });
+      this.props.fetchAction(this.props.match.params.id).then(function (res) {
+        _this2.setState({
+          articles: res.articles
         });
-      } // if (this.props.articles.length === 0 || this.props.readView) {
-      //     console.log('reached here')
-      //     this.props.fetchAction(this.props.match.params.id)
-      //         .then(res => {
-      //             this.setState({articles: res.articles})
-      //         })
+      }); // if (this.props.articles.length === 0) {
       // }
-      // this.props.fetchLatest();
-
 
       this.articleIndex = document.querySelector(".article-index");
     }
   }, {
     key: "componentDidUpdate",
-    value: function componentDidUpdate(newProps) {
+    value: function componentDidUpdate(prevProps) {
       var _this3 = this;
 
-      var oldURL = this.props.match.url;
-      var newURL = newProps.match.url;
+      var oldURL = prevProps.match.url;
+      var newURL = this.props.match.url;
 
-      if (newProps.articles.length === 0 && oldURL !== newURL) {
-        newProps.fetchAction(newProps.match.params.id).then(function (res) {
+      if (this.props.articles.length === 0 && oldURL !== newURL) {
+        this.props.fetchAction(this.props.match.params.id).then(function (res) {
           _this3.setState({
             articles: res.articles
           });

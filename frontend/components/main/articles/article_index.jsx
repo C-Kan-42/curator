@@ -12,34 +12,23 @@ class ArticleIndex extends React.Component {
         }
     }
 
-    componentDidMount() {
+    componentDidMount() {         
+        this.props.fetchAction(this.props.match.params.id)
+            .then(res => {
+                this.setState({ articles: res.articles })
+            })
         // if (this.props.articles.length === 0) {
-        //     this.props.fetchArticle(this.props.match.params.id)
+            
         // }
-        // console.log(this.props)
-        // this.props.fetchAction()
-        if (this.props.articles.length === 0) {
-            this.props.fetchAction(this.props.match.params.id)
-                .then(res => {
-                    this.setState({ articles: res.articles })
-                })
-        }
-        // if (this.props.articles.length === 0 || this.props.readView) {
-        //     console.log('reached here')
-        //     this.props.fetchAction(this.props.match.params.id)
-        //         .then(res => {
-        //             this.setState({articles: res.articles})
-        //         })
-        // }
-        // this.props.fetchLatest();
+
         this.articleIndex = document.querySelector(".article-index")
     }
 
-    componentDidUpdate(newProps) {
-        const oldURL = this.props.match.url;
-        const newURL = newProps.match.url;
-        if ((newProps.articles.length === 0) && (oldURL !== newURL)) {
-            newProps.fetchAction(newProps.match.params.id)
+    componentDidUpdate(prevProps) {
+        const oldURL = prevProps.match.url;
+        const newURL = this.props.match.url;
+        if ((this.props.articles.length === 0) && (oldURL !== newURL)) {
+            this.props.fetchAction(this.props.match.params.id)
                 .then(res => {
                     this.setState({ articles: res.articles })
                 })
