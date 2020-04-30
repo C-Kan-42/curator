@@ -1466,7 +1466,7 @@ function DiscoverIndexItem(_ref) {
     className: "feed-search-name"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
     src: feed.favicon_url,
-    className: "feed=index-icon"
+    className: "feed-index-icon"
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "feed-search-description"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
@@ -2634,7 +2634,7 @@ var NavBarAddContent = function NavBarAddContent(_ref4) {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fa fa-plus",
     "aria-hidden": "true"
-  })), "Follow New Sources"));
+  })), "+ Follow New Sources"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (NavBar);

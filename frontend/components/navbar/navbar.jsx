@@ -171,7 +171,7 @@ const NavBarAddContent = ({ closeNavBar }) => (
     <div className="add-content">
         <Link to="/i/discover">
             <span><i className="fa fa-plus" aria-hidden="true"></i></span>
-            Follow New Sources
+            + Follow New Sources
         </Link>
     </div>
 );
