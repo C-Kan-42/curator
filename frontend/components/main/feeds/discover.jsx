@@ -7,6 +7,8 @@ class Discover extends React.Component {
         super(props);
         this.state = {
             query: "",
+            filteredData: [],
+            data: [],
             dataBaseSearch: true
         }
     }
@@ -14,6 +16,13 @@ class Discover extends React.Component {
     componentDidMount() {
         this.props.fetchFeedResults(this.state.query);
     }
+
+    handleInputChange = (e) => {
+        console.log('onChange result', e.target.value)
+        this.setState({
+            query: event.target.value
+        })
+    };
 
     render() {
         const text = this.state.query.length === 0 ? "Popular Feeds" : "Results";
