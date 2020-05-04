@@ -818,39 +818,25 @@ function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      // if (this.props.articles.length === 0) {
-      //     this.props.fetchArticle(this.props.match.params.id)
-      // }
-      // console.log(this.props)
-      // this.props.fetchAction()
-      if (this.props.articles.length === 0) {
-        this.props.fetchAction(this.props.match.params.id).then(function (res) {
-          _this2.setState({
-            articles: res.articles
-          });
+      this.props.fetchAction(this.props.match.params.id).then(function (res) {
+        _this2.setState({
+          articles: res.articles
         });
-      } // if (this.props.articles.length === 0 || this.props.readView) {
-      //     console.log('reached here')
-      //     this.props.fetchAction(this.props.match.params.id)
-      //         .then(res => {
-      //             this.setState({articles: res.articles})
-      //         })
+      }); // if (this.props.articles.length === 0) {
       // }
-      // this.props.fetchLatest();
-
 
       this.articleIndex = document.querySelector(".article-index");
     }
   }, {
     key: "componentDidUpdate",
-    value: function componentDidUpdate(newProps) {
+    value: function componentDidUpdate(prevProps) {
       var _this3 = this;
 
-      var oldURL = this.props.match.url;
-      var newURL = newProps.match.url;
+      var oldURL = prevProps.match.url;
+      var newURL = this.props.match.url;
 
-      if (newProps.articles.length === 0 && oldURL !== newURL) {
-        newProps.fetchAction(newProps.match.params.id).then(function (res) {
+      if (this.props.articles.length === 0 && oldURL !== newURL) {
+        this.props.fetchAction(this.props.match.params.id).then(function (res) {
           _this3.setState({
             articles: res.articles
           });
@@ -1294,9 +1280,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -1319,8 +1305,10 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Discover).call(this, props));
     _this.state = {
       query: "",
-      dataBaseSearch: true
+      filtered: [],
+      searchForm: true
     };
+    _this.handleInputChange = _this.handleInputChange.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1330,23 +1318,72 @@ function (_React$Component) {
       this.props.fetchFeedResults(this.state.query);
     }
   }, {
+    key: "handleInputChange",
+    value: function handleInputChange(e) {
+      console.log('onChange result', e.target.value);
+      this.setState({
+        query: e.target.value
+      });
+      this.props.fetchFeedResults(e.target.value); // .then(res => 
+      //     this.setState({filtered: res.data})
+      //     console.log(res);
+      // );
+      //the action .fetchFeedResults takes care of the filtering for us, see feeds_controller.rb index method
+      //we use the .ransack method to search
+    }
+  }, {
     key: "render",
     value: function render() {
       var text = this.state.query.length === 0 ? "Popular Feeds" : "Results";
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "discover-search-index"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.state.searchForm ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(SearchBar, {
+        query: this.state.query,
+        handleInputChange: this.handleInputChange
+      }) : null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "discover-items"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, text), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DiscoverIndexItems, this.props)));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+        className: "discover-title-text"
+      }, text), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DiscoverIndexItems, this.props)));
     }
   }]);
 
   return Discover;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-function DiscoverIndexItems(_ref) {
-  var feeds = _ref.feeds,
-      feedActions = _objectWithoutProperties(_ref, ["feeds"]);
+function SearchBar(_ref) {
+  var query = _ref.query,
+      handleInputChange = _ref.handleInputChange;
+  var styles = {
+    'padding-left': '44px',
+    'padding-right': '100px'
+  };
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "search-container"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "search-description"
+  }, "Discover the best sources for any topic"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    className: "search-form"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-input-container"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    value: query,
+    onChange: handleInputChange,
+    type: "text",
+    placeholder: "Search by topic, website, or RSS link",
+    autoCorrect: "on",
+    style: styles,
+    className: "search-form-input"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "search-form-overlay"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "search-icon"
+  })))));
+}
+
+function DiscoverIndexItems(_ref2) {
+  var feeds = _ref2.feeds,
+      feedActions = _objectWithoutProperties(_ref2, ["feeds"]);
 
   var results = feeds.results.length == 0 ? ["No Feeds Found"] : feeds.results.map(function (resultId) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_discover_index_item__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({

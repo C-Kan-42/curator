@@ -11,7 +11,9 @@ class Api::FeedsController < ApplicationController
                 .joins(sql_join)
         else
             @q = Feed.ransack(title_or_rss_url_or_description_cont: params[:q])
-            @feeds = @q.result
+            #above line asks if a feed contains the params[:q] value in the title, rss_url, or description field
+            # the #result method returns an ActiveRecordRelation object with matching result
+            @feeds = @q.result(distinct: true)
                 .select("feeds.*, subscriptions.subscriber_id as followed")
                 .joins(sql_join)
                 .limit(20)
