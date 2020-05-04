@@ -16,6 +16,10 @@ span, article, footer, time, small {
   background: transparent;
 }
 
+div {
+  display: block;
+}
+
 ul {
   list-style: none;
 }
@@ -26,15 +30,15 @@ img {
   height: auto;
 }
 
-input[type="password"],
-input[type="email"],
-input[type="text"],
-input[type="submit"],
-textarea,
-button {
-  // -webkit-appearance: none;
-  // -moz-appearance: none;
-}
+// input[type="password"],
+// input[type="email"],
+// input[type="text"],
+// input[type="submit"],
+// textarea,
+// button {
+//   // -webkit-appearance: none;
+//   // -moz-appearance: none;
+// }
 
 button,
 input[type="submit"] {

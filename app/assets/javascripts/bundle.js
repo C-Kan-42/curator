@@ -1256,9 +1256,147 @@ var ArticleShowPopout = function ArticleShowPopout(props) {
   !*** ./frontend/components/main/feeds/discover.jsx ***!
   \*****************************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /mnt/c/Users/ckan/Desktop/curator/frontend/components/main/feeds/discover.jsx: Support for the experimental syntax 'classProperties' isn't currently enabled (20:23):\n\n\u001b[0m \u001b[90m 18 | \u001b[39m    }\u001b[0m\n\u001b[0m \u001b[90m 19 | \u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 20 | \u001b[39m    handleInputChange \u001b[33m=\u001b[39m (e) \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m                      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 21 | \u001b[39m        console\u001b[33m.\u001b[39mlog(\u001b[32m'onChange result'\u001b[39m\u001b[33m,\u001b[39m e\u001b[33m.\u001b[39mtarget\u001b[33m.\u001b[39mvalue)\u001b[0m\n\u001b[0m \u001b[90m 22 | \u001b[39m        \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39msetState({\u001b[0m\n\u001b[0m \u001b[90m 23 | \u001b[39m            query\u001b[33m:\u001b[39m event\u001b[33m.\u001b[39mtarget\u001b[33m.\u001b[39mvalue\u001b[0m\n\nAdd @babel/plugin-proposal-class-properties (https://git.io/vb4SL) to the 'plugins' section of your Babel config to enable transformation.\n    at Object.raise (/mnt/c/Users/ckan/Desktop/curator/node_modules/@babel/parser/lib/index.js:7012:17)\n    at Object.expectPlugin (/mnt/c/Users/ckan/Desktop/curator/node_modules/@babel/parser/lib/index.js:8410:18)\n    at Object.parseClassProperty (/mnt/c/Users/ckan/Desktop/curator/node_modules/@babel/parser/lib/index.js:11697:12)\n    at Object.pushClassProperty (/mnt/c/Users/ckan/Desktop/curator/node_modules/@babel/parser/lib/index.js:11662:30)\n    at Object.parseClassMemberWithIsStatic (/mnt/c/Users/ckan/Desktop/curator/node_modules/@babel/parser/lib/index.js:11595:14)\n    at Object.parseClassMember (/mnt/c/Users/ckan/Desktop/curator/node_modules/@babel/parser/lib/index.js:11532:10)\n    at withTopicForbiddingContext (/mnt/c/Users/ckan/Desktop/curator/node_modules/@babel/parser/lib/index.js:11487:14)\n    at Object.withTopicForbiddingContext (/mnt/c/Users/ckan/Desktop/curator/node_modules/@babel/parser/lib/index.js:10565:14)\n    at Object.parseClassBody (/mnt/c/Users/ckan/Desktop/curator/node_modules/@babel/parser/lib/index.js:11464:10)\n    at Object.parseClass (/mnt/c/Users/ckan/Desktop/curator/node_modules/@babel/parser/lib/index.js:11438:22)\n    at Object.parseStatementContent (/mnt/c/Users/ckan/Desktop/curator/node_modules/@babel/parser/lib/index.js:10732:21)\n    at Object.parseStatement (/mnt/c/Users/ckan/Desktop/curator/node_modules/@babel/parser/lib/index.js:10690:17)\n    at Object.parseBlockOrModuleBlockBody (/mnt/c/Users/ckan/Desktop/curator/node_modules/@babel/parser/lib/index.js:11266:25)\n    at Object.parseBlockBody (/mnt/c/Users/ckan/Desktop/curator/node_modules/@babel/parser/lib/index.js:11253:10)\n    at Object.parseTopLevel (/mnt/c/Users/ckan/Desktop/curator/node_modules/@babel/parser/lib/index.js:10621:10)\n    at Object.parse (/mnt/c/Users/ckan/Desktop/curator/node_modules/@babel/parser/lib/index.js:12131:10)\n    at parse (/mnt/c/Users/ckan/Desktop/curator/node_modules/@babel/parser/lib/index.js:12182:38)\n    at parser (/mnt/c/Users/ckan/Desktop/curator/node_modules/@babel/core/lib/transformation/normalize-file.js:187:34)\n    at normalizeFile (/mnt/c/Users/ckan/Desktop/curator/node_modules/@babel/core/lib/transformation/normalize-file.js:113:11)\n    at runSync (/mnt/c/Users/ckan/Desktop/curator/node_modules/@babel/core/lib/transformation/index.js:44:43)\n    at runAsync (/mnt/c/Users/ckan/Desktop/curator/node_modules/@babel/core/lib/transformation/index.js:35:14)\n    at process.nextTick (/mnt/c/Users/ckan/Desktop/curator/node_modules/@babel/core/lib/transform.js:34:34)\n    at process._tickCallback (internal/process/next_tick.js:61:11)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _discover_index_item__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./discover_index_item */ "./frontend/components/main/feeds/discover_index_item.jsx");
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var Discover =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Discover, _React$Component);
+
+  function Discover(props) {
+    var _this;
+
+    _classCallCheck(this, Discover);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Discover).call(this, props));
+    _this.state = {
+      query: "",
+      filtered: [],
+      searchForm: true
+    };
+    _this.handleInputChange = _this.handleInputChange.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(Discover, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.fetchFeedResults(this.state.query);
+    }
+  }, {
+    key: "handleInputChange",
+    value: function handleInputChange(e) {
+      console.log('onChange result', e.target.value);
+      this.setState({
+        query: e.target.value
+      });
+      this.props.fetchFeedResults(e.target.value); // .then(res => 
+      //     this.setState({filtered: res.data})
+      //     console.log(res);
+      // );
+      //the action .fetchFeedResults takes care of the filtering for us, see feeds_controller.rb index method
+      //we use the .ransack method to search
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var text = this.state.query.length === 0 ? "Popular Feeds" : "Results";
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "discover-search-index"
+      }, this.state.searchForm ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(SearchBar, {
+        query: this.state.query,
+        handleInputChange: this.handleInputChange
+      }) : null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "discover-items"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+        className: "discover-title-text"
+      }, text), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DiscoverIndexItems, this.props)));
+    }
+  }]);
+
+  return Discover;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+function SearchBar(_ref) {
+  var query = _ref.query,
+      handleInputChange = _ref.handleInputChange;
+  var styles = {
+    'padding-left': '44px',
+    'padding-right': '100px'
+  };
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "search-container"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "search-description"
+  }, "Discover the best sources for any topic"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    className: "search-form"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-input-container"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    value: query,
+    onChange: handleInputChange,
+    type: "text",
+    placeholder: "Search by topic, website, or RSS link",
+    autoCorrect: "on",
+    style: styles,
+    className: "search-form-input"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "search-form-overlay"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "search-icon"
+  })))));
+}
+
+function DiscoverIndexItems(_ref2) {
+  var feeds = _ref2.feeds,
+      feedActions = _objectWithoutProperties(_ref2, ["feeds"]);
+
+  var results = feeds.results.length == 0 ? ["No Feeds Found"] : feeds.results.map(function (resultId) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_discover_index_item__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
+      key: resultId,
+      feed: feeds.byId[resultId]
+    }, feedActions));
+  });
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "results"
+  }, results);
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Discover);
 
 /***/ }),
 
@@ -1318,6 +1456,123 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(_discover__WEBPACK_IMPORTED_MODULE_7__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/main/feeds/discover_index_item.jsx":
+/*!****************************************************************!*\
+  !*** ./frontend/components/main/feeds/discover_index_item.jsx ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+function DiscoverIndexItem(_ref) {
+  var feed = _ref.feed,
+      deleteFeed = _ref.deleteFeed,
+      createFeed = _ref.createFeed;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    key: feed.id,
+    className: "feed-search-item"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "feed-search-name"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    src: feed.favicon_url,
+    className: "feed-index-icon"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "feed-search-description"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    to: "/i/discover/".concat(feed.id)
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, feed.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, feed.description))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, feed.subscribed ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(UnsubscribeButton, {
+    feed: feed,
+    deleteFeed: deleteFeed
+  }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(SubscribeButton, {
+    feed: feed,
+    createFeed: createFeed
+  })));
+}
+
+var UnsubscribeButton =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(UnsubscribeButton, _React$Component);
+
+  function UnsubscribeButton(props) {
+    var _this;
+
+    _classCallCheck(this, UnsubscribeButton);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(UnsubscribeButton).call(this, props));
+    _this.state = {
+      hovering: false
+    };
+    return _this;
+  }
+
+  _createClass(UnsubscribeButton, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "following-button discover-button",
+        onMouseOver: function onMouseOver(e) {
+          return _this2.setState({
+            hovering: true
+          });
+        },
+        onMouseLeave: function onMouseLeave(e) {
+          return _this2.setState({
+            hovering: false
+          });
+        },
+        onClick: function onClick(e) {
+          return _this2.props.deleteFeed(_this2.props.feed);
+        }
+      }, this.state.hovering ? "Unfollow?" : "Following");
+    }
+  }]);
+
+  return UnsubscribeButton;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+function SubscribeButton(_ref2) {
+  var feed = _ref2.feed,
+      createFeed = _ref2.createFeed;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "follow-button discover-button",
+    onClick: function onClick(e) {
+      return createFeed(feed);
+    }
+  }, "Follow");
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (DiscoverIndexItem);
 
 /***/ }),
 
