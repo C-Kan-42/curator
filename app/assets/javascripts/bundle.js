@@ -1502,23 +1502,46 @@ function DiscoverIndexItem(_ref) {
       createFeed = _ref.createFeed;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     key: feed.id,
-    className: "feed-search-item"
+    className: "feed-discover-item"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "feed-search-name"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    src: feed.favicon_url,
-    className: "feed-index-icon"
+    className: "feed-visual",
+    title: feed.title,
+    style: {
+      backgroundImage: "url(".concat(feed.favicon_url, ")")
+    }
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "feed-search-description"
+    className: "feed-discover-content"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "feed-discover-header-container"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "feed-discover-title"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     to: "/i/discover/".concat(feed.id)
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, feed.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, feed.description))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, feed.subscribed ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(UnsubscribeButton, {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+    className: "feed-discover-title-link"
+  }, feed.title))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "feed-discover-button-container"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "feed-discover-buttons"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "follow-button-floated"
+  }, feed.subscribed ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(UnsubscribeButton, {
     feed: feed,
     deleteFeed: deleteFeed
   }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(SubscribeButton, {
     feed: feed,
     createFeed: createFeed
-  })));
+  }))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "feed-discover-metadata"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: feed.website_url,
+    title: feed.website_url,
+    target: "blank",
+    rel: "noopner noreferrer",
+    className: "feed-discover-metadata-item"
+  }, feed.website_url)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "feed-discover-description"
+  }, feed.description)));
 }
 
 var UnsubscribeButton =
@@ -1544,7 +1567,7 @@ function (_React$Component) {
       var _this2 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "following-button discover-button",
+        className: "unfollow-button discover-button",
         onMouseOver: function onMouseOver(e) {
           return _this2.setState({
             hovering: true
