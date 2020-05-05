@@ -35,23 +35,33 @@ class Discover extends React.Component {
         const text = this.state.query.length === 0 ? "Popular Feeds" : "Results";
 
         return(
-            <div className="discover-search-index">
+            <div id="Frame">
+                <div id="PageHolderFX" className="fx">
+                    <div id="PageFX" className="container centered">
+                        <div className="board presentation-4">
 
-                { this.state.searchForm ? 
-                    <SearchBar query={this.state.query} handleInputChange={this.handleInputChange} /> :
-                    null
-                }
+                            <div className="discover-search-index">
 
-                <div className="feed-results-row">
-                    <div className="results-container">
-                        <div className="results-title-container">
-                            <h2 className="discover-title-text">{text}</h2>
+                                { this.state.searchForm ? 
+                                    <SearchBar query={this.state.query} handleInputChange={this.handleInputChange} /> :
+                                    null
+                                }
+
+                                <div className="feed-results-row">
+                                    <div className="results-container">
+                                        <div className="results-title-container">
+                                            <h2 className="discover-title-text">{text}</h2>
+                                        </div>
+                                        <DiscoverIndexItems {...this.props } />
+                                    </div>
+                                </div>
+                                
+                            </div> 
+
                         </div>
-                        <DiscoverIndexItems {...this.props } />
                     </div>
                 </div>
-                
-            </div>            
+            </div>           
         );
     }
 

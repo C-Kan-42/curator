@@ -1363,6 +1363,16 @@ function (_React$Component) {
     value: function render() {
       var text = this.state.query.length === 0 ? "Popular Feeds" : "Results";
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "Frame"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "PageHolderFX",
+        className: "fx"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "PageFX",
+        className: "container centered"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "board presentation-4"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "discover-search-index"
       }, this.state.searchForm ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(SearchBar, {
         query: this.state.query,
@@ -1375,7 +1385,7 @@ function (_React$Component) {
         className: "results-title-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
         className: "discover-title-text"
-      }, text)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DiscoverIndexItems, this.props))));
+      }, text)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DiscoverIndexItems, this.props))))))));
     }
   }]);
 
