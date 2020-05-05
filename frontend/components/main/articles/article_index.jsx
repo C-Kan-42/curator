@@ -17,17 +17,14 @@ class ArticleIndex extends React.Component {
             .then(res => {
                 this.setState({ articles: res.articles })
             })
-        // if (this.props.articles.length === 0) {
-            
-        // }
-
+  
         this.articleIndex = document.querySelector(".article-index")
     }
 
     componentDidUpdate(prevProps) {
         const oldURL = prevProps.match.url;
         const newURL = this.props.match.url;
-        if ((this.props.articles.length === 0) && (oldURL !== newURL)) {
+        if ((this.props.articles) && (oldURL !== newURL)) {
             this.props.fetchAction(this.props.match.params.id)
                 .then(res => {
                     this.setState({ articles: res.articles })
@@ -43,7 +40,7 @@ class ArticleIndex extends React.Component {
         console.log(this.props);
         console.log(this.state)
         // console.log(this.state)
-        if (this.props.articles.length > 0) {
+        if (this.props.articles) {
             console.log('reached!!')
             articleItems = 
                 (this.props.articles.map(article => {

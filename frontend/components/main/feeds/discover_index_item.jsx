@@ -2,22 +2,42 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 function DiscoverIndexItem({ feed, deleteFeed, createFeed }) {
+
     return (
-        <div key={feed.id} className="feed-search-item">
-            <div className="feed-search-name">
-                <img src={feed.favicon_url} className="feed-index-icon" />
-                <div className="feed-search-description">
-                    <Link to={`/i/discover/${feed.id}`}>
-                        <h3>{feed.title}</h3>
-                    </Link>
-                    <p>{feed.description}</p>
-                </div>
+        <div key={feed.id} className="feed-discover-item">
+            <div className="feed-visual"
+                title={feed.title}
+                style={{backgroundImage: `url(${feed.favicon_url})`}}
+            >
             </div>
-            <div>
-                {feed.subscribed ? 
-                    <UnsubscribeButton {...{feed, deleteFeed}} /> :
-                    <SubscribeButton {...{feed, createFeed}} />
-                }
+            <div className="feed-discover-content">
+                <div className="feed-discover-header-container">
+                    <div className="feed-discover-title">
+                        <Link to={`/i/discover/${feed.id}`}>
+                            <h3 className="feed-discover-title-link">{feed.title}</h3>
+                        </Link>
+                    </div>
+                    <div className="feed-discover-button-container">
+                        <div className="feed-discover-buttons">
+                            <div className="follow-button-floated">
+                                {feed.subscribed ? 
+                                    <UnsubscribeButton {...{feed, deleteFeed}} /> :
+                                    <SubscribeButton {...{feed, createFeed}} />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="feed-discover-metadata">
+                    <a href={feed.website_url} title={feed.website_url}
+                    target="blank" rel="noopner noreferrer"
+                    className="feed-discover-metadata-item">
+                        {feed.website_url}
+                    </a>
+                </div>
+                <div className="feed-discover-description">
+                    {feed.description}
+                </div>
             </div>
         </div>
     );
@@ -33,11 +53,11 @@ class UnsubscribeButton extends React.Component {
 
     render() {
         return(
-            <button className="following-button discover-button"
+            <button className="unfollow-button discover-button"
                 onMouseOver={e => this.setState({ hovering: true })}
                 onMouseLeave={e => this.setState({ hovering: false })}
                 onClick={e => this.props.deleteFeed(this.props.feed)}>
-                {this.state.hovering ? "Unfollow?" : "Following"}
+                {this.state.hovering ? "Unfollow" : "Following"}
             </button>
         );
     }

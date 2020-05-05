@@ -6,7 +6,7 @@ import LandingContainer from '../landing/landing_container';
 import ArticleContainer from './articles/article_container';
 import FeedsIndexContainer from './feeds/feeds_index_container';
 import DiscoverContainer from './feeds/discover_container';
-// import SubscriptionArticlesIndexPopout from './stories/subscription_stories_index_popout';
+import SubscriptionArticlesIndexPopout from './articles/subscription_articles_index_popout';
 import ArticleShowPopout from './articles/article_show_popout';
 import { receiveFeedTitle } from '../../actions/ui_actions';
 // import throttle from 'lodash/throttle';
@@ -70,7 +70,7 @@ class MainContent extends React.Component {
                 {/* <ProtectedRoute path="/i/reads" component={ArticleContainer} /> */}
                 <Switch>
                     <ProtectedRoute path="/i/:prevSource/:prevId/articles/:id" component={ArticleShowPopout} />
-                    {/* <ProtectedRoute path="/i/discover/:id" component={SubscriptionStoriesIndexPopout} /> */}
+                    <ProtectedRoute path="/i/discover/:id" component={SubscriptionArticlesIndexPopout} />
                 </Switch>
                 <ProtectedRoute path="/i/discover" component={DiscoverContainer} />
                 <ProtectedRoute path="/i/subscriptions/:id" component={ArticleContainer} />

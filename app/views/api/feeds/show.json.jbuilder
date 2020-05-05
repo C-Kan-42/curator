@@ -4,13 +4,13 @@ all_articles = []
 # ON reads.story_id = articles.id
 # AND reads.reader_id = #{current_user.id}"
 
+#   .joins(reads_join) after .select("articles.*")
 json.articles({})
 json.articles do
   json.byId({})
   json.byId do
     articles = @feed.articles
       .select("articles.*")
-    #   .joins(reads_join)
       .order('pub_date DESC')
       .limit(20)
     articles.each do |article|

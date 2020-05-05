@@ -22,8 +22,8 @@ class Api::FeedsController < ApplicationController
 
     def show
         @feed = Feed
-            .includes(:articles, :subscriptions)
-            .find_by(id: params[:id])
+                .includes(:articles, :subscriptions)
+                .find_by(id: params[:id])
         render :show
     end
 

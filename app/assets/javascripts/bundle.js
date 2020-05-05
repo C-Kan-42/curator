@@ -713,11 +713,15 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
     latest: {
       title: "Latest"
     },
+    discover: _objectSpread({}, feed, {
+      previewView: true
+    }),
     subscriptions: _objectSpread({}, feed)
   };
   var articleIds = {
     latest: state.session.latest,
-    subscriptions: feed.articles
+    subscriptions: feed.articles,
+    discover: feed.articles
   };
   console.log(articleIds); // console.log(path)
 
@@ -733,14 +737,13 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
-  var path = ownProps.match.path.split('/')[2]; // console.log(path)
-  // const fetchBenches = {
-  //     latest: () => dispatch(fetchLatest())
-  // }
-
+  var path = ownProps.match.path.split('/')[2];
   var fetchActions = {
     latest: function latest(id) {
       return dispatch(Object(_actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["fetchLatest"])(id));
+    },
+    discover: function discover(id) {
+      return dispatch(Object(_actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["fetchUnsubscribedFeed"])(id));
     },
     subscriptions: function subscriptions(id, offset) {
       return dispatch(Object(_actions_subscription_actions__WEBPACK_IMPORTED_MODULE_3__["fetchSingleFeed"])(id, offset));
@@ -822,9 +825,7 @@ function (_React$Component) {
         _this2.setState({
           articles: res.articles
         });
-      }); // if (this.props.articles.length === 0) {
-      // }
-
+      });
       this.articleIndex = document.querySelector(".article-index");
     }
   }, {
@@ -835,7 +836,7 @@ function (_React$Component) {
       var oldURL = prevProps.match.url;
       var newURL = this.props.match.url;
 
-      if (this.props.articles.length === 0 && oldURL !== newURL) {
+      if (this.props.articles && oldURL !== newURL) {
         this.props.fetchAction(this.props.match.params.id).then(function (res) {
           _this3.setState({
             articles: res.articles
@@ -861,7 +862,7 @@ function (_React$Component) {
       console.log(this.props);
       console.log(this.state); // console.log(this.state)
 
-      if (this.props.articles.length > 0) {
+      if (this.props.articles) {
         console.log('reached!!');
         articleItems = this.props.articles.map(function (article) {
           // const article = this.state.articles.byId[articleId]
@@ -1238,16 +1239,42 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 var ArticleShowPopout = function ArticleShowPopout(props) {
   var prevSource = props.match.params.prevSource;
   var prevId = props.match.params.prevId ? props.match.params.prevId : null;
-  var prevURL = prevId ? "".concat(prevSource, "/").concat(prevId) : "".concat(prevSource);
-  var newProps = {
-    closePath: "/i/".concat(prevURL)
-  };
+  var prevURL = prevId ? "".concat(prevSource, "/").concat(prevId) : "".concat(prevSource); // const newProps = {
+  //     closePath: `/i/${prevURL}`
+  // };
+
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_popout__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({}, props, {
     closePath: "/i/".concat(prevURL)
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_article_show__WEBPACK_IMPORTED_MODULE_1__["default"], null));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ArticleShowPopout);
+
+/***/ }),
+
+/***/ "./frontend/components/main/articles/subscription_articles_index_popout.jsx":
+/*!**********************************************************************************!*\
+  !*** ./frontend/components/main/articles/subscription_articles_index_popout.jsx ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _article_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./article_container */ "./frontend/components/main/articles/article_container.js");
+/* harmony import */ var _popout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../popout */ "./frontend/components/main/popout.jsx");
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = (function (props) {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_popout__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({}, props, {
+    closePath: '/i/discover'
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_article_container__WEBPACK_IMPORTED_MODULE_1__["default"], null));
+});
 
 /***/ }),
 
@@ -1336,15 +1363,29 @@ function (_React$Component) {
     value: function render() {
       var text = this.state.query.length === 0 ? "Popular Feeds" : "Results";
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "Frame"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "PageHolderFX",
+        className: "fx"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "PageFX",
+        className: "container centered"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "board presentation-4"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "discover-search-index"
       }, this.state.searchForm ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(SearchBar, {
         query: this.state.query,
         handleInputChange: this.handleInputChange
       }) : null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "discover-items"
+        className: "feed-results-row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "results-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "results-title-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
         className: "discover-title-text"
-      }, text), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DiscoverIndexItems, this.props)));
+      }, text)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DiscoverIndexItems, this.props))))))));
     }
   }]);
 
@@ -1355,8 +1396,8 @@ function SearchBar(_ref) {
   var query = _ref.query,
       handleInputChange = _ref.handleInputChange;
   var styles = {
-    'padding-left': '44px',
-    'padding-right': '100px'
+    'paddingLeft': '44px',
+    'paddingRight': '100px'
   };
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "search-container"
@@ -1392,7 +1433,7 @@ function DiscoverIndexItems(_ref2) {
     }, feedActions));
   });
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "results"
+    className: "feed-results-list"
   }, results);
 }
 
@@ -1498,23 +1539,46 @@ function DiscoverIndexItem(_ref) {
       createFeed = _ref.createFeed;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     key: feed.id,
-    className: "feed-search-item"
+    className: "feed-discover-item"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "feed-search-name"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    src: feed.favicon_url,
-    className: "feed-index-icon"
+    className: "feed-visual",
+    title: feed.title,
+    style: {
+      backgroundImage: "url(".concat(feed.favicon_url, ")")
+    }
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "feed-search-description"
+    className: "feed-discover-content"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "feed-discover-header-container"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "feed-discover-title"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     to: "/i/discover/".concat(feed.id)
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, feed.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, feed.description))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, feed.subscribed ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(UnsubscribeButton, {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+    className: "feed-discover-title-link"
+  }, feed.title))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "feed-discover-button-container"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "feed-discover-buttons"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "follow-button-floated"
+  }, feed.subscribed ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(UnsubscribeButton, {
     feed: feed,
     deleteFeed: deleteFeed
   }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(SubscribeButton, {
     feed: feed,
     createFeed: createFeed
-  })));
+  }))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "feed-discover-metadata"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: feed.website_url,
+    title: feed.website_url,
+    target: "blank",
+    rel: "noopner noreferrer",
+    className: "feed-discover-metadata-item"
+  }, feed.website_url)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "feed-discover-description"
+  }, feed.description)));
 }
 
 var UnsubscribeButton =
@@ -1540,7 +1604,7 @@ function (_React$Component) {
       var _this2 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "following-button discover-button",
+        className: "unfollow-button discover-button",
         onMouseOver: function onMouseOver(e) {
           return _this2.setState({
             hovering: true
@@ -1554,7 +1618,7 @@ function (_React$Component) {
         onClick: function onClick(e) {
           return _this2.props.deleteFeed(_this2.props.feed);
         }
-      }, this.state.hovering ? "Unfollow?" : "Following");
+      }, this.state.hovering ? "Unfollow" : "Following");
     }
   }]);
 
@@ -1966,8 +2030,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _articles_article_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./articles/article_container */ "./frontend/components/main/articles/article_container.js");
 /* harmony import */ var _feeds_feeds_index_container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./feeds/feeds_index_container */ "./frontend/components/main/feeds/feeds_index_container.js");
 /* harmony import */ var _feeds_discover_container__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./feeds/discover_container */ "./frontend/components/main/feeds/discover_container.jsx");
-/* harmony import */ var _articles_article_show_popout__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./articles/article_show_popout */ "./frontend/components/main/articles/article_show_popout.jsx");
-/* harmony import */ var _actions_ui_actions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../actions/ui_actions */ "./frontend/actions/ui_actions.js");
+/* harmony import */ var _articles_subscription_articles_index_popout__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./articles/subscription_articles_index_popout */ "./frontend/components/main/articles/subscription_articles_index_popout.jsx");
+/* harmony import */ var _articles_article_show_popout__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./articles/article_show_popout */ "./frontend/components/main/articles/article_show_popout.jsx");
+/* harmony import */ var _actions_ui_actions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../actions/ui_actions */ "./frontend/actions/ui_actions.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
@@ -1995,7 +2060,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
- // import SubscriptionArticlesIndexPopout from './stories/subscription_stories_index_popout';
+
 
 
  // import throttle from 'lodash/throttle';
@@ -2079,7 +2144,10 @@ function (_React$Component) {
         component: _articles_article_container__WEBPACK_IMPORTED_MODULE_5__["default"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_3__["ProtectedRoute"], {
         path: "/i/:prevSource/:prevId/articles/:id",
-        component: _articles_article_show_popout__WEBPACK_IMPORTED_MODULE_8__["default"]
+        component: _articles_article_show_popout__WEBPACK_IMPORTED_MODULE_9__["default"]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_3__["ProtectedRoute"], {
+        path: "/i/discover/:id",
+        component: _articles_subscription_articles_index_popout__WEBPACK_IMPORTED_MODULE_8__["default"]
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_3__["ProtectedRoute"], {
         path: "/i/discover",
         component: _feeds_discover_container__WEBPACK_IMPORTED_MODULE_7__["default"]
@@ -2088,7 +2156,7 @@ function (_React$Component) {
         component: _articles_article_container__WEBPACK_IMPORTED_MODULE_5__["default"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_3__["ProtectedRoute"], {
         path: "/i/:prevSource/articles/:id",
-        component: _articles_article_show_popout__WEBPACK_IMPORTED_MODULE_8__["default"]
+        component: _articles_article_show_popout__WEBPACK_IMPORTED_MODULE_9__["default"]
       }));
     }
   }]);
@@ -2112,7 +2180,7 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     receiveFeedTitle: function receiveFeedTitle(title) {
-      return dispatch(Object(_actions_ui_actions__WEBPACK_IMPORTED_MODULE_9__["receiveFeedTitle"])(title));
+      return dispatch(Object(_actions_ui_actions__WEBPACK_IMPORTED_MODULE_10__["receiveFeedTitle"])(title));
     }
   };
 };
