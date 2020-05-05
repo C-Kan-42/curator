@@ -74,7 +74,7 @@ class Feed < ApplicationRecord
         self.website_url = @feed_page.url
         self.last_built = Time.now
         if rss_url === 'http://feeds.bbci.co.uk/news/world/rss.xml'
-            self.favicon_url = @rss_feed.image.url
+            self.favicon_url = "https://storage.googleapis.com/site-assets/6tEjjG1yas2HK_Qxnos1q7W8ioIhhmXKTYoNgwIjOLo_visual-16bf7b9f0af"
         end
 
         self.favicon_url = @feed_page.images.favicon || favicon_url
