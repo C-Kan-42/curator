@@ -42,10 +42,15 @@ class Discover extends React.Component {
                     null
                 }
 
-                <div className="discover-items">
-                    <h2 className="discover-title-text">{text}</h2>
-                    <DiscoverIndexItems {...this.props } />
+                <div className="feed-results-row">
+                    <div className="results-container">
+                        <div className="results-title-container">
+                            <h2 className="discover-title-text">{text}</h2>
+                        </div>
+                        <DiscoverIndexItems {...this.props } />
+                    </div>
                 </div>
+                
             </div>            
         );
     }
@@ -81,11 +86,11 @@ function DiscoverIndexItems({ feeds, ...feedActions}) {
     const results = feeds.results.length == 0 ?
         ["No Feeds Found"] :
         feeds.results.map(resultId => 
-                <DiscoverIndexItem key={resultId} feed={feeds.byId[resultId]} {...feedActions} />
+            <DiscoverIndexItem key={resultId} feed={feeds.byId[resultId]} {...feedActions} />
         );
 
     return (
-        <div className="results">
+        <div className="feed-results-list">
             {results}
         </div>
     )

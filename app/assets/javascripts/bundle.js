@@ -1341,10 +1341,14 @@ function (_React$Component) {
         query: this.state.query,
         handleInputChange: this.handleInputChange
       }) : null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "discover-items"
+        className: "feed-results-row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "results-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "results-title-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
         className: "discover-title-text"
-      }, text), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DiscoverIndexItems, this.props)));
+      }, text)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DiscoverIndexItems, this.props))));
     }
   }]);
 
@@ -1392,7 +1396,7 @@ function DiscoverIndexItems(_ref2) {
     }, feedActions));
   });
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "results"
+    className: "feed-results-list"
   }, results);
 }
 

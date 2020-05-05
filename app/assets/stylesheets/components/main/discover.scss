@@ -2,6 +2,52 @@ button {
   cursor: pointer;
 }
 
+//Feed results list
+.feed-results-row {
+    margin-left: -12px;
+    margin-right: -12px;
+    box-sizing: border-box;
+    margin-top: 3rem;
+    color: #333333;
+    font-size: 12px;
+    font-family: sans-serif;
+}
+
+.results-container {
+  width: 100%;
+  position: relative;
+  min-height: 1px;
+  padding-left: 12px;
+  padding-right: 12px;
+  box-sizing: border-box;
+}
+
+.results-title-container {
+  box-sizing: border-box;
+  margin-bottom: 1.5rem !important;
+}
+
+.discover-title-text {
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  font-size: 0.75rem;
+  color: #757575;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-family: sans-serif;
+  line-height: 1rem;
+}
+
+.feed-results-list {
+  box-sizing: border-box;
+  color: #333333;
+  font-size: 12px;
+  font-family: sans-serif;
+}
+
+//end of feed results list
+
 .feed-index-icon {
   height: 18px;
   width: 18px;
@@ -62,6 +108,8 @@ button {
   padding-right: 10px;
 }
 
+
+//Search bar 
 .search-description {
   font-size: 1.25rem;
   font-weight: 300;
@@ -107,29 +155,29 @@ button {
   height: 3.5rem;
   position: relative;
   background: rgba(255, 255, 255, 0.75);
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 0.25rem;
-    box-shadow: 0 0 0 0 transparent inset;
-    color: #333333;
-    font-size: 1rem;
-    line-height: normal;
-    margin: 0;
-    outline: 0;
-    padding: .5rem .75rem;
-    transition: color .1s ease, border-color .1s ease;
-    vertical-align: top;
-    width: 100%;
-    // -webkit-writing-mode: horizontal-tb !important;
-    text-rendering: auto;
-    letter-spacing: normal;
-    word-spacing: normal;
-    text-transform: none;
-    text-indent: 0px;
-    text-shadow: none;
-    display: inline-block;
-    text-align: start;
-    -webkit-rtl-ordering: logical;
-    cursor: text;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+  box-shadow: 0 0 0 0 transparent inset;
+  color: #333333;
+  font-size: 1rem;
+  line-height: normal;
+  margin: 0;
+  outline: 0;
+  padding: .5rem .75rem;
+  transition: color .1s ease, border-color .1s ease;
+  vertical-align: top;
+  width: 100%;
+  // -webkit-writing-mode: horizontal-tb !important;
+  text-rendering: auto;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: start;
+  -webkit-rtl-ordering: logical;
+  cursor: text;
 }
 
 .search-form-overlay {
@@ -169,9 +217,14 @@ button {
   border: 1px solid #2bb24c;
 }
 
-// .feed-search-input-container input:focus + i {
-//   color: grey;
-// }
+//end of search bar
+
+//Feed Index Item
+
+
+
+
+//end of Feed Index Item
 
 .feed-url-container {
   margin-top: 5px;
