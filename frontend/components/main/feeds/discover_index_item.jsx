@@ -57,7 +57,7 @@ class UnsubscribeButton extends React.Component {
                 onMouseOver={e => this.setState({ hovering: true })}
                 onMouseLeave={e => this.setState({ hovering: false })}
                 onClick={e => this.props.deleteFeed(this.props.feed)}>
-                {this.state.hovering ? "Unfollow?" : "Following"}
+                {this.state.hovering ? "Unfollow" : "Following"}
             </button>
         );
     }

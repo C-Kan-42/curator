@@ -18,12 +18,14 @@ const mapStateToProps = (state, ownProps) => {
 
     const pathProps = {
         latest: {title: "Latest"},
+        discover: {...feed, previewView: true},
         subscriptions: {...feed}
     };
 
     const articleIds = {
         latest: state.session.latest,
-        subscriptions: feed.articles
+        subscriptions: feed.articles,
+        discover: feed.articles
     };
     
     console.log(articleIds)
@@ -40,12 +42,9 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     const path = ownProps.match.path.split('/')[2];
-    // console.log(path)
-    // const fetchBenches = {
-    //     latest: () => dispatch(fetchLatest())
-    // }
     const fetchActions = {
         latest: (id) => dispatch(fetchLatest(id)),
+        discover: (id) => dispatch(fetchUnsubscribedFeed(id)),
         subscriptions: (id, offset) => dispatch(fetchSingleFeed(id, offset))
     }
 

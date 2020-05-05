@@ -8,9 +8,9 @@ const ArticleShowPopout = props => {
         props.match.params.prevId : null;
     const prevURL = prevId ? `${prevSource}/${prevId}` : `${prevSource}`;
 
-    const newProps = {
-        closePath: `/i/${prevURL}`
-    };
+    // const newProps = {
+    //     closePath: `/i/${prevURL}`
+    // };
 
     return (
         <Popout {...props} closePath={`/i/${prevURL}`}>

@@ -63,7 +63,7 @@ class Feed < ApplicationRecord
         @rss_feed ||= RSS::Parser.parse(open(rss_url).read, false)
         if rss_url == 'https://www.wired.com/feed/rss'
             page_link = 'https://www.wired.com'
-            favicon_url = MetaInspector.new(@rss_feed.items[0].link).images.favicon
+            favicon_url = 'https://storage.googleapis.com/site-assets/tLs-1vBwN-VbKdXz72E49J0xQKpgQOM84Ue-E_GZh84_visual-1704034bda4'
         else
             page_link = @rss_feed.channel.image.link
         end

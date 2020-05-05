@@ -59,8 +59,8 @@ class Discover extends React.Component {
 
 function SearchBar({query, handleInputChange}) {
     let styles = {
-        'padding-left': '44px',
-        'padding-right': '100px'
+        'paddingLeft': '44px',
+        'paddingRight': '100px'
     };
 
     return (
