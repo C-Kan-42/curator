@@ -1,7 +1,7 @@
 # Curator
 
 -----------
-![alt_text](https://imgur.com/a/w4zPCYB)
+![](https://i.imgur.com/90cxFTX.png)
 
 [Live Website Link](https://curator-1.herokuapp.com/#/)
 
@@ -17,7 +17,7 @@ This app uses Ruby on Rails for the backend API, and Javascript/React/Redux to r
 
 Users are able to click on individual articles on the show page, and a modal popout will appear on the right side of the screen. This was accomplished with a modal passing relevant articles props to a popout container, and also makes use of this.props.children.
 
-![alt_text](https://imgur.com/a/2XzsDHs)
+![](https://i.imgur.com/uKQ6JhZ.jpg)
 
 ```
 render() {
@@ -37,7 +37,7 @@ render() {
 
 Users are able to search for feeds by keyword, feed title, or rss url, through a search bar that dynamically re-renders as users continue typing. This is accomplished with the use of the #ransack method (Ruby on Rails) on the backend to filter search results, as well as React onChange event handlers and .setState on the frontend to dynamically re-render the results. 
 
-![alt_text](https://imgur.com/a/x8mOqbF)
+![](https://i.imgur.com/g22Bb0Z.png)
 
 ```
 ----In main class----
