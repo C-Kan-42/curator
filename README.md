@@ -1,17 +1,27 @@
 # Curator
 
 -----------
-![](https://i.imgur.com/90cxFTX.png)
-
 [Live Website Link](https://curator-1.herokuapp.com/#/)
 
 This web app is a clone of Feedly, a popular news aggregator. With so many sources of news today, this site allows users to subscribe to your preferred news sources and organize them into feeds. Curator makes use of RSS Feeds, which hold raw data from news sources and allow users to bypass social media and advertisements while retaining access to their favorite articles. Curator enables users to curate and view their own personalized news page, with their favorite topics and sites neatly organized in one place. 
+
+![](https://i.imgur.com/90cxFTX.png)
 
 ## Technology
 
 This app uses Ruby on Rails for the backend API, and Javascript/React/Redux to render the front-end. 
 
 ## Features
+
+Curator has a range of features including: 
+* User authentication
+* Automated article scraping of RSS feeds
+* Article and feed pop outs
+* Follow and unfollow feeds
+* Dynamic search bar
+* Read and unread article marking
+
+A few highlighted features include: 
 
 ### Article Floating Modals
 
@@ -72,6 +82,6 @@ Users are able to search for feeds by keyword, feed title, or rss url, through a
 ```
 
 
-### Acknowledgements
+## Acknowledgements
 
 I would like to acknowledge [Elliot Grieco](https://github.com/etgrieco), as I referenced and got inspiration from his code for his Feedly clone, easyFeeds. I would also like to thank my project advisor, Michelle Kim, and my classmates at App Academy, for all their help and support. 
