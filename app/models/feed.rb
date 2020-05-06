@@ -64,15 +64,23 @@ class Feed < ApplicationRecord
         if rss_url == 'https://www.wired.com/feed/rss'
             page_link = 'https://www.wired.com'
             favicon_url = 'https://storage.googleapis.com/site-assets/tLs-1vBwN-VbKdXz72E49J0xQKpgQOM84Ue-E_GZh84_visual-1704034bda4'
+        elsif rss_url == 'http://feeds.washingtonpost.com/rss/national'
+            page_link = 'https://www.washingtonpost.com/national/?itid=nb_hp_national'
+            favicon_url = 'https://storage.googleapis.com/site-assets/omg6N8BjH3hdVOfXoFqfQj5UQcC2PsAU6NLrHBXu_Rs_visual-166f1263aa5'
+        elsif rss_url == 'https://www.newyorker.com/feed/everything'
+            page_link = 'https://www.newyorker.com/'
+            # favicon_url = 'https://storage.googleapis.com/site-assets/C9CfPZRBh-c_qSlXCotKuKjPbIhUHLA4NHKO5PZy49k_visual-170318a6422'
         else
             page_link = @rss_feed.channel.image.link
         end
+
         @feed_page = MetaInspector.new(page_link)
         
         self.title = @feed_page.title || @rss_feed.channel.image.title || "New Feed"
         self.description = @feed_page.description || @rss_feed.channel.description
         self.website_url = @feed_page.url
         self.last_built = Time.now
+
         if rss_url === 'http://feeds.bbci.co.uk/news/world/rss.xml'
             self.favicon_url = "https://storage.googleapis.com/site-assets/6tEjjG1yas2HK_Qxnos1q7W8ioIhhmXKTYoNgwIjOLo_visual-16bf7b9f0af"
         end
