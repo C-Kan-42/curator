@@ -1,9 +1,11 @@
 # Curator
 
 -----------
+![alt_text](https://imgur.com/a/w4zPCYB)
+
 [Live Website Link](https://curator-1.herokuapp.com/#/)
 
-This web app is a clone of Feedly, a popular news aggregator. With so many sources of news today, this site allows users to subscribe to your preferred news sources and organize them into feeds. Curator makes use of RSS Feeds, which hold raw data from news sources and allow users to bypass social media and advertisements while consuming their favorite articles. Curator enables users to curate and view their own personalized news page, with their favorite topics and sites neatly organized in one place. 
+This web app is a clone of Feedly, a popular news aggregator. With so many sources of news today, this site allows users to subscribe to your preferred news sources and organize them into feeds. Curator makes use of RSS Feeds, which hold raw data from news sources and allow users to bypass social media and advertisements while retaining access to their favorite articles. Curator enables users to curate and view their own personalized news page, with their favorite topics and sites neatly organized in one place. 
 
 ## Technology
 
@@ -14,6 +16,8 @@ This app uses Ruby on Rails for the backend API, and Javascript/React/Redux to r
 ### Article Floating Modals
 
 Users are able to click on individual articles on the show page, and a modal popout will appear on the right side of the screen. This was accomplished with a modal passing relevant articles props to a popout container, and also makes use of this.props.children.
+
+![alt_text](https://imgur.com/a/2XzsDHs)
 
 ```
 render() {
@@ -28,6 +32,45 @@ render() {
         );
 }
 ```
+
+### Dynamic Search Bar
+
+Users are able to search for feeds by keyword, feed title, or rss url, through a search bar that dynamically re-renders as users continue typing. This is accomplished with the use of the #ransack method (Ruby on Rails) on the backend to filter search results, as well as React onChange event handlers and .setState on the frontend to dynamically re-render the results. 
+
+![alt_text](https://imgur.com/a/x8mOqbF)
+
+```
+----In main class----
+
+ handleInputChange(e) {
+        console.log('onChange result', e.target.value);
+        this.setState({
+            query: e.target.value
+        })
+        this.props.fetchFeedResults(e.target.value);
+            // .then(res => 
+            //     this.setState({filtered: res.data})
+            //     console.log(res);
+            // );
+        //the action .fetchFeedResults takes care of the filtering for us, see feeds_controller.rb index method
+        //we use the .ransack method to search
+    };
+
+----In function searchBar----
+
+<div className="form-input-container">
+        <input value={query} onChange={handleInputChange} type='text'
+            placeholder='Search by topic, website, or RSS link'
+            autoCorrect="on"
+            style={styles}
+            className="search-form-input" />
+        <div className="search-form-overlay">
+            <i className="search-icon"></i>
+        </div>
+</div>
+
+```
+
 
 ### Acknowledgements
 
