@@ -19,10 +19,12 @@ seed_urls = [
     'https://www.wired.com/feed/rss',
     'http://feeds.bbci.co.uk/news/world/rss.xml',
     'https://feeds.npr.org/1039/rss.xml',
-    'https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml'
+    'https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml',
+    'http://feeds.washingtonpost.com/rss/national',
+    'https://techcrunch.com/feed/',
+    'https://www.newyorker.com/feed/everything'
 ]
-#  'https://www.vox.com/rss/index.xml',
-#  'https://www.theverge.com/rss/index.xml',
+
 feeds = seed_urls.map do |url|
     puts "Fetching and scraping #{url}!"
     feed = Feed.new(rss_url: url)
@@ -80,7 +82,6 @@ feed_ids_demo.uniq.each do |feed_id|
         subscriber_id: demoUser.id,
         feed_id: feed_id
     )
-    # sub.title = Faker::Ancient.god if Random.rand(3) > 1
     sub.save
 end   
 
