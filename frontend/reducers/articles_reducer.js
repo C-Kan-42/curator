@@ -17,7 +17,6 @@ const articlesById = (state = {}, action) => {
         case RECEIVE_NEW_FEED:
         case RECEIVE_ARTICLE:
             newState = merge({}, state, action.articles.byId);
-            // console.log(newState)
             return newState;
             // const newArticle = { [action.article.id]: action.article };
             // return Object.assign({}, state, newArticle);

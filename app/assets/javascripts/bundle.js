@@ -723,12 +723,9 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
     subscriptions: feed.articles,
     discover: feed.articles
   };
-  console.log(articleIds); // console.log(path)
-
   var articles = articleIds[path] ? articleIds[path].map(function (articleId) {
     return articlesById[articleId];
   }) : null;
-  console.log(articles);
   return _objectSpread({
     feeds: feeds
   }, pathProps[path], {
@@ -859,11 +856,8 @@ function (_React$Component) {
           previewView = _this$props.previewView,
           readView = _this$props.readView;
       var articleItems;
-      console.log(this.props);
-      console.log(this.state); // console.log(this.state)
 
       if (this.props.articles) {
-        console.log('reached!!');
         articleItems = this.props.articles.map(function (article) {
           // const article = this.state.articles.byId[articleId]
           var feed = feeds[article.feed_id];
@@ -875,7 +869,6 @@ function (_React$Component) {
             history: _this4.props.history
           }, _this4.state, _this4.props));
         });
-        console.log(articleItems);
       }
 
       return (
@@ -1124,11 +1117,9 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      // console.log(this.props.article)
       var feedInfo;
 
       if (this.state.article) {
-        console.log(this.state.article);
         feedInfo = this.state.article.feedInfo;
       }
 
@@ -1347,7 +1338,6 @@ function (_React$Component) {
   }, {
     key: "handleInputChange",
     value: function handleInputChange(e) {
-      console.log('onChange result', e.target.value);
       this.setState({
         query: e.target.value
       });
@@ -2479,7 +2469,6 @@ __webpack_require__.r(__webpack_exports__);
 
 var mapStateToProps = function mapStateToProps(_ref) {
   var session = _ref.session;
-  console.log(session);
   return {
     loggedIn: Boolean(session.currentUser),
     currentUser: session.currentUser
@@ -2700,11 +2689,8 @@ var NavBarLinks = function NavBarLinks(_ref3) {
       feeds = _ref3.feeds,
       selected = _ref3.selected,
       closeNavBar = _ref3.closeNavBar;
-  console.log(feedIds);
-  console.log(feeds);
   var feedsList = feedIds ? feedIds.map(function (feedId) {
     var feed = feeds[feedId];
-    console.log(feed);
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
       className: selected == feedId ? "selected" : "" // onClick={closeNavBar}
       ,
@@ -3128,8 +3114,7 @@ document.addEventListener("DOMContentLoaded", function () {
   window.fetchLatest = _actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["fetchLatest"];
   window.fetchArticle = _actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["fetchArticle"];
   window.getState = store.getState;
-  window.dispatch = store.dispatch; // dispatch(fetchLatest()).then(console.log);
-
+  window.dispatch = store.dispatch;
   var root = document.getElementById("root");
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_3__["default"], {
     store: store
@@ -3172,8 +3157,7 @@ var articlesById = function articlesById() {
     case _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_SINGLE_FEED"]:
     case _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_NEW_FEED"]:
     case _actions_article_actions__WEBPACK_IMPORTED_MODULE_3__["RECEIVE_ARTICLE"]:
-      newState = lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, state, action.articles.byId); // console.log(newState)
-
+      newState = lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, state, action.articles.byId);
       return newState;
     // const newArticle = { [action.article.id]: action.article };
     // return Object.assign({}, state, newArticle);
@@ -3460,7 +3444,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (function () {
   var oldState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
-  Object.freeze(oldState); // console.log(action)
+  Object.freeze(oldState);
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_SESSION_ERRORS"]:
@@ -3607,7 +3591,6 @@ var feedTitleReducer = function feedTitleReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
-  // console.log(action)
   switch (action.type) {
     case _actions_ui_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_FEED_TITLE"]:
       return action.feedTitle;

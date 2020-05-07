@@ -28,10 +28,7 @@ const mapStateToProps = (state, ownProps) => {
         discover: feed.articles
     };
     
-    console.log(articleIds)
-    // console.log(path)
     const articles = articleIds[path] ? articleIds[path].map(articleId => articlesById[articleId]) : null
-    console.log(articles)
     
     return {
         feeds,

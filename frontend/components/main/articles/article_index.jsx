@@ -37,11 +37,8 @@ class ArticleIndex extends React.Component {
     render() {
         const { articles, feeds, title, titleLink, previewView, readView } = this.props;
         let articleItems;
-        console.log(this.props);
-        console.log(this.state)
-        // console.log(this.state)
+        
         if (this.props.articles) {
-            console.log('reached!!')
             articleItems = 
                 (this.props.articles.map(article => {
                     // const article = this.state.articles.byId[articleId]
@@ -57,7 +54,6 @@ class ArticleIndex extends React.Component {
                         />
                     );
                 }))
-            console.log(articleItems)
         }
         
         

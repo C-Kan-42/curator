@@ -119,11 +119,8 @@ const NavBarCollapseExpand = ({ isOpen, handleClick }) => (
 );
 
 const NavBarLinks = ({ feedIds, feeds, selected, closeNavBar }) => {
-    console.log(feedIds)
-    console.log(feeds)
     const feedsList = feedIds ? (feedIds.map(feedId => {
         const feed = feeds[feedId];
-        console.log(feed)
         return (
             <Link className={selected == feedId ? "selected" : ""}
                 // onClick={closeNavBar}
