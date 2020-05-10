@@ -12,7 +12,6 @@ const commonAction = type => payload => ({
     articles: payload.articles
 });
 
-
 // export const receiveLatest = commonAction(RECEIVE_LATEST);
 export const receiveLatest = (payload) => ({
     type: RECEIVE_LATEST,

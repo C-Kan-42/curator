@@ -40,7 +40,6 @@ class ArticleIndexItem extends React.Component {
         return (
             <div className="article-index-item" onClick={e => this.handleRedirect(e, article.id)} className="entry unread u4">
                 <div className="visual" style={imageStyle}>
-                    {/* <img src={`${article.image_url}`} alt=""/> */}
                 </div>
                 <div className="content">
                     <a className="article-title" href={article.link}> 
