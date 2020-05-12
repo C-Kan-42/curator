@@ -90,18 +90,25 @@
 /*!*********************************************!*\
   !*** ./frontend/actions/article_actions.js ***!
   \*********************************************/
-/*! exports provided: RECEIVE_LATEST, RECEIVE_ARTICLE, receiveLatest, receiveArticle, fetchArticle, fetchLatest, fetchUnsubscribedFeed */
+/*! exports provided: RECEIVE_LATEST, RECEIVE_ARTICLE, RECEIVE_READS, RECEIVE_READ, RECEIVE_UNREAD, receiveLatest, receiveArticle, receiveReads, receiveRead, receiveUnread, fetchArticle, fetchLatest, fetchUnsubscribedFeed, markRead */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_LATEST", function() { return RECEIVE_LATEST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_ARTICLE", function() { return RECEIVE_ARTICLE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_READS", function() { return RECEIVE_READS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_READ", function() { return RECEIVE_READ; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_UNREAD", function() { return RECEIVE_UNREAD; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveLatest", function() { return receiveLatest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveArticle", function() { return receiveArticle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveReads", function() { return receiveReads; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveRead", function() { return receiveRead; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveUnread", function() { return receiveUnread; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchArticle", function() { return fetchArticle; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchLatest", function() { return fetchLatest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUnsubscribedFeed", function() { return fetchUnsubscribedFeed; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "markRead", function() { return markRead; });
 /* harmony import */ var _util_article_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/article_api_util */ "./frontend/util/article_api_util.js");
 /* harmony import */ var _util_feed_api_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/feed_api_util */ "./frontend/util/feed_api_util.js");
 /* harmony import */ var _subscription_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./subscription_actions */ "./frontend/actions/subscription_actions.js");
@@ -110,6 +117,9 @@ __webpack_require__.r(__webpack_exports__);
 
 var RECEIVE_LATEST = 'RECEIVE_LATEST';
 var RECEIVE_ARTICLE = 'RECEIVE_ARTICLE';
+var RECEIVE_READS = 'RECEIVE_READS';
+var RECEIVE_READ = 'RECEIVE_READ';
+var RECEIVE_UNREAD = 'RECEIVE_UNREAD';
 
 var commonAction = function commonAction(type) {
   return function (payload) {
@@ -130,8 +140,15 @@ var receiveLatest = function receiveLatest(payload) {
     subscriptions: payload.subscriptions,
     articles: payload.articles
   };
-};
-var receiveArticle = commonAction(RECEIVE_ARTICLE);
+}; // fetch article
+
+var receiveArticle = commonAction(RECEIVE_ARTICLE); // fetch reads
+
+var receiveReads = commonAction(RECEIVE_READS); // create read article
+
+var receiveRead = commonAction(RECEIVE_READ); // create unread article 
+
+var receiveUnread = commonAction(RECEIVE_UNREAD);
 var fetchArticle = function fetchArticle(articleId) {
   return function (dispatch) {
     return _util_article_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchArticle"](articleId).then(function (article) {
@@ -150,6 +167,13 @@ var fetchUnsubscribedFeed = function fetchUnsubscribedFeed(feedId) {
   return function (dispatch) {
     return _util_feed_api_util__WEBPACK_IMPORTED_MODULE_1__["fetchUnsubscribedFeed"](feedId).then(function (feedPayload) {
       return dispatch(Object(_subscription_actions__WEBPACK_IMPORTED_MODULE_2__["receiveSingleFeed"])(feedPayload));
+    });
+  };
+};
+var markRead = function markRead(id) {
+  return function (dispatch) {
+    return _util_article_api_util__WEBPACK_IMPORTED_MODULE_0__["markRead"](id).then(function (articlePayload) {
+      return dispatch(receiveRead(articlePayload));
     });
   };
 };
@@ -713,6 +737,10 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
     latest: {
       title: "Latest"
     },
+    reads: {
+      title: 'Recently Read',
+      readView: true
+    },
     discover: _objectSpread({}, feed, {
       previewView: true
     }),
@@ -720,6 +748,7 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
   };
   var articleIds = {
     latest: state.session.latest,
+    reads: state.session.reads,
     subscriptions: feed.articles,
     discover: feed.articles
   };
@@ -739,6 +768,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
     latest: function latest(id) {
       return dispatch(Object(_actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["fetchLatest"])(id));
     },
+    reads: function reads(id) {
+      return dispatch(fetchReads(offset));
+    },
     discover: function discover(id) {
       return dispatch(Object(_actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["fetchUnsubscribedFeed"])(id));
     },
@@ -747,8 +779,32 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
     }
   };
   return {
-    // fetchLatest: () => dispatch(fetchLatest()),
-    // fetchArticle: (articleId) => dispatch(fetchArticle(articleId))
+    markRead: function (_markRead) {
+      function markRead(_x) {
+        return _markRead.apply(this, arguments);
+      }
+
+      markRead.toString = function () {
+        return _markRead.toString();
+      };
+
+      return markRead;
+    }(function (id) {
+      return dispatch(markRead(id));
+    }),
+    markUnread: function (_markUnread) {
+      function markUnread(_x2) {
+        return _markUnread.apply(this, arguments);
+      }
+
+      markUnread.toString = function () {
+        return _markUnread.toString();
+      };
+
+      return markUnread;
+    }(function (id) {
+      return dispatch(markUnread(id));
+    }),
     fetchAction: fetchActions[path]
   };
 };
@@ -993,6 +1049,9 @@ function (_React$Component) {
     value: function handleExitClick(e) {
       e.preventDefault(); // this.setState({hidden: true});
     }
+  }, {
+    key: "handleReadClick",
+    value: function handleReadClick(e) {}
   }, {
     key: "render",
     value: function render() {
@@ -3157,10 +3216,11 @@ var articlesById = function articlesById() {
     case _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_SINGLE_FEED"]:
     case _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_NEW_FEED"]:
     case _actions_article_actions__WEBPACK_IMPORTED_MODULE_3__["RECEIVE_ARTICLE"]:
+    case _actions_article_actions__WEBPACK_IMPORTED_MODULE_3__["RECEIVE_READS"]:
+    case _actions_article_actions__WEBPACK_IMPORTED_MODULE_3__["RECEIVE_READ"]:
+    case _actions_article_actions__WEBPACK_IMPORTED_MODULE_3__["RECEIVE_UNREAD"]:
       newState = lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, state, action.articles.byId);
       return newState;
-    // const newArticle = { [action.article.id]: action.article };
-    // return Object.assign({}, state, newArticle);
 
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_4__["CLEAR_ENTITIES"]:
       return {};
@@ -3652,13 +3712,16 @@ var configureStore = function configureStore() {
 /*!*******************************************!*\
   !*** ./frontend/util/article_api_util.js ***!
   \*******************************************/
-/*! exports provided: fetchLatest, fetchArticle */
+/*! exports provided: fetchLatest, fetchArticle, markRead, markUnread, fetchReads */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchLatest", function() { return fetchLatest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchArticle", function() { return fetchArticle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "markRead", function() { return markRead; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "markUnread", function() { return markUnread; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchReads", function() { return fetchReads; });
 var fetchLatest = function fetchLatest() {
   return $.ajax({
     url: 'api/articles',
@@ -3672,6 +3735,32 @@ var fetchArticle = function fetchArticle(id) {
   return $.ajax({
     url: "api/articles/".concat(id),
     method: 'GET'
+  });
+};
+var markRead = function markRead(id) {
+  return $.ajax({
+    url: 'api/reads',
+    method: 'POST',
+    data: {
+      read: {
+        article_id: id
+      }
+    }
+  });
+};
+var markUnread = function markUnread(id) {
+  return $.ajax({
+    url: "api/reads/".concat(id),
+    method: 'DELETE'
+  });
+};
+var fetchReads = function fetchReads(offset) {
+  return $.ajax({
+    url: 'api/reads',
+    method: 'GET',
+    data: {
+      offset: offset
+    }
   });
 };
 

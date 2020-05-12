@@ -13,3 +13,27 @@ export const fetchArticle = id => (
     })
 )
 
+export const markRead = id => (
+    $.ajax({
+        url: 'api/reads',
+        method: 'POST',
+        data: { read: {article_id: id}}
+    })
+) 
+
+export const markUnread = id => (
+    $.ajax({
+        url: `api/reads/${id}`,
+        method: 'DELETE',
+    })
+)
+
+export const fetchReads = (offset) => (
+    $.ajax({
+        url: 'api/reads',
+        method: 'GET',
+        data: { offset }
+    })
+)
+
+

@@ -18,6 +18,11 @@ class Article < ApplicationRecord
         through: :feed,
         source: :subscriptions
 
+    has_many :reads,
+        foreign_key: :article_id,
+        class_name: :Read,
+        dependent: :destroy
+
     def self.create_article(article, feed)
         page = MetaInspector.new(article.link)
 

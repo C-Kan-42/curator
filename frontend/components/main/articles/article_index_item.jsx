@@ -27,6 +27,10 @@ class ArticleIndexItem extends React.Component {
         // this.setState({hidden: true});
     }
 
+    handleReadClick(e) {
+
+    };
+    
     render() {
         const {article, feed} = this.props;
         const imageStyle = {

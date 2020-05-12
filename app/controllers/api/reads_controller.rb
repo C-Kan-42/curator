@@ -43,7 +43,19 @@ class Api::ReadsController < ApplicationController
     end
 
     def destroy
+        @read = current_user.reads.find_by(article_id: params[:id])
 
+        if @read
+            @read.destroy
+            @article = Article  
+                        .select("articles.*, reads.reader_id as read")
+                        .joins(reads_sql_join)
+                        .includes(:feed, :subscriptions)
+                        .find_by(id: params[:id])
+                    render 'api/articles/show'
+        else    
+            render json: ["Read does not exist"], status: 404
+        end
     end
 
     def read_params
