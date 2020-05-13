@@ -37,7 +37,7 @@ class ArticleShow extends React.Component {
             <div className="entryholder">
                 <div className="article-show-entry">
                     <div className="entryHeader">
-                        <a href={`${this.state.article.link_url}`} className="entryTitle title read">{this.state.article.title}</a>
+                        <a href={`${this.state.article.link_url}`} className="entryTitle title">{this.state.article.title}</a>
                         <div className="fx metadata">
                             <span className="metadata-holder">
                                 <div className="metadata entryMetadata">

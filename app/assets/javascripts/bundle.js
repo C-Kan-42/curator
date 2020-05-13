@@ -1255,7 +1255,7 @@ function (_React$Component) {
         className: "entryHeader"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "".concat(this.state.article.link_url),
-        className: "entryTitle title read"
+        className: "entryTitle title"
       }, this.state.article.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "fx metadata"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
