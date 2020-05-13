@@ -90,18 +90,27 @@
 /*!*********************************************!*\
   !*** ./frontend/actions/article_actions.js ***!
   \*********************************************/
-/*! exports provided: RECEIVE_LATEST, RECEIVE_ARTICLE, receiveLatest, receiveArticle, fetchArticle, fetchLatest, fetchUnsubscribedFeed */
+/*! exports provided: RECEIVE_LATEST, RECEIVE_ARTICLE, RECEIVE_READS, RECEIVE_READ, RECEIVE_UNREAD, receiveLatest, receiveArticle, receiveReads, receiveRead, receiveUnread, fetchArticle, fetchLatest, fetchUnsubscribedFeed, markRead, markUnread, fetchReads */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_LATEST", function() { return RECEIVE_LATEST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_ARTICLE", function() { return RECEIVE_ARTICLE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_READS", function() { return RECEIVE_READS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_READ", function() { return RECEIVE_READ; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_UNREAD", function() { return RECEIVE_UNREAD; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveLatest", function() { return receiveLatest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveArticle", function() { return receiveArticle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveReads", function() { return receiveReads; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveRead", function() { return receiveRead; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveUnread", function() { return receiveUnread; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchArticle", function() { return fetchArticle; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchLatest", function() { return fetchLatest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUnsubscribedFeed", function() { return fetchUnsubscribedFeed; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "markRead", function() { return markRead; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "markUnread", function() { return markUnread; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchReads", function() { return fetchReads; });
 /* harmony import */ var _util_article_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/article_api_util */ "./frontend/util/article_api_util.js");
 /* harmony import */ var _util_feed_api_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/feed_api_util */ "./frontend/util/feed_api_util.js");
 /* harmony import */ var _subscription_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./subscription_actions */ "./frontend/actions/subscription_actions.js");
@@ -110,6 +119,9 @@ __webpack_require__.r(__webpack_exports__);
 
 var RECEIVE_LATEST = 'RECEIVE_LATEST';
 var RECEIVE_ARTICLE = 'RECEIVE_ARTICLE';
+var RECEIVE_READS = 'RECEIVE_READS';
+var RECEIVE_READ = 'RECEIVE_READ';
+var RECEIVE_UNREAD = 'RECEIVE_UNREAD';
 
 var commonAction = function commonAction(type) {
   return function (payload) {
@@ -130,8 +142,15 @@ var receiveLatest = function receiveLatest(payload) {
     subscriptions: payload.subscriptions,
     articles: payload.articles
   };
-};
-var receiveArticle = commonAction(RECEIVE_ARTICLE);
+}; // fetch article
+
+var receiveArticle = commonAction(RECEIVE_ARTICLE); // fetch reads
+
+var receiveReads = commonAction(RECEIVE_READS); // create read article
+
+var receiveRead = commonAction(RECEIVE_READ); // create unread article 
+
+var receiveUnread = commonAction(RECEIVE_UNREAD);
 var fetchArticle = function fetchArticle(articleId) {
   return function (dispatch) {
     return _util_article_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchArticle"](articleId).then(function (article) {
@@ -150,6 +169,27 @@ var fetchUnsubscribedFeed = function fetchUnsubscribedFeed(feedId) {
   return function (dispatch) {
     return _util_feed_api_util__WEBPACK_IMPORTED_MODULE_1__["fetchUnsubscribedFeed"](feedId).then(function (feedPayload) {
       return dispatch(Object(_subscription_actions__WEBPACK_IMPORTED_MODULE_2__["receiveSingleFeed"])(feedPayload));
+    });
+  };
+};
+var markRead = function markRead(id) {
+  return function (dispatch) {
+    return _util_article_api_util__WEBPACK_IMPORTED_MODULE_0__["markRead"](id).then(function (articlePayload) {
+      return dispatch(receiveRead(articlePayload));
+    });
+  };
+};
+var markUnread = function markUnread(id) {
+  return function (dispatch) {
+    return _util_article_api_util__WEBPACK_IMPORTED_MODULE_0__["markUnread"](id).then(function (articlePayload) {
+      return dispatch(receiveUnread(articlePayload));
+    });
+  };
+};
+var fetchReads = function fetchReads(offset) {
+  return function (dispatch) {
+    return _util_article_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchReads"](offset).then(function (articles) {
+      return dispatch(receiveReads(articles));
     });
   };
 };
@@ -713,22 +753,22 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
     latest: {
       title: "Latest"
     },
-    discover: _objectSpread({}, feed, {
-      previewView: true
-    }),
+    reads: {
+      title: 'Recently Read',
+      readView: true
+    },
+    discover: _objectSpread({}, feed),
     subscriptions: _objectSpread({}, feed)
   };
   var articleIds = {
     latest: state.session.latest,
+    reads: state.session.reads,
     subscriptions: feed.articles,
     discover: feed.articles
   };
-  console.log(articleIds); // console.log(path)
-
   var articles = articleIds[path] ? articleIds[path].map(function (articleId) {
     return articlesById[articleId];
   }) : null;
-  console.log(articles);
   return _objectSpread({
     feeds: feeds
   }, pathProps[path], {
@@ -742,6 +782,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
     latest: function latest(id) {
       return dispatch(Object(_actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["fetchLatest"])(id));
     },
+    reads: function reads(id) {
+      return dispatch(Object(_actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["fetchReads"])(offset));
+    },
     discover: function discover(id) {
       return dispatch(Object(_actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["fetchUnsubscribedFeed"])(id));
     },
@@ -750,8 +793,12 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
     }
   };
   return {
-    // fetchLatest: () => dispatch(fetchLatest()),
-    // fetchArticle: (articleId) => dispatch(fetchArticle(articleId))
+    markRead: function markRead(id) {
+      return dispatch(Object(_actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["markRead"])(id));
+    },
+    markUnread: function markUnread(id) {
+      return dispatch(Object(_actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["markUnread"])(id));
+    },
     fetchAction: fetchActions[path]
   };
 };
@@ -859,11 +906,8 @@ function (_React$Component) {
           previewView = _this$props.previewView,
           readView = _this$props.readView;
       var articleItems;
-      console.log(this.props);
-      console.log(this.state); // console.log(this.state)
 
       if (this.props.articles) {
-        console.log('reached!!');
         articleItems = this.props.articles.map(function (article) {
           // const article = this.state.articles.byId[articleId]
           var feed = feeds[article.feed_id];
@@ -875,7 +919,6 @@ function (_React$Component) {
             history: _this4.props.history
           }, _this4.state, _this4.props));
         });
-        console.log(articleItems);
       }
 
       return (
@@ -946,8 +989,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -966,7 +1007,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
- // import Article
+
 
 var ArticleIndexItem =
 /*#__PURE__*/
@@ -978,12 +1019,15 @@ function (_React$Component) {
 
     _classCallCheck(this, ArticleIndexItem);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(ArticleIndexItem).call(this, props)); // this.state = {
-    //     hidden: false,
-    //     isMouseInside: false
-    // };
-
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ArticleIndexItem).call(this, props));
+    _this.state = {
+      hidden: false,
+      read: Boolean(_this.props.article.read),
+      isMouseInside: false
+    };
     _this.handleRedirect = _this.handleRedirect.bind(_assertThisInitialized(_this));
+    _this.handleHideClick = _this.handleHideClick.bind(_assertThisInitialized(_this));
+    _this.handleReadClick = _this.handleReadClick.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -996,9 +1040,35 @@ function (_React$Component) {
       this.props.history.push("".concat(originPath, "/articles/").concat(articleId)); // this.handle
     }
   }, {
-    key: "handleExitClick",
-    value: function handleExitClick(e) {
-      e.preventDefault(); // this.setState({hidden: true});
+    key: "handleHideClick",
+    value: function handleHideClick(e) {
+      e.preventDefault();
+      this.setState({
+        hidden: true
+      });
+      this.handleReadClick(e);
+    }
+  }, {
+    key: "handleReadClick",
+    value: function handleReadClick(e) {
+      //need to check if article is in reads
+      //if it is, send markUnread
+      //if not, send markRead
+      console.log(this.props.article);
+      console.log(this.state.read);
+      e.preventDefault();
+
+      if (this.state.read && e.target.className.includes('mark-as-read')) {
+        this.props.markUnread(this.props.article.id);
+        this.setState({
+          read: false
+        });
+      } else if (!this.state.read) {
+        this.props.markRead(this.props.article.id);
+        this.setState({
+          read: true
+        });
+      }
     }
   }, {
     key: "render",
@@ -1008,26 +1078,53 @@ function (_React$Component) {
       var _this$props = this.props,
           article = _this$props.article,
           feed = _this$props.feed;
+      var isMouseInside = this.state.isMouseInside;
       var imageStyle = {
         backgroundImage: 'url(' + "\"".concat(article.image_url, "\"") + ')'
       }; // const originPath = this.props.history.location.pathname;
 
+      var articleIndexItemClass = "entry unread u4" + (this.state.hidden ? " hidden" : "") + (this.state.read ? " read" : ""); // + (this.props.condensedView ? " condensed" : "")
+
       var timeSincePub = moment__WEBPACK_IMPORTED_MODULE_2__(article.pub_date).fromNow();
       timeSincePub = timeSincePub.split(" ")[0] === "in" ? "Just now" : timeSincePub.split(" ").slice(0, 2).join(' ');
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", _defineProperty({
-        className: "article-index-item",
-        onClick: function onClick(e) {
-          return _this2.handleRedirect(e, article.id);
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "".concat(articleIndexItemClass),
+        onMouseEnter: function onMouseEnter(e) {
+          return _this2.setState({
+            isMouseInside: true
+          });
+        },
+        onMouseLeave: function onMouseLeave(e) {
+          return _this2.setState({
+            isMouseInside: false
+          });
         }
-      }, "className", "entry unread u4"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "visual",
         style: imageStyle
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "content"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         className: "article-title",
-        href: article.link
-      }, article.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        href: article.link,
+        onClick: function onClick(e) {
+          return _this2.handleRedirect(e, article.id);
+        }
+      }, article.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "hide ".concat(isMouseInside ? "" : "hidden-button"),
+        title: "Mark as read and hide",
+        type: "button",
+        onClick: function onClick(e) {
+          return _this2.handleHideClick(e);
+        }
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "mark-as-read ".concat(isMouseInside ? "" : "hidden-button"),
+        title: "Mark as read",
+        type: "button",
+        onClick: function onClick(e) {
+          return _this2.handleReadClick(e);
+        }
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "metadata"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "feed-source"
@@ -1045,6 +1142,24 @@ function (_React$Component) {
 
   return ArticleIndexItem;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+var ReadButtons = function ReadButtons(_ref) {
+  var read = _ref.read,
+      handleReadClick = _ref.handleReadClick,
+      handleHideClick = _ref.handleHideClick,
+      isMouseInside = _ref.isMouseInside;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "hide ".concat(isMouseInside ? "" : " hidden"),
+    title: "Mark as read and hide",
+    type: "button",
+    onClick: handleHideClick
+  }, "X"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "mark-as-read ".concat(isMouseInside ? "" : " hidden"),
+    title: "Mark as read",
+    type: "button",
+    onClick: handleReadClick
+  }, "Check"));
+};
 
 /* harmony default export */ __webpack_exports__["default"] = (ArticleIndexItem);
 
@@ -1124,11 +1239,9 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      // console.log(this.props.article)
       var feedInfo;
 
       if (this.state.article) {
-        console.log(this.state.article);
         feedInfo = this.state.article.feedInfo;
       }
 
@@ -1347,7 +1460,6 @@ function (_React$Component) {
   }, {
     key: "handleInputChange",
     value: function handleInputChange(e) {
-      console.log('onChange result', e.target.value);
       this.setState({
         query: e.target.value
       });
@@ -2479,7 +2591,6 @@ __webpack_require__.r(__webpack_exports__);
 
 var mapStateToProps = function mapStateToProps(_ref) {
   var session = _ref.session;
-  console.log(session);
   return {
     loggedIn: Boolean(session.currentUser),
     currentUser: session.currentUser
@@ -2700,11 +2811,8 @@ var NavBarLinks = function NavBarLinks(_ref3) {
       feeds = _ref3.feeds,
       selected = _ref3.selected,
       closeNavBar = _ref3.closeNavBar;
-  console.log(feedIds);
-  console.log(feeds);
   var feedsList = feedIds ? feedIds.map(function (feedId) {
     var feed = feeds[feedId];
-    console.log(feed);
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
       className: selected == feedId ? "selected" : "" // onClick={closeNavBar}
       ,
@@ -3128,8 +3236,7 @@ document.addEventListener("DOMContentLoaded", function () {
   window.fetchLatest = _actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["fetchLatest"];
   window.fetchArticle = _actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["fetchArticle"];
   window.getState = store.getState;
-  window.dispatch = store.dispatch; // dispatch(fetchLatest()).then(console.log);
-
+  window.dispatch = store.dispatch;
   var root = document.getElementById("root");
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_3__["default"], {
     store: store
@@ -3172,11 +3279,11 @@ var articlesById = function articlesById() {
     case _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_SINGLE_FEED"]:
     case _actions_subscription_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_NEW_FEED"]:
     case _actions_article_actions__WEBPACK_IMPORTED_MODULE_3__["RECEIVE_ARTICLE"]:
-      newState = lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, state, action.articles.byId); // console.log(newState)
-
+    case _actions_article_actions__WEBPACK_IMPORTED_MODULE_3__["RECEIVE_READS"]:
+    case _actions_article_actions__WEBPACK_IMPORTED_MODULE_3__["RECEIVE_READ"]:
+    case _actions_article_actions__WEBPACK_IMPORTED_MODULE_3__["RECEIVE_UNREAD"]:
+      newState = lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, state, action.articles.byId);
       return newState;
-    // const newArticle = { [action.article.id]: action.article };
-    // return Object.assign({}, state, newArticle);
 
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_4__["CLEAR_ENTITIES"]:
       return {};
@@ -3460,7 +3567,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (function () {
   var oldState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
-  Object.freeze(oldState); // console.log(action)
+  Object.freeze(oldState);
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_SESSION_ERRORS"]:
@@ -3562,26 +3669,41 @@ var latestArticlesReducer = function latestArticlesReducer() {
   }
 };
 
+var readsReducer = function readsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+  var newState;
+
+  switch (action.type) {
+    case _actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["RECEIVE_UNREAD"]:
+      var id = action.articles.allIds[0];
+      return state.filter(function (el) {
+        return el !== id;
+      });
+    //remove article from reads slice of state after marked unread
+
+    case _actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["RECEIVE_READ"]:
+      return lodash_union__WEBPACK_IMPORTED_MODULE_1___default()(action.articles.allIds, state);
+    // union creates an array of unique values, in order, from all given arrays 
+
+    case _actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["RECEIVE_READS"]:
+      return action.articles.allIds;
+
+    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["CLEAR_ENTITIES"]:
+      return [];
+
+    default:
+      return state;
+  }
+};
+
 /* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   currentUser: userReducer,
   subscriptions: subscriptionsReducer,
-  latest: latestArticlesReducer
-})); //Old reducer
-// const sessionReducer = (oldState = {currentUser: null}, action) => {
-//     Object.freeze(oldState);
-//     // console.log(action.currentUser)
-//     switch (action.type) {
-//         case RECEIVE_CURRENT_USER:
-//             return {currentUser: action.currentUser};
-//         case LOGOUT_CURRENT_USER:
-//             // debugger;
-//             return { currentUser: null };
-//         default:
-//             return oldState;
-//     }
-// };
-// export default sessionReducer;
-//refactor so that userReducer and subscriptionsReducer
+  latest: latestArticlesReducer,
+  reads: readsReducer
+}));
 
 /***/ }),
 
@@ -3607,7 +3729,6 @@ var feedTitleReducer = function feedTitleReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
-  // console.log(action)
   switch (action.type) {
     case _actions_ui_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_FEED_TITLE"]:
       return action.feedTitle;
@@ -3669,13 +3790,16 @@ var configureStore = function configureStore() {
 /*!*******************************************!*\
   !*** ./frontend/util/article_api_util.js ***!
   \*******************************************/
-/*! exports provided: fetchLatest, fetchArticle */
+/*! exports provided: fetchLatest, fetchArticle, markRead, markUnread, fetchReads */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchLatest", function() { return fetchLatest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchArticle", function() { return fetchArticle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "markRead", function() { return markRead; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "markUnread", function() { return markUnread; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchReads", function() { return fetchReads; });
 var fetchLatest = function fetchLatest() {
   return $.ajax({
     url: 'api/articles',
@@ -3689,6 +3813,32 @@ var fetchArticle = function fetchArticle(id) {
   return $.ajax({
     url: "api/articles/".concat(id),
     method: 'GET'
+  });
+};
+var markRead = function markRead(id) {
+  return $.ajax({
+    url: 'api/reads',
+    method: 'POST',
+    data: {
+      read: {
+        article_id: id
+      }
+    }
+  });
+};
+var markUnread = function markUnread(id) {
+  return $.ajax({
+    url: "api/reads/".concat(id),
+    method: 'DELETE'
+  });
+};
+var fetchReads = function fetchReads(offset) {
+  return $.ajax({
+    url: 'api/reads',
+    method: 'GET',
+    data: {
+      offset: offset
+    }
   });
 };
 

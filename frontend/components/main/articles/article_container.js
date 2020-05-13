@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import ArticleIndex from './article_index';
 import { fetchSingleFeed } from '../../../actions/subscription_actions';
-import {fetchUnsubscribedFeed, fetchLatest, fetchArticle} from '../../../actions/article_actions';
+import {fetchUnsubscribedFeed, fetchLatest, fetchArticle, markRead, markUnread, fetchReads} from '../../../actions/article_actions';
 import { asArray } from '../../../reducers/selectors';
 // debugger;
 
@@ -18,20 +18,19 @@ const mapStateToProps = (state, ownProps) => {
 
     const pathProps = {
         latest: {title: "Latest"},
-        discover: {...feed, previewView: true},
+        reads: { title: 'Recently Read', readView: true },
+        discover: {...feed},
         subscriptions: {...feed}
     };
 
     const articleIds = {
         latest: state.session.latest,
+        reads: state.session.reads,
         subscriptions: feed.articles,
         discover: feed.articles
     };
     
-    console.log(articleIds)
-    // console.log(path)
     const articles = articleIds[path] ? articleIds[path].map(articleId => articlesById[articleId]) : null
-    console.log(articles)
     
     return {
         feeds,
@@ -44,13 +43,14 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     const path = ownProps.match.path.split('/')[2];
     const fetchActions = {
         latest: (id) => dispatch(fetchLatest(id)),
+        reads: (id) => dispatch(fetchReads(offset)),
         discover: (id) => dispatch(fetchUnsubscribedFeed(id)),
         subscriptions: (id, offset) => dispatch(fetchSingleFeed(id, offset))
     }
 
     return {
-        // fetchLatest: () => dispatch(fetchLatest()),
-        // fetchArticle: (articleId) => dispatch(fetchArticle(articleId))
+        markRead: id => dispatch(markRead(id)),
+        markUnread: id => dispatch(markUnread(id)),
         fetchAction: fetchActions[path]
     };
 }

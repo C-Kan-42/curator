@@ -24,11 +24,9 @@ class ArticleShow extends React.Component {
     }
 
     render() {
-        // console.log(this.props.article)
         let feedInfo;
 
         if (this.state.article) {
-            console.log(this.state.article);
             feedInfo = this.state.article.feedInfo;
         }
 

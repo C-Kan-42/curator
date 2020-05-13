@@ -1,22 +1,33 @@
 class Api::ArticlesController < ApplicationController
     before_action :require_logged_in
 
-    def index
-        # article_arr = []
-        # (0..4).each do |idx|
-        #     article_arr.push(Article.create_nyt_article(idx))
-        # end
-        
+    def index     
+        #eager_load is equivalent to reads_join
+        reads_join = "LEFT OUTER JOIN reads 
+                        ON reads.article_id = articles.id
+                        AND reads.reader_id = #{current_user.id}"
+
         @articles = current_user.articles
-            .select("articles.*")
+            .eager_load(:reads)
+            .select("articles.*, reads.reader_id as read")
+            .where("reads.id IS NULL
+                    OR reads.updated_at > :within_last_three_minutes",
+                    within_last_three_minutes: Time.now - 180)
             .order('pub_date DESC')
             .limit(20)
             .includes(:feed, :subscriptions)
+            
     end
 
     def show
+        
+        reads_join = "LEFT OUTER JOIN reads 
+                        ON reads.article_id = articles.id
+                        AND reads.reader_id = #{current_user.id}"
+
         @article = Article
-                    .select("articles.*")
+                    .eager_load(:reads)
+                    .select("articles.*, reads.reader_id as read")
                     .includes(:feed, :subscriptions)
                     .find_by(id: params[:id])
         

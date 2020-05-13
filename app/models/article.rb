@@ -18,6 +18,11 @@ class Article < ApplicationRecord
         through: :feed,
         source: :subscriptions
 
+    has_many :reads,
+        foreign_key: :article_id,
+        class_name: :Read,
+        dependent: :destroy
+
     def self.create_article(article, feed)
         page = MetaInspector.new(article.link)
 
@@ -42,6 +47,17 @@ class Article < ApplicationRecord
             feed_id: feed.id
         )
 
+    end
+
+    def read(current_user)
+        #return true if article has a read column with reader.id=current_user.id
+        self.reads.each do |read| 
+            if read.reader_id == current_user.id
+                return true
+            end
+        end
+
+        false
     end
     
 end

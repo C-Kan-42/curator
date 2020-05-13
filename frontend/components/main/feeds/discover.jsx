@@ -18,7 +18,6 @@ class Discover extends React.Component {
     }
 
     handleInputChange(e) {
-        console.log('onChange result', e.target.value);
         this.setState({
             query: e.target.value
         })

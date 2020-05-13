@@ -4,6 +4,9 @@ import { receiveSingleFeed } from './subscription_actions';
 
 export const RECEIVE_LATEST = 'RECEIVE_LATEST';
 export const RECEIVE_ARTICLE = 'RECEIVE_ARTICLE';
+export const RECEIVE_READS = 'RECEIVE_READS';
+export const RECEIVE_READ = 'RECEIVE_READ';
+export const RECEIVE_UNREAD = 'RECEIVE_UNREAD';
 
 const commonAction = type => payload => ({
     type,
@@ -11,7 +14,6 @@ const commonAction = type => payload => ({
     subscriptions: payload.subscriptions,
     articles: payload.articles
 });
-
 
 // export const receiveLatest = commonAction(RECEIVE_LATEST);
 export const receiveLatest = (payload) => ({
@@ -21,7 +23,17 @@ export const receiveLatest = (payload) => ({
     articles: payload.articles
 })
 
+// fetch article
 export const receiveArticle = commonAction(RECEIVE_ARTICLE);
+
+// fetch reads
+export const receiveReads = commonAction(RECEIVE_READS);
+
+// create read article
+export const receiveRead = commonAction(RECEIVE_READ);
+
+// create unread article 
+export const receiveUnread = commonAction(RECEIVE_UNREAD);
 
 export const fetchArticle = articleId => dispatch => (
     ArticleAPIUtil.fetchArticle(articleId)
@@ -37,3 +49,18 @@ export const fetchUnsubscribedFeed = feedId => dispatch => (
     FeedAPIUtil.fetchUnsubscribedFeed(feedId)
         .then(feedPayload => dispatch(receiveSingleFeed(feedPayload)))
 );
+
+export const markRead = id => dispatch => (
+    ArticleAPIUtil.markRead(id)
+        .then(articlePayload => dispatch(receiveRead(articlePayload)))
+)
+
+export const markUnread = id => dispatch => (
+    ArticleAPIUtil.markUnread(id)
+        .then(articlePayload => dispatch(receiveUnread(articlePayload)))
+)
+
+export const fetchReads = (offset) => dispatch => (
+    ArticleAPIUtil.fetchReads(offset) 
+        .then(articles => dispatch(receiveReads(articles)))
+)

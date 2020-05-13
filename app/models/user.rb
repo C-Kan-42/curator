@@ -24,6 +24,15 @@ class User < ApplicationRecord
     has_many :articles,
         through: :feeds,
         source: :articles
+
+    has_many :reads,
+        foreign_key: :reader_id,
+        class_name: :Read,
+        dependent: :destroy
+
+    has_many :read_articles,
+        through: :reads,
+        source: :article
     
     #add collections and read article relations here
 
