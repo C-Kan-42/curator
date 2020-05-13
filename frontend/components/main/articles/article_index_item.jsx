@@ -43,7 +43,6 @@ class ArticleIndexItem extends React.Component {
             this.props.markRead(this.props.article.id);
             this.setState({ read: true })
         }
-        
     };
     
     render() {

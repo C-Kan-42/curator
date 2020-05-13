@@ -49,9 +49,15 @@ class Article < ApplicationRecord
 
     end
 
-    def read 
+    def read(current_user)
         #return true if article has a read column with reader.id=current_user.id
-        
+        self.reads.each do |read| 
+            if read.reader_id == current_user.id
+                return true
+            end
+        end
+
+        false
     end
     
 end

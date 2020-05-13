@@ -180,9 +180,11 @@ var markRead = function markRead(id) {
   };
 };
 var markUnread = function markUnread(id) {
-  return dispatch(_util_article_api_util__WEBPACK_IMPORTED_MODULE_0__["markUnread"](id).then(function (articlePayload) {
-    return dispatch(receiveUnread(articlePayload));
-  }));
+  return function (dispatch) {
+    return _util_article_api_util__WEBPACK_IMPORTED_MODULE_0__["markUnread"](id).then(function (articlePayload) {
+      return dispatch(receiveUnread(articlePayload));
+    });
+  };
 };
 var fetchReads = function fetchReads(offset) {
   return function (dispatch) {

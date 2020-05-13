@@ -55,7 +55,7 @@ export const markRead = id => dispatch => (
         .then(articlePayload => dispatch(receiveRead(articlePayload)))
 )
 
-export const markUnread = id => dispatch (
+export const markUnread = id => dispatch => (
     ArticleAPIUtil.markUnread(id)
         .then(articlePayload => dispatch(receiveUnread(articlePayload)))
 )
