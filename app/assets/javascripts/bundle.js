@@ -90,7 +90,7 @@
 /*!*********************************************!*\
   !*** ./frontend/actions/article_actions.js ***!
   \*********************************************/
-/*! exports provided: RECEIVE_LATEST, RECEIVE_ARTICLE, RECEIVE_READS, RECEIVE_READ, RECEIVE_UNREAD, receiveLatest, receiveArticle, receiveReads, receiveRead, receiveUnread, fetchArticle, fetchLatest, fetchUnsubscribedFeed, markRead */
+/*! exports provided: RECEIVE_LATEST, RECEIVE_ARTICLE, RECEIVE_READS, RECEIVE_READ, RECEIVE_UNREAD, receiveLatest, receiveArticle, receiveReads, receiveRead, receiveUnread, fetchArticle, fetchLatest, fetchUnsubscribedFeed, markRead, markUnread, fetchReads */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -109,6 +109,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchLatest", function() { return fetchLatest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUnsubscribedFeed", function() { return fetchUnsubscribedFeed; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "markRead", function() { return markRead; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "markUnread", function() { return markUnread; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchReads", function() { return fetchReads; });
 /* harmony import */ var _util_article_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/article_api_util */ "./frontend/util/article_api_util.js");
 /* harmony import */ var _util_feed_api_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/feed_api_util */ "./frontend/util/feed_api_util.js");
 /* harmony import */ var _subscription_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./subscription_actions */ "./frontend/actions/subscription_actions.js");
@@ -174,6 +176,18 @@ var markRead = function markRead(id) {
   return function (dispatch) {
     return _util_article_api_util__WEBPACK_IMPORTED_MODULE_0__["markRead"](id).then(function (articlePayload) {
       return dispatch(receiveRead(articlePayload));
+    });
+  };
+};
+var markUnread = function markUnread(id) {
+  return dispatch(_util_article_api_util__WEBPACK_IMPORTED_MODULE_0__["markUnread"](id).then(function (articlePayload) {
+    return dispatch(receiveUnread(articlePayload));
+  }));
+};
+var fetchReads = function fetchReads(offset) {
+  return function (dispatch) {
+    return _util_article_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchReads"](offset).then(function (articles) {
+      return dispatch(receiveReads(articles));
     });
   };
 };
@@ -741,9 +755,7 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
       title: 'Recently Read',
       readView: true
     },
-    discover: _objectSpread({}, feed, {
-      previewView: true
-    }),
+    discover: _objectSpread({}, feed),
     subscriptions: _objectSpread({}, feed)
   };
   var articleIds = {
@@ -1015,7 +1027,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
- // import Article
+
 
 var ArticleIndexItem =
 /*#__PURE__*/
@@ -1027,12 +1039,15 @@ function (_React$Component) {
 
     _classCallCheck(this, ArticleIndexItem);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(ArticleIndexItem).call(this, props)); // this.state = {
-    //     hidden: false,
-    //     isMouseInside: false
-    // };
-
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ArticleIndexItem).call(this, props));
+    _this.state = {
+      hidden: false,
+      read: Boolean(_this.props.article.read),
+      isMouseInside: false
+    };
     _this.handleRedirect = _this.handleRedirect.bind(_assertThisInitialized(_this));
+    _this.handleHideClick = _this.handleHideClick.bind(_assertThisInitialized(_this));
+    _this.handleReadClick = _this.handleReadClick.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1045,33 +1060,66 @@ function (_React$Component) {
       this.props.history.push("".concat(originPath, "/articles/").concat(articleId)); // this.handle
     }
   }, {
-    key: "handleExitClick",
-    value: function handleExitClick(e) {
-      e.preventDefault(); // this.setState({hidden: true});
+    key: "handleHideClick",
+    value: function handleHideClick(e) {
+      e.preventDefault();
+      this.setState({
+        hidden: true
+      });
+      this.handleReadClick(e);
     }
   }, {
     key: "handleReadClick",
-    value: function handleReadClick(e) {}
+    value: function handleReadClick(e) {
+      //need to check if article is in reads
+      //if it is, send markUnread
+      //if not, send markRead
+      e.preventDefault();
+
+      if (this.state.read && e.target.className.includes('mark-as-read')) {
+        this.props.markUnread(this.props.article.id);
+        this.setState({
+          read: false
+        });
+      } else if (!this.state.read) {
+        this.props.readArticle(this.props.article.id);
+        this.setState({
+          read: true
+        });
+      }
+    }
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this2 = this,
+          _React$createElement;
 
       var _this$props = this.props,
           article = _this$props.article,
           feed = _this$props.feed;
+      var isMouseInside = this.state.isMouseInside;
       var imageStyle = {
         backgroundImage: 'url(' + "\"".concat(article.image_url, "\"") + ')'
       }; // const originPath = this.props.history.location.pathname;
 
+      var articleIndexItemClass = "article-index-item" + (this.state.hidden ? " hidden" : "") + (this.state.read ? " read" : ""); // + (this.props.condensedView ? " condensed" : "")
+
       var timeSincePub = moment__WEBPACK_IMPORTED_MODULE_2__(article.pub_date).fromNow();
       timeSincePub = timeSincePub.split(" ")[0] === "in" ? "Just now" : timeSincePub.split(" ").slice(0, 2).join(' ');
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", _defineProperty({
-        className: "article-index-item",
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", (_React$createElement = {
+        className: "".concat(articleIndexItemClass),
         onClick: function onClick(e) {
           return _this2.handleRedirect(e, article.id);
         }
-      }, "className", "entry unread u4"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, _defineProperty(_React$createElement, "className", "entry unread u4"), _defineProperty(_React$createElement, "onMouseEnter", function onMouseEnter(e) {
+        return _this2.setState({
+          isMouseInside: true
+        });
+      }), _defineProperty(_React$createElement, "onMouseLeave", function onMouseLeave(e) {
+        return _this2.setState({
+          isMouseInside: false
+        });
+      }), _React$createElement), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "visual",
         style: imageStyle
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1079,7 +1127,17 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         className: "article-title",
         href: article.link
-      }, article.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, article.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "hide ".concat(isMouseInside ? "" : " hidden"),
+        title: "Mark as read and hide",
+        type: "button",
+        onClick: this.handleHideClick
+      }, "X"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "mark-as-read ".concat(isMouseInside ? "" : " hidden"),
+        title: "Mark as read",
+        type: "button",
+        onClick: this.handleReadClick
+      }, "Check"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "metadata"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "feed-source"
@@ -1097,6 +1155,24 @@ function (_React$Component) {
 
   return ArticleIndexItem;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+var ReadButtons = function ReadButtons(_ref) {
+  var read = _ref.read,
+      handleReadClick = _ref.handleReadClick,
+      handleHideClick = _ref.handleHideClick,
+      isMouseInside = _ref.isMouseInside;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "hide ".concat(isMouseInside ? "" : " hidden"),
+    title: "Mark as read and hide",
+    type: "button",
+    onClick: handleHideClick
+  }, "X"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "mark-as-read ".concat(isMouseInside ? "" : " hidden"),
+    title: "Mark as read",
+    type: "button",
+    onClick: handleReadClick
+  }, "Check"));
+};
 
 /* harmony default export */ __webpack_exports__["default"] = (ArticleIndexItem);
 
@@ -3606,26 +3682,41 @@ var latestArticlesReducer = function latestArticlesReducer() {
   }
 };
 
+var readsReducer = function readsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+  var newState;
+
+  switch (action.type) {
+    case _actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["RECEIVE_UNREAD"]:
+      var id = action.articles.allIds[0];
+      return state.filter(function (el) {
+        return el !== id;
+      });
+    //remove article from reads slice of state after marked unread
+
+    case _actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["RECEIVE_READ"]:
+      return lodash_union__WEBPACK_IMPORTED_MODULE_1___default()(action.articles.allIds, state);
+    // union creates an array of unique values, in order, from all given arrays 
+
+    case _actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["RECEIVE_READS"]:
+      return action.articles.allIds;
+
+    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["CLEAR_ENTITIES"]:
+      return [];
+
+    default:
+      return state;
+  }
+};
+
 /* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   currentUser: userReducer,
   subscriptions: subscriptionsReducer,
-  latest: latestArticlesReducer
-})); //Old reducer
-// const sessionReducer = (oldState = {currentUser: null}, action) => {
-//     Object.freeze(oldState);
-//     // console.log(action.currentUser)
-//     switch (action.type) {
-//         case RECEIVE_CURRENT_USER:
-//             return {currentUser: action.currentUser};
-//         case LOGOUT_CURRENT_USER:
-//             // debugger;
-//             return { currentUser: null };
-//         default:
-//             return oldState;
-//     }
-// };
-// export default sessionReducer;
-//refactor so that userReducer and subscriptionsReducer
+  latest: latestArticlesReducer,
+  reads: readsReducer
+}));
 
 /***/ }),
 

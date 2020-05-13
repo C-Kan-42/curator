@@ -19,7 +19,7 @@ const mapStateToProps = (state, ownProps) => {
     const pathProps = {
         latest: {title: "Latest"},
         reads: { title: 'Recently Read', readView: true },
-        discover: {...feed, previewView: true},
+        discover: {...feed},
         subscriptions: {...feed}
     };
 

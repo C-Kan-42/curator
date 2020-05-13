@@ -160,4 +160,100 @@
     transition: background-color 0.2s linear, color 0.2s linear;
 }
 
+// Read Controls
 
+.hide {
+    float: right;
+    height: 24px;
+    padding: 0;
+    visibility: hidden;
+    width: 24px;
+    background-size: 20px 20px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    color: #757575;
+    background-color: transparent;
+    font-weight: normal;
+    min-width: 0;
+    margin-right: 0px;
+    opacity: 0.38;
+    // background-image: url('data:image/svg+xml;charset%3DUS-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M14.576%204.574L10%209.15%205.424%204.574l-.849.85%204.577%204.574-4.577%204.576.85.85L10%2010.846l4.576%204.576.85-.849-4.577-4.576%204.577-4.575-.85-.849z%22%20fill%3D%22black%22%20fill-rule%3D%22evenodd%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E');
+    -webkit-font-smoothing: antialiased;
+    font-family: sans-serif;
+    font-size: 12px;
+    line-height: 1rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    vertical-align: top;
+    text-decoration: none;
+    box-sizing: border-box;
+    letter-spacing: 0;
+    box-shadow: none;
+    outline: 0;
+    transition: background-color 0.2s linear, color 0.2s linear;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    align-items: flex-start;
+    margin: 0em;
+    font: 400 13.3333px Arial;
+}
+
+.mark-as-read {
+    float: right;
+    height: 24px;
+    padding: 0;
+    visibility: hidden;
+    width: 24px;
+    background-size: 20px 20px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    color: #757575;
+    background-color: transparent;
+    font-weight: normal;
+    min-width: 0;
+    margin-right: 0px;
+    opacity: 0.38;
+    // background-image: url('data:image/svg+xml;charset%3DUS-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%3E%3Cpath%20fill%3D%22black%22%20fill-rule%3D%22nonzero%22%20d%3D%22M2.357%2010.013a.5.5%200%201%200-.714.701l5.209%205.303a.5.5%200%200%200%20.713%200L19.023%204.35a.5.5%200%200%200-.713-.7L7.208%2014.953l-4.851-4.94z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E');
+    -webkit-font-smoothing: antialiased;
+    font-family: sans-serif;
+    font-size: 12px;
+    line-height: 1rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    vertical-align: top;
+    text-decoration: none;
+    box-sizing: border-box;
+    letter-spacing: 0;
+    box-shadow: none;
+    outline: 0;
+    transition: background-color 0.2s linear, color 0.2s linear;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    align-items: flex-start;
+    margin: 0em;
+    font: 400 13.3333px Arial;
+}
+
+.hide:hover, .mark-as-read:hover {
+    cursor: pointer;
+    // color:#757575;
+    color: black;
+}
+
+// .hidden {
+//     display: none;
+// }
+
+.read {
+    color: #888888;
+}

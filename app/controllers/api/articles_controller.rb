@@ -26,8 +26,8 @@ class Api::ArticlesController < ApplicationController
                         AND reads.reader_id = #{current_user.id}"
 
         @article = Article
+                    .eager_load(:reads)
                     .select("articles.*, reads.reader_id as read")
-                    .joins(reads_join)
                     .includes(:feed, :subscriptions)
                     .find_by(id: params[:id])
         

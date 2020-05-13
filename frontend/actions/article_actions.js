@@ -54,3 +54,13 @@ export const markRead = id => dispatch => (
     ArticleAPIUtil.markRead(id)
         .then(articlePayload => dispatch(receiveRead(articlePayload)))
 )
+
+export const markUnread = id => dispatch (
+    ArticleAPIUtil.markUnread(id)
+        .then(articlePayload => dispatch(receiveUnread(articlePayload)))
+)
+
+export const fetchReads = (offset) => dispatch => (
+    ArticleAPIUtil.fetchReads(offset) 
+        .then(articles => dispatch(receiveReads(articles)))
+)

@@ -11,7 +11,7 @@ import {
   RECEIVE_ALL_SUBSCRIPTIONS,
 } from "../actions/subscription_actions";
 import {
-  RECEIVE_LATEST
+  RECEIVE_LATEST, RECEIVE_READS, RECEIVE_READ, RECEIVE_UNREAD
 } from "../actions/article_actions";
 import { CLEAR_ENTITIES } from "../actions/session_actions";
 
@@ -59,29 +59,31 @@ const latestArticlesReducer = (state = [], action) => {
   }
 };
 
+const readsReducer = (state = [], action) => {
+  Object.freeze(state);
+  let newState;
+  
+  switch (action.type) {
+    case RECEIVE_UNREAD:
+      const id = action.articles.allIds[0];
+      return state.filter(el => el !== id); //remove article from reads slice of state after marked unread
+    case RECEIVE_READ:
+      return union(action.articles.allIds, state) // union creates an array of unique values, in order, from all given arrays 
+    case RECEIVE_READS:
+      return action.articles.allIds;
+    case CLEAR_ENTITIES:
+      return [];
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   currentUser: userReducer,
   subscriptions: subscriptionsReducer,
-  latest: latestArticlesReducer
+  latest: latestArticlesReducer,
+  reads: readsReducer
 });
 
 
 
-//Old reducer
-
-// const sessionReducer = (oldState = {currentUser: null}, action) => {
-//     Object.freeze(oldState);
-//     // console.log(action.currentUser)
-//     switch (action.type) {
-//         case RECEIVE_CURRENT_USER:
-//             return {currentUser: action.currentUser};
-//         case LOGOUT_CURRENT_USER:
-//             // debugger;
-//             return { currentUser: null };
-//         default:
-//             return oldState;
-//     }
-// };
-// export default sessionReducer;
-
-//refactor so that userReducer and subscriptionsReducer
