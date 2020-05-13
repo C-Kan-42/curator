@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import ArticleIndex from './article_index';
 import { fetchSingleFeed } from '../../../actions/subscription_actions';
-import {fetchUnsubscribedFeed, fetchLatest, fetchArticle} from '../../../actions/article_actions';
+import {fetchUnsubscribedFeed, fetchLatest, fetchArticle, markRead, markUnread, fetchReads} from '../../../actions/article_actions';
 import { asArray } from '../../../reducers/selectors';
 // debugger;
 

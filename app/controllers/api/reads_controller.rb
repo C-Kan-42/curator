@@ -59,7 +59,7 @@ class Api::ReadsController < ApplicationController
     end
 
     def read_params
-        params.require(:read).(:article_id)
+        params.require(:read).permit(:article_id)
     end
 
 end

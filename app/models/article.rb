@@ -48,5 +48,10 @@ class Article < ApplicationRecord
         )
 
     end
+
+    def read 
+        #return true if article has a read column with reader.id=current_user.id
+        
+    end
     
 end

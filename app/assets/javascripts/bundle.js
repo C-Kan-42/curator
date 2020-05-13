@@ -781,7 +781,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
       return dispatch(Object(_actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["fetchLatest"])(id));
     },
     reads: function reads(id) {
-      return dispatch(fetchReads(offset));
+      return dispatch(Object(_actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["fetchReads"])(offset));
     },
     discover: function discover(id) {
       return dispatch(Object(_actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["fetchUnsubscribedFeed"])(id));
@@ -791,32 +791,12 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
     }
   };
   return {
-    markRead: function (_markRead) {
-      function markRead(_x) {
-        return _markRead.apply(this, arguments);
-      }
-
-      markRead.toString = function () {
-        return _markRead.toString();
-      };
-
-      return markRead;
-    }(function (id) {
-      return dispatch(markRead(id));
-    }),
-    markUnread: function (_markUnread) {
-      function markUnread(_x2) {
-        return _markUnread.apply(this, arguments);
-      }
-
-      markUnread.toString = function () {
-        return _markUnread.toString();
-      };
-
-      return markUnread;
-    }(function (id) {
-      return dispatch(markUnread(id));
-    }),
+    markRead: function markRead(id) {
+      return dispatch(Object(_actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["markRead"])(id));
+    },
+    markUnread: function markUnread(id) {
+      return dispatch(Object(_actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["markUnread"])(id));
+    },
     fetchAction: fetchActions[path]
   };
 };
@@ -1007,8 +987,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -1074,6 +1052,8 @@ function (_React$Component) {
       //need to check if article is in reads
       //if it is, send markUnread
       //if not, send markRead
+      console.log(this.props.article);
+      console.log(this.state.read);
       e.preventDefault();
 
       if (this.state.read && e.target.className.includes('mark-as-read')) {
@@ -1082,7 +1062,7 @@ function (_React$Component) {
           read: false
         });
       } else if (!this.state.read) {
-        this.props.readArticle(this.props.article.id);
+        this.props.markRead(this.props.article.id);
         this.setState({
           read: true
         });
@@ -1091,8 +1071,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this,
-          _React$createElement;
+      var _this2 = this;
 
       var _this$props = this.props,
           article = _this$props.article,
@@ -1102,42 +1081,48 @@ function (_React$Component) {
         backgroundImage: 'url(' + "\"".concat(article.image_url, "\"") + ')'
       }; // const originPath = this.props.history.location.pathname;
 
-      var articleIndexItemClass = "article-index-item" + (this.state.hidden ? " hidden" : "") + (this.state.read ? " read" : ""); // + (this.props.condensedView ? " condensed" : "")
+      var articleIndexItemClass = "entry unread u4" + (this.state.hidden ? " hidden" : "") + (this.state.read ? " read" : ""); // + (this.props.condensedView ? " condensed" : "")
 
       var timeSincePub = moment__WEBPACK_IMPORTED_MODULE_2__(article.pub_date).fromNow();
       timeSincePub = timeSincePub.split(" ")[0] === "in" ? "Just now" : timeSincePub.split(" ").slice(0, 2).join(' ');
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", (_React$createElement = {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "".concat(articleIndexItemClass),
-        onClick: function onClick(e) {
-          return _this2.handleRedirect(e, article.id);
+        onMouseEnter: function onMouseEnter(e) {
+          return _this2.setState({
+            isMouseInside: true
+          });
+        },
+        onMouseLeave: function onMouseLeave(e) {
+          return _this2.setState({
+            isMouseInside: false
+          });
         }
-      }, _defineProperty(_React$createElement, "className", "entry unread u4"), _defineProperty(_React$createElement, "onMouseEnter", function onMouseEnter(e) {
-        return _this2.setState({
-          isMouseInside: true
-        });
-      }), _defineProperty(_React$createElement, "onMouseLeave", function onMouseLeave(e) {
-        return _this2.setState({
-          isMouseInside: false
-        });
-      }), _React$createElement), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "visual",
         style: imageStyle
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "content"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         className: "article-title",
-        href: article.link
+        href: article.link,
+        onClick: function onClick(e) {
+          return _this2.handleRedirect(e, article.id);
+        }
       }, article.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "hide ".concat(isMouseInside ? "" : " hidden"),
+        className: "hide ".concat(isMouseInside ? "" : "hidden-button"),
         title: "Mark as read and hide",
         type: "button",
-        onClick: this.handleHideClick
-      }, "X"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "mark-as-read ".concat(isMouseInside ? "" : " hidden"),
+        onClick: function onClick(e) {
+          return _this2.handleHideClick(e);
+        }
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "mark-as-read ".concat(isMouseInside ? "" : "hidden-button"),
         title: "Mark as read",
         type: "button",
-        onClick: this.handleReadClick
-      }, "Check"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        onClick: function onClick(e) {
+          return _this2.handleReadClick(e);
+        }
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "metadata"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "feed-source"

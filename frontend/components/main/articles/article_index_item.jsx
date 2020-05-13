@@ -33,13 +33,14 @@ class ArticleIndexItem extends React.Component {
         //need to check if article is in reads
         //if it is, send markUnread
         //if not, send markRead
-
+        console.log(this.props.article)
+        console.log(this.state.read)
         e.preventDefault();
         if (this.state.read && e.target.className.includes('mark-as-read')) {
             this.props.markUnread(this.props.article.id);
             this.setState({ read: false })
         } else if (!this.state.read) {
-            this.props.readArticle(this.props.article.id);
+            this.props.markRead(this.props.article.id);
             this.setState({ read: true })
         }
         
@@ -53,7 +54,7 @@ class ArticleIndexItem extends React.Component {
         };
         // const originPath = this.props.history.location.pathname;
         
-        const articleIndexItemClass = "article-index-item"
+        const articleIndexItemClass = "entry unread u4"
             + (this.state.hidden ? " hidden" : "")
             + (this.state.read ? " read" : "");
             // + (this.props.condensedView ? " condensed" : "")
@@ -62,21 +63,20 @@ class ArticleIndexItem extends React.Component {
         timeSincePub = timeSincePub.split(" ")[0] === "in" ? "Just now" : timeSincePub.split(" ").slice(0,2).join(' ');
 
         return (
-            <div className={`${articleIndexItemClass}`} onClick={e => this.handleRedirect(e, article.id)} 
-            className="entry unread u4"
+            <div className={`${articleIndexItemClass}`}  
             onMouseEnter={e => this.setState({isMouseInside: true})}
             onMouseLeave={e => this.setState({isMouseInside: false})}
             >
-                <div className="visual" style={imageStyle}>
+                <div className="visual" style={imageStyle} >
                 </div>
                 <div className="content">
-                    <a className="article-title" href={article.link}> 
+                    <a className="article-title" href={article.link} onClick={e => this.handleRedirect(e, article.id)}> 
                         {article.title}
                     </a>
-                    <button className={`hide ${isMouseInside ? "" : " hidden"}`}
-                        title="Mark as read and hide" type="button" onClick={this.handleHideClick}>X</button>
-                    <button className={`mark-as-read ${isMouseInside ? "" : " hidden"}`}
-                        title="Mark as read" type="button" onClick={this.handleReadClick}>Check</button>
+                    <button className={`hide ${isMouseInside ? "" : "hidden-button"}`}
+                        title="Mark as read and hide" type="button" onClick={e => this.handleHideClick(e)}></button>
+                    <button className={`mark-as-read ${isMouseInside ? "" : "hidden-button"}`}
+                        title="Mark as read" type="button" onClick={e => this.handleReadClick(e)}></button>
                     {/* <ReadButtons 
                         handleReadClick={this.handleReadClick}
                         handleHideClick={this.handleHideClick}
