@@ -18,7 +18,7 @@ class Api::ReadsController < ApplicationController
             .limit(20)
             .includes(:feed, :subscriptions)
         
-        render 'api/stories/index'
+        render 'api/articles/index'
         
     end
 

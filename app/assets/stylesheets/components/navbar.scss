@@ -1,5 +1,5 @@
 .navbar {
-  position: relative;
+  // position: relative;
   background: #f6f7f8;
   width: 250px;
   flex-shrink: 0;
@@ -10,6 +10,9 @@
   border-right: 1px solid #efefef;
   border-left: 1px solid #efefef;
   height: 100vh;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
 }
 
 .navbar.collapsed {
@@ -109,7 +112,7 @@
   position: absolute;
   width: 100%;
   bottom: 0;
-  text-transform: uppercase;
+  // text-transform: uppercase;
   // border-top: 1px solid grey;
   box-sizing: border-box;
   text-align: center;

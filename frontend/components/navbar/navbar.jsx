@@ -145,20 +145,20 @@ const NavBarLinks = ({ feedIds, feeds, selected, closeNavBar }) => {
                     </li>
                 </Link>
 
-                {/* <Link to="/i/reads" onClick={closeNavBar}
+                <Link to="/i/reads"
+                    // onClick={closeNavBar}
                     className={`reads${selected === "reads" ? " selected" : ""}`}>
-                    <li>
-                        <span>
-                            <i className="fa fa-book" aria-hidden="true"></i>
-                        </span>
-            Recently Read
-          </li>
-                </Link> */}
+                    <li><span><i className="fa fa-bars" aria-hidden="true"></i></span>
+                        {/* insert image here? */}
+                        Recently Read
+                    </li>
+                </Link>    
+                
                 <div className="feeds-list">
                     {feedsList}
                 </div>
 
-                {/* <Link to="/i/discover" className= */}
+                        
             </div>
         </nav>
     );

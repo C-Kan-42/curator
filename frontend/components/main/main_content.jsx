@@ -67,7 +67,7 @@ class MainContent extends React.Component {
                 <AuthRoute path="/signup" component={LandingContainer} />
                 <ProtectedRoute path="/i/feeds" component={FeedsIndexContainer} />
                 <ProtectedRoute path="/i/latest" component={ArticleContainer} />
-                {/* <ProtectedRoute path="/i/reads" component={ArticleContainer} /> */}
+                <ProtectedRoute path="/i/reads" component={ArticleContainer} />
                 <Switch>
                     <ProtectedRoute path="/i/:prevSource/:prevId/articles/:id" component={ArticleShowPopout} />
                     <ProtectedRoute path="/i/discover/:id" component={SubscriptionArticlesIndexPopout} />
