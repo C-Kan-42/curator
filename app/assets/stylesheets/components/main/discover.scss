@@ -167,7 +167,7 @@ button {
   padding: .5rem .75rem;
   transition: color .1s ease, border-color .1s ease;
   vertical-align: top;
-  width: 100%;
+  max-width: 600px;
   // -webkit-writing-mode: horizontal-tb !important;
   text-rendering: auto;
   letter-spacing: normal;

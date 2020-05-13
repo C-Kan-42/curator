@@ -20,18 +20,8 @@ import MainPage from './main/main_page';
 
 const App = () => (
     <div className="app-wrapper">
-        {/* <header>
-            <SessionBarContainer />
-        </header> */}
         <ProtectedRoute path="/i" component={NavbarContainer} />
         <MainPage />
-        {/* <Switch>
-            <AuthRoute exact path="/" component={LandingContainer} />
-            <AuthRoute path="/login" component={LandingContainer} />
-            <AuthRoute path="/signup" component={LandingContainer} />
-            <Route path="/i/articles/:articleId" component={ArticleShowPopout} />
-            <ProtectedRoute exact path="/i/today" component={ArticleContainer} />
-        </Switch> */}
     </div>
 );
 

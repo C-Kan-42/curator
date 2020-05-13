@@ -43,7 +43,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     const path = ownProps.match.path.split('/')[2];
     const fetchActions = {
         latest: (id) => dispatch(fetchLatest(id)),
-        reads: (id) => dispatch(fetchReads(offset)),
+        reads: (offset) => dispatch(fetchReads(offset)),
         discover: (id) => dispatch(fetchUnsubscribedFeed(id)),
         subscriptions: (id, offset) => dispatch(fetchSingleFeed(id, offset))
     }

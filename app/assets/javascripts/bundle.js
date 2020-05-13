@@ -782,7 +782,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
     latest: function latest(id) {
       return dispatch(Object(_actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["fetchLatest"])(id));
     },
-    reads: function reads(id) {
+    reads: function reads(offset) {
       return dispatch(Object(_actions_article_actions__WEBPACK_IMPORTED_MODULE_4__["fetchReads"])(offset));
     },
     discover: function discover(id) {
@@ -2254,6 +2254,9 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_3__["ProtectedRoute"], {
         path: "/i/latest",
         component: _articles_article_container__WEBPACK_IMPORTED_MODULE_5__["default"]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_3__["ProtectedRoute"], {
+        path: "/i/reads",
+        component: _articles_article_container__WEBPACK_IMPORTED_MODULE_5__["default"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_3__["ProtectedRoute"], {
         path: "/i/:prevSource/:prevId/articles/:id",
         component: _articles_article_show_popout__WEBPACK_IMPORTED_MODULE_9__["default"]
@@ -2833,7 +2836,14 @@ var NavBarLinks = function NavBarLinks(_ref3) {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fa fa-bars",
     "aria-hidden": "true"
-  })), "Latest")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  })), "Latest")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    to: "/i/reads" // onClick={closeNavBar}
+    ,
+    className: "reads".concat(selected === "reads" ? " selected" : "")
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fa fa-bars",
+    "aria-hidden": "true"
+  })), "Recently Read")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "feeds-list"
   }, feedsList)));
 };

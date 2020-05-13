@@ -1,4 +1,4 @@
-# get 20 most-recent stories
+# get 20 most-recent articles
 all_articles = []
 subscription = @subscription
 # p subscription
