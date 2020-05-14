@@ -139,8 +139,8 @@ const NavBarLinks = ({ feedIds, feeds, selected, closeNavBar }) => {
                 <Link to="/i/latest" 
                     // onClick={closeNavBar}
                     className={`latest${selected === "latest" ? " selected" : ""}`}>
-                    <li><span><i className="fa fa-bars" aria-hidden="true"></i></span>
-                        {/* insert image here? */}
+                    <li><span></span>
+                        <img src="https://img.icons8.com/cotton/64/000000/news.png" />
                         Latest
                     </li>
                 </Link>
@@ -148,8 +148,8 @@ const NavBarLinks = ({ feedIds, feeds, selected, closeNavBar }) => {
                 <Link to="/i/reads"
                     // onClick={closeNavBar}
                     className={`reads${selected === "reads" ? " selected" : ""}`}>
-                    <li><span><i className="fa fa-bars" aria-hidden="true"></i></span>
-                        {/* insert image here? */}
+                    <li><span><i className="navbar-icon" aria-hidden="true"></i></span>
+                        <img src="https://img.icons8.com/material-sharp/96/000000/time-machine.png" />
                         Recently Read
                     </li>
                 </Link>    
