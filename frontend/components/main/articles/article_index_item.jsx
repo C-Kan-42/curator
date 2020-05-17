@@ -76,12 +76,7 @@ class ArticleIndexItem extends React.Component {
                         title="Mark as read and hide" type="button" onClick={e => this.handleHideClick(e)}></button>
                     <button className={`mark-as-read ${isMouseInside ? "" : "hidden-button"}`}
                         title="Mark as read" type="button" onClick={e => this.handleReadClick(e)}></button>
-                    {/* <ReadButtons 
-                        handleReadClick={this.handleReadClick}
-                        handleHideClick={this.handleHideClick}
-                        {...this.props}
-                        {...this.state}
-                    /> */}
+                
                     <div className="metadata">
                         <span className="feed-source"> {!this.props.titleLink ?
                             <Link to={`/i/subscriptions/${article.feed_id}`}>

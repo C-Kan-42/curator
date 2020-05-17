@@ -1352,10 +1352,7 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 var ArticleShowPopout = function ArticleShowPopout(props) {
   var prevSource = props.match.params.prevSource;
   var prevId = props.match.params.prevId ? props.match.params.prevId : null;
-  var prevURL = prevId ? "".concat(prevSource, "/").concat(prevId) : "".concat(prevSource); // const newProps = {
-  //     closePath: `/i/${prevURL}`
-  // };
-
+  var prevURL = prevId ? "".concat(prevSource, "/").concat(prevId) : "".concat(prevSource);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_popout__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({}, props, {
     closePath: "/i/".concat(prevURL)
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_article_show__WEBPACK_IMPORTED_MODULE_1__["default"], null));
@@ -2833,17 +2830,18 @@ var NavBarLinks = function NavBarLinks(_ref3) {
     to: "/i/latest" // onClick={closeNavBar}
     ,
     className: "latest".concat(selected === "latest" ? " selected" : "")
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fa fa-bars",
-    "aria-hidden": "true"
-  })), "Latest")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    src: "https://img.icons8.com/cotton/64/000000/news.png"
+  }), "Latest")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     to: "/i/reads" // onClick={closeNavBar}
     ,
     className: "reads".concat(selected === "reads" ? " selected" : "")
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fa fa-bars",
+    className: "navbar-icon",
     "aria-hidden": "true"
-  })), "Recently Read")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    src: "https://img.icons8.com/material-sharp/96/000000/time-machine.png"
+  }), "Recently Read")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "feeds-list"
   }, feedsList)));
 };
