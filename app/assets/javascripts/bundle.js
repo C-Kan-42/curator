@@ -1352,10 +1352,7 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 var ArticleShowPopout = function ArticleShowPopout(props) {
   var prevSource = props.match.params.prevSource;
   var prevId = props.match.params.prevId ? props.match.params.prevId : null;
-  var prevURL = prevId ? "".concat(prevSource, "/").concat(prevId) : "".concat(prevSource); // const newProps = {
-  //     closePath: `/i/${prevURL}`
-  // };
-
+  var prevURL = prevId ? "".concat(prevSource, "/").concat(prevId) : "".concat(prevSource);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_popout__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({}, props, {
     closePath: "/i/".concat(prevURL)
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_article_show__WEBPACK_IMPORTED_MODULE_1__["default"], null));
