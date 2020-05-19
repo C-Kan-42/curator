@@ -74,6 +74,10 @@ class Feed < ApplicationRecord
             page_link = @rss_feed.channel.image.link
         end
 
+        if rss_url === 'http://feeds.bbci.co.uk/news/world/rss.xml'
+            self.favicon_url = "https://storage.googleapis.com/site-assets/6tEjjG1yas2HK_Qxnos1q7W8ioIhhmXKTYoNgwIjOLo_visual-16bf7b9f0af"
+        end
+        
         @feed_page = MetaInspector.new(page_link)
         
         self.title = @feed_page.title || @rss_feed.channel.image.title || "New Feed"
@@ -81,9 +85,7 @@ class Feed < ApplicationRecord
         self.website_url = @feed_page.url
         self.last_built = Time.now
 
-        if rss_url === 'http://feeds.bbci.co.uk/news/world/rss.xml'
-            self.favicon_url = "https://storage.googleapis.com/site-assets/6tEjjG1yas2HK_Qxnos1q7W8ioIhhmXKTYoNgwIjOLo_visual-16bf7b9f0af"
-        end
+        
 
         self.favicon_url = @feed_page.images.favicon || favicon_url
     end
