@@ -1037,7 +1037,8 @@ function (_React$Component) {
       var target = e.target.parentElement; // const articleId = this.props.article.id;
 
       var originPath = this.props.history.location.pathname;
-      this.props.history.push("".concat(originPath, "/articles/").concat(articleId)); // this.handle
+      this.props.history.push("".concat(originPath, "/articles/").concat(articleId));
+      this.handleReadClick(e);
     }
   }, {
     key: "handleHideClick",
