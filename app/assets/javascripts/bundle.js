@@ -1055,8 +1055,6 @@ function (_React$Component) {
       //need to check if article is in reads
       //if it is, send markUnread
       //if not, send markRead
-      console.log(this.props.article);
-      console.log(this.state.read);
       e.preventDefault();
 
       if (this.state.read && e.target.className.includes('mark-as-read')) {
@@ -2768,8 +2766,6 @@ function (_React$Component) {
         selected: selected,
         feeds: feeds,
         closeNavBar: this.closeNavBar
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NavBarAddContent, {
-        closeNavBar: this.closeNavBar
       })) : null);
     }
   }]);
@@ -2844,20 +2840,24 @@ var NavBarLinks = function NavBarLinks(_ref3) {
     src: "https://img.icons8.com/material-sharp/96/000000/time-machine.png"
   }), "Recently Read")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "feeds-list"
-  }, feedsList)));
-};
-
-var NavBarAddContent = function NavBarAddContent(_ref4) {
-  var closeNavBar = _ref4.closeNavBar;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "add-content"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-    to: "/i/discover"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fa fa-plus",
+  }, feedsList), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    to: "/i/discover",
+    className: "addfeeds".concat(selected === "addfeeds" ? " selected" : "")
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "navbar-icon",
     "aria-hidden": "true"
-  })), "+ Follow New Sources"));
-};
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    src: "https://img.icons8.com/windows/64/000000/add.png"
+  }), "Follow New Sources"))));
+}; // const NavBarAddContent = ({ closeNavBar }) => (
+//     <div className="add-content">
+//         <Link to="/i/discover">
+//             <span><i className="fa fa-plus" aria-hidden="true"></i></span>
+//             + Follow New Sources
+//         </Link>
+//     </div>
+// );
+
 
 /* harmony default export */ __webpack_exports__["default"] = (NavBar);
 
@@ -3812,10 +3812,8 @@ __webpack_require__.r(__webpack_exports__);
 var fetchLatest = function fetchLatest() {
   return $.ajax({
     url: 'api/articles',
-    method: 'GET',
-    error: function error(err) {
-      return console.log(err);
-    }
+    method: 'GET' // error: (err) => console.log(err)
+
   });
 };
 var fetchArticle = function fetchArticle(id) {
