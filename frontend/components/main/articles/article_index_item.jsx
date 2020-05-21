@@ -33,8 +33,6 @@ class ArticleIndexItem extends React.Component {
         //need to check if article is in reads
         //if it is, send markUnread
         //if not, send markRead
-        console.log(this.props.article)
-        console.log(this.state.read)
         e.preventDefault();
         if (this.state.read && e.target.className.includes('mark-as-read')) {
             this.props.markUnread(this.props.article.id);

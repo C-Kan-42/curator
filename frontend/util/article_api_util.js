@@ -2,7 +2,7 @@ export const fetchLatest = () => (
     $.ajax({
         url: 'api/articles',
         method: 'GET',
-        error: (err) => console.log(err)
+        // error: (err) => console.log(err)
     })
 )
 
