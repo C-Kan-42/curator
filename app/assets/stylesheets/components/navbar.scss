@@ -98,8 +98,6 @@
 .feeds .selected li {
   font-weight: 700;
   border-left: 2px solid #2bb24c;
-
-  // border-left-color: #2bb24c;
   color: #2bb24c;
 }
 
@@ -107,32 +105,39 @@
   margin-top: 20px;
 }
 
-//ADD CONTENT BUTTON
-.add-content {
+// personal links
+.footer-personal-links {
   position: absolute;
-  width: 100%;
   bottom: 0;
-  // text-transform: uppercase;
-  // border-top: 1px solid grey;
-  box-sizing: border-box;
-  text-align: center;
-  vertical-align: baseline;
-  padding: 15px 0;
-  background: #f6f7f8;
-  color: #333333;
-
+  display: flex; 
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 15%;
+  width: 100%;
+  line-height: normal;
 }
 
-.add-content a {
-  display: inline-block;
+.icon-container {
+  height: 40%;
+  width: 25%;
+  display: flex;
+  justify-content: center;
 }
 
-.add-content:hover {
-  background: #efefef;
-  color: black;
-  // font-weight: 700;
-  border-left: 2px solid #2bb24c;
-  // color: #2bb24c;
+.fab {
+  cursor: pointer;
+  font: normal normal normal 14px/1 FontAwesome;
+  // justify-content: center;
+  font-size: 48px;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color:#2bb24c;
+}
+
+.fab:hover {
+  opacity: 0.3;
 }
 
 .add-content span {
@@ -164,4 +169,3 @@
   font-weight: 300;
 }
 
-// <img src="https://img.icons8.com/cotton/64/000000/news.png"/>

@@ -10,9 +10,9 @@ class NavBar extends React.Component {
             isManuallyClosed: false,
             isManuallyOpen: false
         };
-        this.handleClick = this.handleClick.bind(this);
+        // this.handleClick = this.handleClick.bind(this);
         this.handleSelectedUpdate = this.handleSelectedUpdate.bind(this);
-        this.closeNavBar = this.closeNavBar.bind(this);
+        // this.closeNavBar = this.closeNavBar.bind(this);
     }
         
     getSelectedLink () {
@@ -39,30 +39,30 @@ class NavBar extends React.Component {
     //     }
     // }
 
-    componentWillUnmount() {
-        removeEventListener('resize', this.handleResize, false);
-    }
+    // componentWillUnmount() {
+    //     removeEventListener('resize', this.handleResize, false);
+    // }
 
-    handleClick(e) {
-        let controlState = {};
-        if (e.target.className.includes("fa-compress")) {
-            controlState = { isManuallyClosed: true, isManuallyOpen: false };
-        } else {
-            controlState = { isManuallyOpen: true, isManuallyClosed: false };
-        }
+    // handleClick(e) {
+    //     let controlState = {};
+    //     if (e.target.className.includes("fa-compress")) {
+    //         controlState = { isManuallyClosed: true, isManuallyOpen: false };
+    //     } else {
+    //         controlState = { isManuallyOpen: true, isManuallyClosed: false };
+    //     }
 
-        this.setState(({ isOpen }) => ({ isOpen: !isOpen, ...controlState }));
-    }
+    //     this.setState(({ isOpen }) => ({ isOpen: !isOpen, ...controlState }));
+    // }
 
     handleSelectedUpdate() {
         setTimeout(() => this.setState({ selected: this.getSelectedLink() }), 0);
     }
 
-    closeNavBar() {
-        if (window.innerWidth < 700) {
-            this.setState({ isOpen: false })
-        };
-    }
+    // closeNavBar() {
+    //     if (window.innerWidth < 700) {
+    //         this.setState({ isOpen: false })
+    //     };
+    // }
 
     render() {
         const { isOpen, selected } = this.state;
@@ -82,7 +82,27 @@ class NavBar extends React.Component {
                             feedIds={feedIds} selected={selected} feeds={feeds} 
                             closeNavBar={this.closeNavBar}
                         />
-                        <NavBarAddContent closeNavBar={this.closeNavBar} />
+
+                        <div className="footer-personal-links">
+
+                            <div className="icon-container">
+                                <a className="personal-link" href={'https://github.com/C-Kan-42'} target="_blank">
+                                    {/* <span className="personal-link-icon"> */}
+                                        <i className="fab fa-github"></i>
+                                    {/* </span> */}
+                                </a>
+                            </div>
+                              
+                            <div className="icon-container">
+                                <a className="personal-link" href={'https://www.linkedin.com/in/carinakan/'} target="_blank">
+                                    {/* <span className="personal-link-icon"> */}
+                                        <i className="fab fa-linkedin"></i>
+                                    {/* </span> */}
+                                </a>     
+                            </div>
+                            
+                        </div>
+                                     
                     </div>
                     : null
                 }
@@ -158,19 +178,18 @@ const NavBarLinks = ({ feedIds, feeds, selected, closeNavBar }) => {
                     {feedsList}
                 </div>
 
-                        
+                <Link to="/i/discover" 
+                    className={`discover${selected === "discover" ? " selected" : ""}`}>
+                    <li><span><i className="navbar-icon" aria-hidden="true"></i></span>
+                        <img src="https://img.icons8.com/windows/64/000000/add.png" />
+                        Follow New Sources
+                    </li>
+                </Link>
+
             </div>
         </nav>
     );
 }
 
-const NavBarAddContent = ({ closeNavBar }) => (
-    <div className="add-content">
-        <Link to="/i/discover">
-            <span><i className="fa fa-plus" aria-hidden="true"></i></span>
-            + Follow New Sources
-        </Link>
-    </div>
-);
 
 export default NavBar;

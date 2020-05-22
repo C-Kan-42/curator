@@ -1055,8 +1055,6 @@ function (_React$Component) {
       //need to check if article is in reads
       //if it is, send markUnread
       //if not, send markRead
-      console.log(this.props.article);
-      console.log(this.state.read);
       e.preventDefault();
 
       if (this.state.read && e.target.className.includes('mark-as-read')) {
@@ -2626,12 +2624,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -2667,10 +2659,10 @@ function (_React$Component) {
       selected: _this.getSelectedLink(),
       isManuallyClosed: false,
       isManuallyOpen: false
-    };
-    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
-    _this.handleSelectedUpdate = _this.handleSelectedUpdate.bind(_assertThisInitialized(_this));
-    _this.closeNavBar = _this.closeNavBar.bind(_assertThisInitialized(_this));
+    }; // this.handleClick = this.handleClick.bind(this);
+
+    _this.handleSelectedUpdate = _this.handleSelectedUpdate.bind(_assertThisInitialized(_this)); // this.closeNavBar = this.closeNavBar.bind(this);
+
     return _this;
   }
 
@@ -2696,36 +2688,19 @@ function (_React$Component) {
     //         this.setState({ isManuallyOpen: false });
     //     }
     // }
+    // componentWillUnmount() {
+    //     removeEventListener('resize', this.handleResize, false);
+    // }
+    // handleClick(e) {
+    //     let controlState = {};
+    //     if (e.target.className.includes("fa-compress")) {
+    //         controlState = { isManuallyClosed: true, isManuallyOpen: false };
+    //     } else {
+    //         controlState = { isManuallyOpen: true, isManuallyClosed: false };
+    //     }
+    //     this.setState(({ isOpen }) => ({ isOpen: !isOpen, ...controlState }));
+    // }
 
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      removeEventListener('resize', this.handleResize, false);
-    }
-  }, {
-    key: "handleClick",
-    value: function handleClick(e) {
-      var controlState = {};
-
-      if (e.target.className.includes("fa-compress")) {
-        controlState = {
-          isManuallyClosed: true,
-          isManuallyOpen: false
-        };
-      } else {
-        controlState = {
-          isManuallyOpen: true,
-          isManuallyClosed: false
-        };
-      }
-
-      this.setState(function (_ref) {
-        var isOpen = _ref.isOpen;
-        return _objectSpread({
-          isOpen: !isOpen
-        }, controlState);
-      });
-    }
   }, {
     key: "handleSelectedUpdate",
     value: function handleSelectedUpdate() {
@@ -2736,18 +2711,12 @@ function (_React$Component) {
           selected: _this2.getSelectedLink()
         });
       }, 0);
-    }
-  }, {
-    key: "closeNavBar",
-    value: function closeNavBar() {
-      if (window.innerWidth < 700) {
-        this.setState({
-          isOpen: false
-        });
-      }
+    } // closeNavBar() {
+    //     if (window.innerWidth < 700) {
+    //         this.setState({ isOpen: false })
+    //     };
+    // }
 
-      ;
-    }
   }, {
     key: "render",
     value: function render() {
@@ -2768,9 +2737,25 @@ function (_React$Component) {
         selected: selected,
         feeds: feeds,
         closeNavBar: this.closeNavBar
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NavBarAddContent, {
-        closeNavBar: this.closeNavBar
-      })) : null);
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "footer-personal-links"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "icon-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        className: "personal-link",
+        href: 'https://github.com/C-Kan-42',
+        target: "_blank"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fab fa-github"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "icon-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        className: "personal-link",
+        href: 'https://www.linkedin.com/in/carinakan/',
+        target: "_blank"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fab fa-linkedin"
+      }))))) : null);
     }
   }]);
 
@@ -2791,9 +2776,9 @@ var NavBarMenu = function NavBarMenu(props) {
   })))) : null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NavBarCollapseExpand, props));
 };
 
-var NavBarCollapseExpand = function NavBarCollapseExpand(_ref2) {
-  var isOpen = _ref2.isOpen,
-      handleClick = _ref2.handleClick;
+var NavBarCollapseExpand = function NavBarCollapseExpand(_ref) {
+  var isOpen = _ref.isOpen,
+      handleClick = _ref.handleClick;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "navbar-show-button"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -2807,11 +2792,11 @@ var NavBarCollapseExpand = function NavBarCollapseExpand(_ref2) {
   })));
 };
 
-var NavBarLinks = function NavBarLinks(_ref3) {
-  var feedIds = _ref3.feedIds,
-      feeds = _ref3.feeds,
-      selected = _ref3.selected,
-      closeNavBar = _ref3.closeNavBar;
+var NavBarLinks = function NavBarLinks(_ref2) {
+  var feedIds = _ref2.feedIds,
+      feeds = _ref2.feeds,
+      selected = _ref2.selected,
+      closeNavBar = _ref2.closeNavBar;
   var feedsList = feedIds ? feedIds.map(function (feedId) {
     var feed = feeds[feedId];
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
@@ -2844,19 +2829,15 @@ var NavBarLinks = function NavBarLinks(_ref3) {
     src: "https://img.icons8.com/material-sharp/96/000000/time-machine.png"
   }), "Recently Read")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "feeds-list"
-  }, feedsList)));
-};
-
-var NavBarAddContent = function NavBarAddContent(_ref4) {
-  var closeNavBar = _ref4.closeNavBar;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "add-content"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-    to: "/i/discover"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fa fa-plus",
+  }, feedsList), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    to: "/i/discover",
+    className: "discover".concat(selected === "discover" ? " selected" : "")
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "navbar-icon",
     "aria-hidden": "true"
-  })), "+ Follow New Sources"));
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    src: "https://img.icons8.com/windows/64/000000/add.png"
+  }), "Follow New Sources"))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (NavBar);
@@ -3812,10 +3793,8 @@ __webpack_require__.r(__webpack_exports__);
 var fetchLatest = function fetchLatest() {
   return $.ajax({
     url: 'api/articles',
-    method: 'GET',
-    error: function error(err) {
-      return console.log(err);
-    }
+    method: 'GET' // error: (err) => console.log(err)
+
   });
 };
 var fetchArticle = function fetchArticle(id) {
