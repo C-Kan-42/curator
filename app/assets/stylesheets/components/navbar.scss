@@ -98,8 +98,6 @@
 .feeds .selected li {
   font-weight: 700;
   border-left: 2px solid #2bb24c;
-
-  // border-left-color: #2bb24c;
   color: #2bb24c;
 }
 
@@ -127,13 +125,13 @@
   display: inline-block;
 }
 
-.add-content:hover {
-  background: #efefef;
-  color: black;
-  // font-weight: 700;
-  border-left: 2px solid #2bb24c;
-  // color: #2bb24c;
-}
+// .add-content:hover {
+//   background: #efefef;
+//   color: black;
+//   // font-weight: 700;
+//   border-left: 2px solid #2bb24c;
+//   // color: #2bb24c;
+// }
 
 .add-content span {
   font-size: 20px;

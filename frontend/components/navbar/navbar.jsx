@@ -10,9 +10,9 @@ class NavBar extends React.Component {
             isManuallyClosed: false,
             isManuallyOpen: false
         };
-        this.handleClick = this.handleClick.bind(this);
+        // this.handleClick = this.handleClick.bind(this);
         this.handleSelectedUpdate = this.handleSelectedUpdate.bind(this);
-        this.closeNavBar = this.closeNavBar.bind(this);
+        // this.closeNavBar = this.closeNavBar.bind(this);
     }
         
     getSelectedLink () {
@@ -39,30 +39,30 @@ class NavBar extends React.Component {
     //     }
     // }
 
-    componentWillUnmount() {
-        removeEventListener('resize', this.handleResize, false);
-    }
+    // componentWillUnmount() {
+    //     removeEventListener('resize', this.handleResize, false);
+    // }
 
-    handleClick(e) {
-        let controlState = {};
-        if (e.target.className.includes("fa-compress")) {
-            controlState = { isManuallyClosed: true, isManuallyOpen: false };
-        } else {
-            controlState = { isManuallyOpen: true, isManuallyClosed: false };
-        }
+    // handleClick(e) {
+    //     let controlState = {};
+    //     if (e.target.className.includes("fa-compress")) {
+    //         controlState = { isManuallyClosed: true, isManuallyOpen: false };
+    //     } else {
+    //         controlState = { isManuallyOpen: true, isManuallyClosed: false };
+    //     }
 
-        this.setState(({ isOpen }) => ({ isOpen: !isOpen, ...controlState }));
-    }
+    //     this.setState(({ isOpen }) => ({ isOpen: !isOpen, ...controlState }));
+    // }
 
     handleSelectedUpdate() {
         setTimeout(() => this.setState({ selected: this.getSelectedLink() }), 0);
     }
 
-    closeNavBar() {
-        if (window.innerWidth < 700) {
-            this.setState({ isOpen: false })
-        };
-    }
+    // closeNavBar() {
+    //     if (window.innerWidth < 700) {
+    //         this.setState({ isOpen: false })
+    //     };
+    // }
 
     render() {
         const { isOpen, selected } = this.state;
@@ -159,13 +159,14 @@ const NavBarLinks = ({ feedIds, feeds, selected, closeNavBar }) => {
                     {feedsList}
                 </div>
 
-                <Link to="/i/discover" className={`addfeeds${selected === "addfeeds" ? " selected" : ""}`}>
+                <Link to="/i/discover" 
+                    className={`discover${selected === "discover" ? " selected" : ""}`}>
                     <li><span><i className="navbar-icon" aria-hidden="true"></i></span>
-                    <img src="https://img.icons8.com/windows/64/000000/add.png" />
-                    Follow New Sources
+                        <img src="https://img.icons8.com/windows/64/000000/add.png" />
+                        Follow New Sources
                     </li>
-                    
                 </Link>
+
             </div>
         </nav>
     );
