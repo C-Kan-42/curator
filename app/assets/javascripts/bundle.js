@@ -2737,7 +2737,25 @@ function (_React$Component) {
         selected: selected,
         feeds: feeds,
         closeNavBar: this.closeNavBar
-      })) : null);
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "footer-personal-links"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "icon-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        className: "personal-link",
+        href: 'https://github.com/C-Kan-42',
+        target: "_blank"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fab fa-github"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "icon-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        className: "personal-link",
+        href: 'https://www.linkedin.com/in/carinakan/',
+        target: "_blank"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fab fa-linkedin"
+      }))))) : null);
     }
   }]);
 
@@ -2820,15 +2838,7 @@ var NavBarLinks = function NavBarLinks(_ref2) {
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
     src: "https://img.icons8.com/windows/64/000000/add.png"
   }), "Follow New Sources"))));
-}; // const NavBarAddContent = ({ closeNavBar }) => (
-//     <div className="add-content">
-//         <Link to="/i/discover">
-//             <span><i className="fa fa-plus" aria-hidden="true"></i></span>
-//             + Follow New Sources
-//         </Link>
-//     </div>
-// );
-
+};
 
 /* harmony default export */ __webpack_exports__["default"] = (NavBar);
 

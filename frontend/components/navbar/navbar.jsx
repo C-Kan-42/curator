@@ -82,8 +82,27 @@ class NavBar extends React.Component {
                             feedIds={feedIds} selected={selected} feeds={feeds} 
                             closeNavBar={this.closeNavBar}
                         />
-                        {/* put links to github and linkedin here */}
-                        {/* <NavBarAddContent closeNavBar={this.closeNavBar} /> */}
+
+                        <div className="footer-personal-links">
+
+                            <div className="icon-container">
+                                <a className="personal-link" href={'https://github.com/C-Kan-42'} target="_blank">
+                                    {/* <span className="personal-link-icon"> */}
+                                        <i className="fab fa-github"></i>
+                                    {/* </span> */}
+                                </a>
+                            </div>
+                              
+                            <div className="icon-container">
+                                <a className="personal-link" href={'https://www.linkedin.com/in/carinakan/'} target="_blank">
+                                    {/* <span className="personal-link-icon"> */}
+                                        <i className="fab fa-linkedin"></i>
+                                    {/* </span> */}
+                                </a>     
+                            </div>
+                            
+                        </div>
+                                     
                     </div>
                     : null
                 }
@@ -172,13 +191,5 @@ const NavBarLinks = ({ feedIds, feeds, selected, closeNavBar }) => {
     );
 }
 
-// const NavBarAddContent = ({ closeNavBar }) => (
-//     <div className="add-content">
-//         <Link to="/i/discover">
-//             <span><i className="fa fa-plus" aria-hidden="true"></i></span>
-//             + Follow New Sources
-//         </Link>
-//     </div>
-// );
 
 export default NavBar;
