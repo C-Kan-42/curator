@@ -39,10 +39,6 @@ class NavBar extends React.Component {
     //     }
     // }
 
-    // componentWillUnmount() {
-    //     removeEventListener('resize', this.handleResize, false);
-    // }
-
     // handleClick(e) {
     //     let controlState = {};
     //     if (e.target.className.includes("fa-compress")) {
