@@ -12,7 +12,6 @@ export const createDemoUser = () => (
         method: 'POST',
         data: {
             user: {
-                // email: `demo-user-${Math.floor(Math.random() * 1000000)}-${Math.floor(Math.random() * 1000000)}@demo.com`,
                 email: 'demo-user@email.com',
                 name: 'Demo User',
                 password: `password`
