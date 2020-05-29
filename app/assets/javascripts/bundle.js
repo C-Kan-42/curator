@@ -643,6 +643,8 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "centered-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "landing-row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "header-row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
         className: "top-header-text"
@@ -659,6 +661,8 @@ function (_React$Component) {
         className: "big-green-button demo-user",
         onClick: this.handleDemoUser
       }, "Demo User"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "illust-col"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "illust-under"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "illust-container-col"
@@ -666,7 +670,7 @@ function (_React$Component) {
         src: "https://s5.feedly.com/images/landing/screenshot-web@2x.png",
         className: "illust",
         alt: ""
-      })))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+      })))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
         path: "/login",
         component: _session_login_form_container__WEBPACK_IMPORTED_MODULE_2__["default"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
@@ -2688,9 +2692,6 @@ function (_React$Component) {
     //         this.setState({ isManuallyOpen: false });
     //     }
     // }
-    // componentWillUnmount() {
-    //     removeEventListener('resize', this.handleResize, false);
-    // }
     // handleClick(e) {
     //     let controlState = {};
     //     if (e.target.className.includes("fa-compress")) {
@@ -3950,7 +3951,6 @@ var createDemoUser = function createDemoUser() {
     method: 'POST',
     data: {
       user: {
-        // email: `demo-user-${Math.floor(Math.random() * 1000000)}-${Math.floor(Math.random() * 1000000)}@demo.com`,
         email: 'demo-user@email.com',
         name: 'Demo User',
         password: "password"
