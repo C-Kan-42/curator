@@ -9,7 +9,7 @@ This web app is a clone of Feedly, a popular news aggregator. With so many sourc
 
 ## Technology
 
-This app uses Ruby on Rails for the backend API, and Javascript/React/Redux to render the front-end. 
+This app uses Ruby on Rails and PostgreSQL on the back-end, and Javascript/React/Redux to render the front-end, with HTML and SCSS for styling. 
 
 ## Features
 
