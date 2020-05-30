@@ -69,13 +69,12 @@ class Feed < ApplicationRecord
             favicon_url = 'https://storage.googleapis.com/site-assets/omg6N8BjH3hdVOfXoFqfQj5UQcC2PsAU6NLrHBXu_Rs_visual-166f1263aa5'
         elsif rss_url == 'https://www.newyorker.com/feed/everything'
             page_link = 'https://www.newyorker.com/'
-            # favicon_url = 'https://storage.googleapis.com/site-assets/C9CfPZRBh-c_qSlXCotKuKjPbIhUHLA4NHKO5PZy49k_visual-170318a6422'
         else
             page_link = @rss_feed.channel.image.link
         end
 
         if rss_url === 'http://feeds.bbci.co.uk/news/world/rss.xml'
-            self.favicon_url = "https://storage.googleapis.com/site-assets/6tEjjG1yas2HK_Qxnos1q7W8ioIhhmXKTYoNgwIjOLo_visual-16bf7b9f0af"
+            self.favicon_url = "http://newsvote.bbc.co.uk/favicon.ico"
         end
         
         @feed_page = MetaInspector.new(page_link)
