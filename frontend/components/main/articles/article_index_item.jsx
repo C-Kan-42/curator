@@ -17,7 +17,6 @@ class ArticleIndexItem extends React.Component {
 
     handleRedirect(e, articleId) {
         const target = e.target.parentElement;
-        // const articleId = this.props.article.id;
         const originPath = this.props.history.location.pathname;
         this.props.history.push(`${originPath}/articles/${articleId}`);
         this.handleReadClick(e);
