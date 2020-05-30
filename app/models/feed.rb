@@ -74,7 +74,7 @@ class Feed < ApplicationRecord
         end
 
         if rss_url === 'http://feeds.bbci.co.uk/news/world/rss.xml'
-            self.favicon_url = "https://storage.googleapis.com/site-assets/6tEjjG1yas2HK_Qxnos1q7W8ioIhhmXKTYoNgwIjOLo_visual-16bf7b9f0af"
+            self.favicon_url = "http://newsvote.bbc.co.uk/favicon.ico"
         end
         
         @feed_page = MetaInspector.new(page_link)
