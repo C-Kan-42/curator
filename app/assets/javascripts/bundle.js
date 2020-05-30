@@ -638,8 +638,8 @@ function (_React$Component) {
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "landing"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
-        className: "header-background-gray"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        className: "landing-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "centered-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -670,7 +670,7 @@ function (_React$Component) {
         src: "https://s5.feedly.com/images/landing/screenshot-web@2x.png",
         className: "illust",
         alt: ""
-      })))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+      }))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
         path: "/login",
         component: _session_login_form_container__WEBPACK_IMPORTED_MODULE_2__["default"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
@@ -1038,8 +1038,7 @@ function (_React$Component) {
   _createClass(ArticleIndexItem, [{
     key: "handleRedirect",
     value: function handleRedirect(e, articleId) {
-      var target = e.target.parentElement; // const articleId = this.props.article.id;
-
+      var target = e.target.parentElement;
       var originPath = this.props.history.location.pathname;
       this.props.history.push("".concat(originPath, "/articles/").concat(articleId));
       this.handleReadClick(e);

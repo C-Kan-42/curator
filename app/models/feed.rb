@@ -69,6 +69,9 @@ class Feed < ApplicationRecord
             favicon_url = 'https://storage.googleapis.com/site-assets/omg6N8BjH3hdVOfXoFqfQj5UQcC2PsAU6NLrHBXu_Rs_visual-166f1263aa5'
         elsif rss_url == 'https://www.newyorker.com/feed/everything'
             page_link = 'https://www.newyorker.com/'
+        elsif rss_url === 'http://feeds.bbci.co.uk/news/world/rss.xml'
+            page_link = @rss_feed.channel.image.link
+            favicon_url = "http://newsvote.bbc.co.uk/favicon.ico"
         else
             page_link = @rss_feed.channel.image.link
         end
