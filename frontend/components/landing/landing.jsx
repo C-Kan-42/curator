@@ -26,8 +26,6 @@ class Landing extends React.Component {
         return(
         <div className="landing">
             <section className="landing-container">
-                {/* <header className="header-background-gray">
-                </header> */}
                 <div className="centered-container">
                     <div className="landing-row">
                         <div className="header-row">
