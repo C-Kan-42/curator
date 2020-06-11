@@ -19,7 +19,7 @@ class MainContent extends React.Component {
     }
 
     componentDidMount() {
-        this.props.receiveFeedTitle(null)
+        this.props.receiveFeedTitle(null);
         window.document.querySelector(".main-content")
             .addEventListener('scroll', this.throttledSessionBarScroll, false);
     }
@@ -44,11 +44,11 @@ class MainContent extends React.Component {
         const path = this.props.location.pathname.split("/")[2];
 
         const sessionTitles = {
-            // discover: "Discover Feeds",
+            discover: "Discover Feeds",
             feeds: "Organize Feeds",
             latest: "Latest",
             subscriptions: this.props.subscriptionTitle,
-            // reads: "Recently Read"
+            reads: "Recently Read"
         };
 
         return (sessionTitles[path] || "Welcome to Curator");
@@ -67,7 +67,7 @@ class MainContent extends React.Component {
                 <AuthRoute path="/signup" component={LandingContainer} />
                 <ProtectedRoute path="/i/feeds" component={FeedsIndexContainer} />
                 <ProtectedRoute path="/i/latest" component={ArticleContainer} />
-                <ProtectedRoute path="/i/reads" component={ArticleContainer} />
+                <ProtectedRoute path="/i/reads" componenocalt={ArticleContainer} />
                 <Switch>
                     <ProtectedRoute path="/i/:prevSource/:prevId/articles/:id" component={ArticleShowPopout} />
                     <ProtectedRoute path="/i/discover/:id" component={SubscriptionArticlesIndexPopout} />

@@ -2219,11 +2219,11 @@ function (_React$Component) {
     value: function getTitle() {
       var path = this.props.location.pathname.split("/")[2];
       var sessionTitles = {
-        // discover: "Discover Feeds",
+        discover: "Discover Feeds",
         feeds: "Organize Feeds",
         latest: "Latest",
-        subscriptions: this.props.subscriptionTitle // reads: "Recently Read"
-
+        subscriptions: this.props.subscriptionTitle,
+        reads: "Recently Read"
       };
       return sessionTitles[path] || "Welcome to Curator";
     }
@@ -2255,7 +2255,7 @@ function (_React$Component) {
         component: _articles_article_container__WEBPACK_IMPORTED_MODULE_5__["default"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_3__["ProtectedRoute"], {
         path: "/i/reads",
-        component: _articles_article_container__WEBPACK_IMPORTED_MODULE_5__["default"]
+        componenocalt: _articles_article_container__WEBPACK_IMPORTED_MODULE_5__["default"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_3__["ProtectedRoute"], {
         path: "/i/:prevSource/:prevId/articles/:id",
         component: _articles_article_show_popout__WEBPACK_IMPORTED_MODULE_9__["default"]

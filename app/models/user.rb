@@ -73,23 +73,23 @@ class User < ApplicationRecord
     end
 
     # after_create_commit if option not disabled
-    def seed_user
-        seed_urls = [
-            'https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml',
-            'https://feeds.npr.org/1019/rss.xml',
-            'https://www.wired.com/feed/rss'
-        ]
+    # def seed_user
+    #     seed_urls = [
+    #         'https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml',
+    #         'https://feeds.npr.org/1019/rss.xml',
+    #         'https://www.wired.com/feed/rss'
+    #     ]
 
-        seed_urls.each do |url|
-        feed = Feed.find_by(rss_url: url)
-        next if feed.nil?
-        s = Subscription.new(
-            subscriber_id: id,
-            feed_id: feed.id
-        )
-        s.save
-        end
-    end
+    #     seed_urls.each do |url|
+    #     feed = Feed.find_by(rss_url: url)
+    #     next if feed.nil?
+    #     s = Subscription.new(
+    #         subscriber_id: id,
+    #         feed_id: feed.id
+    #     )
+    #     s.save
+    #     end
+    # end
 
     def subscription_by_feed(feed_id)
         subscriptions.find_by(feed_id: feed_id)
